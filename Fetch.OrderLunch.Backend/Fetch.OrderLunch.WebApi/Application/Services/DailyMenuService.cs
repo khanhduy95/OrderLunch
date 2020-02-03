@@ -4,7 +4,6 @@ using Fetch.OrderLunch.WebApi.Application.Models;
 using Fetch.OrderLunch.Core.Entities;
 using Fetch.OrderLunch.Core.Entities.CompanyAggregate;
 using Fetch.OrderLunch.Core.Interfaces;
-using Fetch.OrderLunch.WebApi.Application.Models;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -62,13 +61,13 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             {
                 throw new ArgumentNullException();
             }
-            
-            //var dailyMenu = new DailyMenu
-            //{
-            //    Name = dailyMenuVm.Name,
-            //    CreatorUserId = userId,
-            //};
-            //await _asyncDailyMenuRepository.AddAsync(dailyMenu);
+
+            var dailyMenu = new DailyMenu
+            {
+                Name = dailyMenuVm.Name,
+                CreatorUserId = userId,
+            };
+            await _asyncDailyMenuRepository.AddAsync(dailyMenu);
             await _asyncDailyMenuRepository.unitOfWork.SaveChangesAsync();
         }
 

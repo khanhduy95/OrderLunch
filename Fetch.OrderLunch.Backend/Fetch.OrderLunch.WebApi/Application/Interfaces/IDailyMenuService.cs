@@ -1,5 +1,4 @@
 ﻿using Fetch.OrderLunch.WebApi.Application.Models;
-using Fetch.OrderLunch.WebApi.Application.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

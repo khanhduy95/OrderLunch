@@ -9,10 +9,10 @@ namespace Fetch.OrderLunch.WebApi.Application.Interfaces
 {
     public interface ICompanyService
     {
-        List<CompanyViewModel> GetAll();
-        Task<CompanyViewModel> GetById(int id);
-        Task<CompanyViewModel> Add(CompanyViewModel companyVm);
-        Task<CompanyViewModel> Update(CompanyViewModel companyVm);         
+        Task<IEnumerable<CompanyViewModel>> GetAll();
+        Task<CompanyViewModel> GetCompanyById(int id);
+        Task Add(CompanyViewModel companyVm);
+        Task Update(CompanyViewModel companyVm);         
         Task Delete(ObjectID objectID);       
     }
 }

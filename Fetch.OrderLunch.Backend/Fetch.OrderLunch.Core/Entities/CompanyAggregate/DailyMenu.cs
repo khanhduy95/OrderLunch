@@ -9,11 +9,9 @@ namespace Fetch.OrderLunch.Core.Entities.CompanyAggregate
     public class DailyMenu : BaseEntity
     {
         public string Name { get; set; }
-        private List<Food> _foods;
+        private List<Food> _foods=new List<Food>();
         public IEnumerable<Food> Foods => _foods.AsReadOnly();
-        protected DailyMenu()
-        {
-            _foods = new List<Food>();
-        }
+       
+        
     }
 }

@@ -14,18 +14,15 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
 {
     public class FoodService : IFoodService
     {       
-        private readonly IRepository<Food> _repository;
+      
         private readonly IAsyncRepository<Food> _asyncFoodRepository;
         private readonly IAsyncRepository<Menu> _asyncMenuRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public FoodService(
-            IRepository<Food> repository, 
-            IAsyncRepository<Food> asyncFoodRepository,
-            IAsyncRepository<Menu> asyncMenuRepository, 
-            IHttpContextAccessor httpContextAccessor)
+        public FoodService(IAsyncRepository<Food> asyncFoodRepository,
+                           IAsyncRepository<Menu> asyncMenuRepository,
+                           IHttpContextAccessor httpContextAccessor)
         {
-            _repository = repository;
             _asyncFoodRepository = asyncFoodRepository;
             _asyncMenuRepository = asyncMenuRepository;
             _httpContextAccessor = httpContextAccessor;
@@ -51,7 +48,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             };
 
             await _asyncFoodRepository.AddAsync(Food);
-            await _repository.unitOfWork.SaveChangesAsync();
+            await _asyncFoodRepository.unitOfWork.SaveChangesAsync();
             return foodVm;
         }
 
@@ -63,7 +60,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                 throw new ArgumentNullException(nameof(food));
             }
            await _asyncFoodRepository.DeleteAsync(food);
-           await _repository.unitOfWork.SaveChangesAsync();
+           await _asyncFoodRepository.unitOfWork.SaveChangesAsync();
         }
         public async Task<PaginatedItemsViewModel<FoodViewModel>> GetAll(int pageIndex, int pageSize)
         {
@@ -95,20 +92,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             }
             return null;
         }
-
-        public async Task<FoodViewModel> GetById(int id)
-        {
-            var food = await _asyncFoodRepository.GetByIdAsync(id);
-            return new FoodViewModel
-            {
-                Id = food.Id,
-                Description = food.Description,
-                Price = food.Price,
-                Image = food.Image,
-                MenuId = food.MenuId,
-                CategoryId = food.CategoryId
-            };
-        }
+       
         public async Task<PaginatedItemsViewModel<FoodViewModel>> GetFoodByCategory(int id, int pageSize, int pageIndex)
         {
             var filterSpecification = new FoodFilterSpecification(id);
@@ -140,11 +124,23 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             return null;
         }
 
-        public Task<List<FoodViewModel>> GetFoodBySupplier(int id)
+        public async Task<FoodViewModel> GetFoodById(int id)
         {
-            throw new NotImplementedException();
+            var food = await _asyncFoodRepository.GetByIdAsync(id);
+            if (food == null)
+            {
+                throw new ArgumentNullException("Food is null");
+            }
+            return new FoodViewModel { Id = food.Id, 
+                Name = food.Name,
+                Description = food.Description,
+                Price = food.Price, 
+                CategoryId = food.CategoryId, 
+                MenuId = food.MenuId,
+                Image = food.Image
+            };
         }
-        
+
         public async Task<FoodViewModel> Update(FoodViewModel foodVm)
         {
             var food = await _asyncFoodRepository.GetByIdAsync(foodVm.Id);
@@ -158,6 +154,8 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             food.MenuId = foodVm.MenuId;
             food.CategoryId = foodVm.CategoryId;
             food.Image = await UploadFile(foodVm.File);
+
+            await _asyncFoodRepository.UpdateAsync(food);
             await _asyncFoodRepository.unitOfWork.SaveChangesAsync();
             return foodVm;
         }

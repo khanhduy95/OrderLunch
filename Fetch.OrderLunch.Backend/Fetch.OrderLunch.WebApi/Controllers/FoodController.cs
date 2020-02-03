@@ -11,21 +11,34 @@ namespace Fetch.OrderLunch.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class FoodController : ControllerBase
     {
-        private readonly ICategoryService _categoryService;
-        public CategoryController(ICategoryService categoryService)
+        private readonly IFoodService _foodService;
+
+
+        public FoodController(IFoodService foodService)
         {
-            _categoryService = categoryService;
+            _foodService = foodService;
         }
 
         [HttpGet]
         [Route("getAll")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetALl([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 0)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _categoryService.GetAll());
+                return Ok(await _foodService.GetAll(pageIndex, pageSize));
+            }
+            return NotFound();
+        }
+
+        [HttpGet]
+        [Route("get/Category{id}")]
+        public async Task<IActionResult> GetAll(int id, [FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 0)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _foodService.GetFoodByCategory(id, pageIndex, pageSize));
             }
             return NotFound();
         }
@@ -36,7 +49,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _categoryService.GetById(id));
+                return Ok(await _foodService.GetFoodById(id));
             }
             return NotFound();
         }
@@ -45,26 +58,24 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         [Route("create")]
         [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Create(CategoryViewModel model)
+        public async Task<IActionResult> Create([FromForm]FoodViewModel model)
         {
             if (ModelState.IsValid)
             {
-                await _categoryService.Add(model);
-                return Ok();
+                return Ok(await _foodService.Add(model));
             }
             return BadRequest();
-
         }
 
         [HttpPost]
         [Route("update")]
         [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Update(CategoryViewModel model)
+        public async Task<IActionResult> Update([FromForm]FoodViewModel model)
         {
             if (ModelState.IsValid)
             {
-                await _categoryService.Update(model);
+                await _foodService.Update(model);
                 return Ok();
             }
             return BadRequest();
@@ -76,12 +87,12 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _categoryService.Delete(objectID);
+                await _foodService.Delete(objectID);
                 return Ok();
             }
-            return BadRequest();
-        }
+            return NotFound();
 
+        }
 
     }
 }

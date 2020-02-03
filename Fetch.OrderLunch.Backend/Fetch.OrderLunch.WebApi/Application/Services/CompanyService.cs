@@ -26,7 +26,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<CompanyViewModel> Add(CompanyViewModel companyVm)
+        public async Task Add(CompanyViewModel companyVm)
         {
             var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
             if (userId == null)
@@ -42,8 +42,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                 CreationTime = DateTime.Now
             };
             await _asyncRepository.AddAsync(company);
-            //  await _repository.unitOfWork.SaveChangesAsync();
-            return companyVm;
+            await _asyncRepository.unitOfWork.SaveChangesAsync();           
         }
 
         public async Task Delete(ObjectID objectID)
@@ -54,36 +53,52 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                 await _asyncRepository.DeleteAsync(company);
 
             }
-
         }
 
-        public List<CompanyViewModel> GetAll()
+        public async Task<IEnumerable<CompanyViewModel>> GetAll()
         {
+            var companies = await _asyncRepository.ListAllAsync();
+            var company = companies.Select(x => new CompanyViewModel
+            {
+                Id=x.Id,
+                Name=x.Name,
+                Address=x.Address,
+                HotLine=x.HotLine
+            });
 
-            return null;
+            return company;
         }
 
-        public async Task<CompanyViewModel> GetById(int id)
+        public async Task<CompanyViewModel> GetCompanyById(int id)
         {
             var query =await _asyncRepository.GetByIdAsync(id);
             if (query == null)
             {
                 throw new ArgumentNullException(nameof(CompanyViewModel));
             }
-            return new CompanyViewModel(query.Id, query.Name, query.Address, query.HotLine, query.CreationTime,
-                                        query.IsActive);
+            return new CompanyViewModel
+            {
+                Id = query.Id,
+                Name = query.Name,
+                Address = query.Address,
+                HotLine = query.HotLine
+            };
         }
 
   
-        public async Task<CompanyViewModel> Update(CompanyViewModel companyVm)
+        public async Task Update(CompanyViewModel companyVm)
         {
             var query =await _asyncRepository.GetByIdAsync(companyVm.Id);
             if (query == null)
             {
                 throw new ArgumentNullException(nameof(CompanyViewModel));
             }
-            await _asyncRepository.UpdateAsync(query);        
-            return companyVm;
+            query.Name = companyVm.Name;
+            query.Address = companyVm.Address;
+            query.HotLine = companyVm.HotLine;
+
+            await _asyncRepository.UpdateAsync(query);
+            await _asyncRepository.unitOfWork.SaveChangesAsync();
         }
     }
 }
