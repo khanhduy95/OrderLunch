@@ -29,21 +29,21 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
         public async Task<CompanyViewModel> Add(CompanyViewModel companyVm)
         {
             var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
-            if (userId != null)
+            if (userId == null)
             {
-                var company = new Company
-                {
-                    Name = companyVm.Name,
-                    Address = companyVm.Address,
-                    HotLine = companyVm.HotLine,
-                    CreatorUserId=userId,
-                    CreationTime = DateTime.Now
-                };
-               await _asyncRepository.AddAsync(company);
-              //  await _repository.unitOfWork.SaveChangesAsync();
-                return companyVm;
+                throw new ArgumentNullException("UserId is null");
             }
-            throw new ArgumentNullException();
+            var company = new Company
+            {
+                Name = companyVm.Name,
+                Address = companyVm.Address,
+                HotLine = companyVm.HotLine,
+                CreatorUserId = userId,
+                CreationTime = DateTime.Now
+            };
+            await _asyncRepository.AddAsync(company);
+            //  await _repository.unitOfWork.SaveChangesAsync();
+            return companyVm;
         }
 
         public async Task Delete(ObjectID objectID)

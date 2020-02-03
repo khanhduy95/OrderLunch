@@ -14,3 +14,8 @@ D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.WebApi\obj\Debug\
 D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.WebApi\obj\Debug\netcoreapp2.2\Fetch.OrderLunch.WebApi.RazorTargetAssemblyInfo.cache
 D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.WebApi\obj\Debug\netcoreapp2.2\Fetch.OrderLunch.WebApi.dll
 D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.WebApi\obj\Debug\netcoreapp2.2\Fetch.OrderLunch.WebApi.pdb
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.WebApi\bin\Debug\netcoreapp2.2\Fetch.OrderLunch.Core.dll
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.WebApi\bin\Debug\netcoreapp2.2\Fetch.OrderLunch.Infrastructure.dll
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.WebApi\bin\Debug\netcoreapp2.2\Fetch.OrderLunch.Core.pdb
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.WebApi\bin\Debug\netcoreapp2.2\Fetch.OrderLunch.Infrastructure.pdb
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.WebApi\obj\Debug\netcoreapp2.2\Fetch.OrderLunch.WebApi.csproj.CopyComplete

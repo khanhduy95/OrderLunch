@@ -12,7 +12,6 @@ namespace Fetch.OrderLunch.WebApi.Application.Interfaces
         Task<CategoryViewModel> GetById(int id);
         Task Add(CategoryViewModel categoryVm);
         Task Update(CategoryViewModel categoryVm);
-        Task HardDelete(ObjectID objectID);
         Task Delete(ObjectID objectID);
     }
 }

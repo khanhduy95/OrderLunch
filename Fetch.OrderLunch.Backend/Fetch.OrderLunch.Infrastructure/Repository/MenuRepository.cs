@@ -17,6 +17,16 @@ namespace Fetch.OrderLunch.Infrastructure.Repository
 
         }
 
+        public async Task<Menu> FindAsync(int id)
+        {
+            var menu = await _dbContext.Menu
+              .Include(x => x.Foods)
+              .Where(x => x.Id == id)
+              .FirstOrDefaultAsync();
+
+            return menu;
+        }
+
         public async Task<Menu> GetAsync(int supplierId)
         {
             var menu = await _dbContext.Menu
@@ -25,6 +35,11 @@ namespace Fetch.OrderLunch.Infrastructure.Repository
                .FirstOrDefaultAsync();
 
             return menu;
+        }
+
+        public void UpdateMenu(Menu menu)
+        {
+            _dbContext.Entry(menu).State = EntityState.Modified;
         }
     }
 }

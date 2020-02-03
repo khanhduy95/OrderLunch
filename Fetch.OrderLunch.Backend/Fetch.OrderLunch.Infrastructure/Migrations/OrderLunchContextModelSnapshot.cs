@@ -390,8 +390,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
 
                     b.Property<int>("MenuId");
 
-                    b.Property<int?>("MenuId1");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200);
@@ -406,8 +404,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                     b.HasIndex("DailyMenuId");
 
                     b.HasIndex("MenuId");
-
-                    b.HasIndex("MenuId1");
 
                     b.ToTable("Foods");
                 });
@@ -573,13 +569,9 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                         .HasForeignKey("DailyMenuId");
 
                     b.HasOne("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Menu")
-                        .WithMany()
+                        .WithMany("Foods")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Menu")
-                        .WithMany("Foods")
-                        .HasForeignKey("MenuId1");
                 });
 
             modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Menu", b =>

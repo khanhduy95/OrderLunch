@@ -40,12 +40,6 @@ namespace Fetch.OrderLunch.Infrastructure.Data.EntityConfigurations
                 .IsRequired()
                 .HasForeignKey(x => x.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasOne<Menu>()
-                .WithMany()
-                .IsRequired()
-                .HasForeignKey(x => x.MenuId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

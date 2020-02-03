@@ -1,0 +1,8 @@
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\obj\Debug\netstandard2.0\Fetch.OrderLunch.Core.csprojAssemblyReference.cache
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\obj\Debug\netstandard2.0\Fetch.OrderLunch.Core.AssemblyInfoInputs.cache
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\obj\Debug\netstandard2.0\Fetch.OrderLunch.Core.AssemblyInfo.cs
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\bin\Debug\netstandard2.0\Fetch.OrderLunch.Core.deps.json
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\bin\Debug\netstandard2.0\Fetch.OrderLunch.Core.dll
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\bin\Debug\netstandard2.0\Fetch.OrderLunch.Core.pdb
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\obj\Debug\netstandard2.0\Fetch.OrderLunch.Core.dll
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\obj\Debug\netstandard2.0\Fetch.OrderLunch.Core.pdb

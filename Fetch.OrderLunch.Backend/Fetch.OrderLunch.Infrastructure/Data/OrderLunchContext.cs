@@ -74,7 +74,8 @@ namespace Fetch.OrderLunch.Infrastructure.Data
             ConfigurationHasQueryFilter<Order>(modelBuilder);           
             ConfigurationHasQueryFilter<FoodDailyMenu>(modelBuilder);        
             ConfigurationHasQueryFilter<OfficeSupplier>(modelBuilder);
-                     
+            ConfigurationHasQueryFilter<Category>(modelBuilder);
+
         }
 
         private void ConfigurationHasQueryFilter<TEntity>(ModelBuilder modelBuilder) where TEntity : BaseEntity

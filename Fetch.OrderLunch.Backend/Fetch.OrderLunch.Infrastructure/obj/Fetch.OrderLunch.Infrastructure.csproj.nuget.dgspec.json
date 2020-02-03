@@ -4,14 +4,14 @@
     "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Infrastructure\\Fetch.OrderLunch.Infrastructure.csproj": {}
   },
   "projects": {
-    "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Infrastructure\\Fetch.OrderLunch.Infrastructure.csproj": {
+    "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Core\\Fetch.OrderLunch.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Infrastructure\\Fetch.OrderLunch.Infrastructure.csproj",
-        "projectName": "Fetch.OrderLunch.Infrastructure",
-        "projectPath": "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Infrastructure\\Fetch.OrderLunch.Infrastructure.csproj",
+        "projectUniqueName": "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Core\\Fetch.OrderLunch.Core.csproj",
+        "projectName": "Fetch.OrderLunch.Core",
+        "projectPath": "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Core\\Fetch.OrderLunch.Core.csproj",
         "packagesPath": "C:\\Users\\khanhduy\\.nuget\\packages\\",
-        "outputPath": "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Infrastructure\\obj\\",
+        "outputPath": "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -41,6 +41,88 @@
       "frameworks": {
         "netstandard2.0": {
           "dependencies": {
+            "MediatR": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Infrastructure\\Fetch.OrderLunch.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Infrastructure\\Fetch.OrderLunch.Infrastructure.csproj",
+        "projectName": "Fetch.OrderLunch.Infrastructure",
+        "projectPath": "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Infrastructure\\Fetch.OrderLunch.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\khanhduy\\.nuget\\packages\\",
+        "outputPath": "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\khanhduy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {
+              "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Core\\Fetch.OrderLunch.Core.csproj": {
+                "projectPath": "D:\\Github\\OrderLunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Core\\Fetch.OrderLunch.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.2.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[2.2.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[2.2.6, )"
+            },
             "NETStandard.Library": {
               "suppressParent": "All",
               "target": "Package",

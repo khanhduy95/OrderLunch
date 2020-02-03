@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Fetch.OrderLunch.Core.Interfaces
 {
-    public interface IMenuRepository
+    public interface IMenuRepository : IRepository<Menu>
     {
         Task<Menu> GetAsync(int supplierId);
+        Task<Menu> FindAsync(int id);
+        void UpdateMenu(Menu menu);
     }
 }

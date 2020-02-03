@@ -22,11 +22,9 @@ namespace Fetch.OrderLunch.WebApi.Application.Models
     }
     public class MenuViewModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public DateTime ExprireTime { get; set; }
-        public int SupplierId { get; set; }
-        public IEnumerable<FoodViewModel> Foods { get; set; }
+        public int Id { get; set; }      
+        public DateTime ExprireTime { get; set; }     
+        public List<FoodViewModel> Foods { get; set; }
     }
    
 }

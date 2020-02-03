@@ -36,23 +36,23 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
             if (userId == null)
             {
-                var Food = new Food
-                {
-                    Name = foodVm.Name,
-                    Description = foodVm.Description,
-                    Price = foodVm.Price,
-                    Image = await UploadFile(foodVm.File),
-                    MenuId = foodVm.MenuId,
-                    CategoryId = foodVm.CategoryId,
-                    CreationTime = DateTime.Now,
-                    CreatorUserId=userId
-                };
-
-                await _asyncFoodRepository.AddAsync(Food);
-                await _repository.unitOfWork.SaveChangesAsync();
-                return foodVm;
+                throw new ArgumentNullException();
             }
-            throw new ArgumentNullException();
+            var Food = new Food
+            {
+                Name = foodVm.Name,
+                Description = foodVm.Description,
+                Price = foodVm.Price,
+                Image = await UploadFile(foodVm.File),
+                MenuId = foodVm.MenuId,
+                CategoryId = foodVm.CategoryId,
+                CreationTime = DateTime.Now,
+                CreatorUserId=userId
+            };
+
+            await _asyncFoodRepository.AddAsync(Food);
+            await _repository.unitOfWork.SaveChangesAsync();
+            return foodVm;
         }
 
         public async  Task Delete(ObjectID objectID)

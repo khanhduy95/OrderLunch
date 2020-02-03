@@ -13,79 +13,50 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
     public class MenuService : IMenuService
     {
         private readonly IMenuRepository _menuRepository;
-        private readonly IAsyncRepository<Menu> _asyncMenuRepository;
-        private readonly IAsyncRepository<Food> _asyncFoodRepository;
 
-        public MenuService(IMenuRepository menuRepository,
-                           IAsyncRepository<Menu> asyncMenuRepository,
-                           IAsyncRepository<Food> asyncFoodRepository)
+        public MenuService(IMenuRepository menuRepository)
         {
             _menuRepository = menuRepository;
-            _asyncMenuRepository = asyncMenuRepository;
-            _asyncFoodRepository = asyncFoodRepository;
         }
 
         public async Task<MenuViewModel> GetMenuById(int supplierId)
         {
             var menu = await _menuRepository.GetAsync(supplierId);
-            if (menu != null)
+            if (menu == null)
             {
-                var menuVm = new MenuViewModel
-                {
-                    Foods = menu.Foods
-                    .Select(x =>
-                        new FoodViewModel
-                        {
-                            Id = x.Id,
-                            Name = x.Name,
-                            Description = x.Description,
-                            Price = x.Price
-                        })
-                    .ToList()
-                };
-                return menuVm;
+                throw new ArgumentNullException("menu is null");
             }
-            throw new ArgumentNullException("menu is null");
+            var menuVm = new MenuViewModel
+            {
+                ExprireTime = menu.ExprireTime,
+                Foods = menu.Foods
+                  .Where(x => x.MenuId == menu.Id)
+                  .Select(x =>
+                      new FoodViewModel
+                      {
+                          Id = x.Id,
+                          Name = x.Name,
+                          Description = x.Description,
+                          Price = x.Price
+                      })
+                  .ToList()
+            };
+            return menuVm;
+
         }
 
-        public Task Update(MenuViewModel menuVm)
+        public async Task Update(MenuViewModel menuVm)
         {
-            throw new NotImplementedException();
+            var menu = await _menuRepository.FindAsync(menuVm.Id);
+            if (menu == null)
+            {
+                throw new ArgumentNullException(nameof(menu));
+            }
+            menu.CreationTime = DateTime.Now;
+
+            _menuRepository.UpdateMenu(menu);
+           await _menuRepository.unitOfWork.SaveChangesAsync();
         }
-
-        //public async Task<MenuViewModel> GetMenuById(int supplierId)
-        //{
-        //    var menu = await _menuRepository.GetAsync(supplierId);
-        //    if (menu != null)
-        //    {
-        //        var menuVm = new MenuViewModel
-        //        {
-        //            Foods = menu.Foods
-        //            .Select(x =>
-        //                new FoodViewModel
-        //                {
-        //                    Id=x.Id,
-        //                    Name=x.Name,
-        //                    Description=x.Description,
-        //                    Price=x.Price
-        //                })
-        //            .ToList()
-        //        };
-        //        return menuVm;
-        //    }
-        //    throw new ArgumentNullException("menu is null");
-        //}
-
-        //public async Task Update(MenuViewModel menuVm)
-        //{
-        //    var menu = await _asyncMenuRepository.GetByIdAsync(menuVm.Id);
-        //    if (menu == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(menu));
-        //    }           
-        //    menu.CreationTime = DateTime.Now;
-        //    await _asyncMenuRepository.unitOfWork.SaveChangesAsync();
-        //}
 
     }
 }

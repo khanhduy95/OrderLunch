@@ -15,27 +15,26 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
     {
         private readonly IAsyncRepository<Supplier> _asyncSupplierRepository;
         private readonly IAsyncRepository<Menu> _asyncMenuRepository;
-        private readonly IAsyncRepository<Food> _asyncFoodRepository;      
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public SupplierService(
-            IAsyncRepository<Supplier> asyncSupplierRepository, 
-            IAsyncRepository<Menu> asyncMenuRepository, 
-            IAsyncRepository<Food> asyncFoodRepository, 
-            IHttpContextAccessor httpContextAccessor)
+        public SupplierService(IAsyncRepository<Supplier> asyncSupplierRepository,
+                               IAsyncRepository<Menu> asyncMenuRepository,
+                               IHttpContextAccessor httpContextAccessor)
         {
             _asyncSupplierRepository = asyncSupplierRepository;
             _asyncMenuRepository = asyncMenuRepository;
-            _asyncFoodRepository = asyncFoodRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task Add(SupplierInput supplierInput)
         {
-            var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
-            if (userId != null)
-            {
-                var supplier = new Supplier
+            //var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
+            //if (userId == null)
+            //{
+            //    throw new ArgumentNullException();
+            //}
+           
+            var supplier = new Supplier
                 {
                     Name = supplierInput.Name,
                     HotLine = supplierInput.HotLine,
@@ -49,9 +48,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                 var menu = supplier.CreateMenu(supplier.Id);
 
                 await _asyncMenuRepository.AddAsync(menu);
-              //  await _asyncSupplierRepository.unitOfWork.SaveChangesAsync();
-            }
-            throw new ArgumentNullException();
+                await _asyncSupplierRepository.unitOfWork.SaveChangesAsync();
         }
        
         public async Task Delete(ObjectID objectID)
@@ -105,6 +102,10 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             {
                 throw new ArgumentNullException(nameof(supplier));
             }
+            supplier.Name = supplierVm.Name;
+            supplier.Address = supplierVm.Address;
+            supplier.HotLine = supplierVm.HotLine;
+
             await _asyncSupplierRepository.UpdateAsync(supplier);
            
         }

@@ -5,6 +5,7 @@ using System.Text;
 using Fetch.OrderLunch.Core.Interfaces;
 using Fetch.OrderLunch.Infrastructure.Data;
 using Fetch.OrderLunch.Infrastructure.Identity;
+using Fetch.OrderLunch.Infrastructure.Repository;
 using Fetch.OrderLunch.WebApi.Application.Interfaces;
 using Fetch.OrderLunch.WebApi.Application.Models;
 using Fetch.OrderLunch.WebApi.Application.Services;
@@ -47,6 +48,7 @@ namespace Fetch.OrderLunch.WebApi
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<IDailyMenuService, DailyMenuService>();
+            services.AddTransient<IMenuRepository, MenuRepository>();
             //  services.AddTransient<IUserService, UserService>();
 
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();

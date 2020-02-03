@@ -11,13 +11,9 @@ namespace Fetch.OrderLunch.Core.Entities.SupplierAggregate
         public DateTime ExprireTime { get; set; }
         public int SupplierId { get; set; }
 
-        private readonly List<Food> _foods;
-        public IReadOnlyCollection<Food> Foods => _foods.AsReadOnly();
-        protected Menu()
-        {
-            _foods = new List<Food>();
-        }
-
+        private readonly List<Food> _foods = new List<Food>();
+        public IReadOnlyCollection<Food> Foods => _foods;
+           
         public Menu(int supplierId)
         {
             CreationTime = DateTime.Now;
