@@ -1,0 +1,5 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Fetch.OrderLunch.Backend/.vs/Fetch.OrderLunch.Backend/v16/Server/sqlite3/db.lock
