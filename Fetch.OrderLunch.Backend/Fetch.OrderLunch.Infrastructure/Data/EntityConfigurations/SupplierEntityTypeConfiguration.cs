@@ -29,7 +29,8 @@ namespace Fetch.OrderLunch.Infrastructure.Data.EntityConfigurations
 
             builder.Property(x => x.HotLine)
                    .HasMaxLength(200)
-                   .IsRequired();           
+                   .IsRequired();  
+                      
         }     
     }       
 }

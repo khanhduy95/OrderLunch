@@ -9,6 +9,6 @@ namespace Fetch.OrderLunch.WebApi.Application.Interfaces
     public interface IMenuService
     {
         Task<MenuViewModel> GetMenuById(int supplierId);
-        Task Update(MenuViewModel menuVm);
+        Task Update(ObjectID objectID);
     }
 }

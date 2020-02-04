@@ -54,12 +54,12 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
         public async Task Delete(ObjectID objectID)
         {
            var supplier=await _asyncSupplierRepository.GetByIdAsync(objectID.Id);
-            if (supplier != null)
+            if (supplier == null)
             {
-                await _asyncSupplierRepository.DeleteAsync(supplier);
-                await _asyncSupplierRepository.unitOfWork.SaveChangesAsync();
+                throw new ArgumentNullException("supplier is null");
             }
-            throw new ArgumentNullException("supplier is null");
+            await _asyncSupplierRepository.DeleteAsync(supplier);
+            await _asyncSupplierRepository.unitOfWork.SaveChangesAsync();
         }
 
         public async  Task<IEnumerable<SupplierViewModel>> GetAll()
@@ -102,6 +102,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             {
                 throw new ArgumentNullException(nameof(supplier));
             }
+            
             supplier.Name = supplierVm.Name;
             supplier.Address = supplierVm.Address;
             supplier.HotLine = supplierVm.HotLine;

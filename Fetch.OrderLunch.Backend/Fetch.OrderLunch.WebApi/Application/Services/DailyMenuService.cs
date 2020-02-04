@@ -14,23 +14,14 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
 {
     public class DailyMenuService : IDailyMenuService
     {
-        private readonly IRepository<DailyMenu> _repository;
-        private readonly IAsyncRepository<DailyMenu> _asyncDailyMenuRepository;
-        private readonly IAsyncRepository<FoodDailyMenu> _asyncFoodDailyMenuRepository;
         private readonly IDailyMenuRepository _dailyMenuRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public DailyMenuService(IRepository<DailyMenu> repository,
-                                IAsyncRepository<DailyMenu> asyncDailyMenuRepository,
-                                IAsyncRepository<FoodDailyMenu> asyncFoodDailyMenuRepository,
-                                IDailyMenuRepository dailyMenuRepository,
+        public DailyMenuService(IDailyMenuRepository dailyMenuRepository,
                                 IHttpContextAccessor httpContextAccessor)
         {
-            _repository = repository;
-            _asyncDailyMenuRepository = asyncDailyMenuRepository;
-            _asyncFoodDailyMenuRepository = asyncFoodDailyMenuRepository;
-            _dailyMenuRepository = dailyMenuRepository;
-            _httpContextAccessor = httpContextAccessor;
+            _dailyMenuRepository = dailyMenuRepository ?? throw new ArgumentNullException(nameof(dailyMenuRepository));
+            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
         public async Task AddFoodToDailyMenu(ObjectID objectID)
@@ -40,17 +31,11 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             {
                 throw new ArgumentNullException();
             }
-            var dailyMenu = _repository.ListAll()
-                                       .Where(x => x.CreatorUserId == userId)
-                                       .FirstOrDefault();
+            var dailyMenu =await _dailyMenuRepository.GetAsync(userId);
+            dailyMenu.AddFoodToDailyMenu(objectID.Id,dailyMenu.Id);
 
-            var foodDailyMenu = new FoodDailyMenu
-            {
-                FoodId = objectID.Id,
-                DailyMenuId = dailyMenu.Id
-            };
-            await _asyncFoodDailyMenuRepository.AddAsync(foodDailyMenu);
-            await _asyncFoodDailyMenuRepository.unitOfWork.SaveChangesAsync();
+            await _dailyMenuRepository.AddAsync(dailyMenu);
+            await _dailyMenuRepository.unitOfWork.SaveChangesAsync();
             
         }
 
@@ -67,36 +52,15 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                 Name = dailyMenuVm.Name,
                 CreatorUserId = userId,
             };
-            await _asyncDailyMenuRepository.AddAsync(dailyMenu);
-            await _asyncDailyMenuRepository.unitOfWork.SaveChangesAsync();
+            await _dailyMenuRepository.AddAsync(dailyMenu);
+            await _dailyMenuRepository.unitOfWork.SaveChangesAsync();
         }
 
         public async Task<DailyMenuViewModel> GetDailyMenuById()
         {
-            var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
-            if (userId==null) 
-            {
-                throw new ArgumentNullException();
-            }
-            var dailyMenu = await _dailyMenuRepository.GetAsync(userId);
-            var foodDailys = await _asyncFoodDailyMenuRepository.GetByIdAsync(dailyMenu.Id);
-            var model = new DailyMenuViewModel
-            {
-                Foods = dailyMenu.Foods
-                .Where(x => x.Id == foodDailys.Id)
-                .Select(x => new FoodViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    MenuId = x.MenuId,
-                    Price = x.Price,
-                    Description = x.Description
+           
 
-                })
-                .ToList()
-            };
-
-            return model;
+            return null;
 
         }
      

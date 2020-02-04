@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fetch.OrderLunch.Core.Interfaces
 {
-    public interface IDailyMenuRepository:IRepository<DailyMenu>,IAsyncRepository<DailyMenu>
+    public interface IDailyMenuRepository : IAsyncRepository<DailyMenu>
     {
         DailyMenu AddDailyMenu(DailyMenu dailyMenu);
 

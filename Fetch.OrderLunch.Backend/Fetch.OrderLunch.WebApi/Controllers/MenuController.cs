@@ -31,11 +31,11 @@ namespace Fetch.OrderLunch.WebApi.Controllers
 
         [HttpPut]
         [Route("update")]
-        public async Task<IActionResult> Update(MenuViewModel model)
+        public async Task<IActionResult> Update(ObjectID objectID)
         {
             if (ModelState.IsValid)
             {
-                await _menuService.Update(model);
+                await _menuService.Update(objectID);
                 return Ok();
             }
             return BadRequest();

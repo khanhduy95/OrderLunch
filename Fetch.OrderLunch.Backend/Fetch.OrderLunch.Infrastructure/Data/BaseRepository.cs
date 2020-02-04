@@ -62,7 +62,7 @@ namespace Fetch.OrderLunch.Infrastructure.Data
         
         public virtual async Task<TEntity> GetByIdAsync(int id)
         {
-            return await _dbContext.Set<TEntity>().FindAsync(id);
+            return await _dbContext.Set<TEntity>().FirstOrDefaultAsync(x=>x.Id==id);
         }
 
         public TEntity GetSingleBySpec(ISpecification<TEntity> spec)

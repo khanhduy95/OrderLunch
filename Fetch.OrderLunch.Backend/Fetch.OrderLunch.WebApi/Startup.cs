@@ -49,6 +49,7 @@ namespace Fetch.OrderLunch.WebApi
             services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<IDailyMenuService, DailyMenuService>();
             services.AddTransient<IMenuRepository, MenuRepository>();
+            services.AddTransient<IDailyMenuRepository, DailyMenuRepository>();
             //  services.AddTransient<IUserService, UserService>();
 
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();

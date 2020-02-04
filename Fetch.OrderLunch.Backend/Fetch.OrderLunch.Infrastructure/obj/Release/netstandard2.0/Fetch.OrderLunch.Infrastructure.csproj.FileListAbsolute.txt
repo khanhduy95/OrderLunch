@@ -1,0 +1,11 @@
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\bin\Release\netstandard2.0\Fetch.OrderLunch.Infrastructure.deps.json
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\bin\Release\netstandard2.0\Fetch.OrderLunch.Infrastructure.dll
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\bin\Release\netstandard2.0\Fetch.OrderLunch.Infrastructure.pdb
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\bin\Release\netstandard2.0\Fetch.OrderLunch.Core.dll
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\bin\Release\netstandard2.0\Fetch.OrderLunch.Core.pdb
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Release\netstandard2.0\Fetch.OrderLunch.Infrastructure.csprojAssemblyReference.cache
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Release\netstandard2.0\Fetch.OrderLunch.Infrastructure.AssemblyInfoInputs.cache
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Release\netstandard2.0\Fetch.OrderLunch.Infrastructure.AssemblyInfo.cs
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Release\netstandard2.0\Fetch.OrderLunch.Infrastructure.csproj.CopyComplete
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Release\netstandard2.0\Fetch.OrderLunch.Infrastructure.dll
+D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Release\netstandard2.0\Fetch.OrderLunch.Infrastructure.pdb

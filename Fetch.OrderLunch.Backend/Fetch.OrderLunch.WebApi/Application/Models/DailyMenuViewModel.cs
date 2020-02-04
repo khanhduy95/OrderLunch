@@ -8,6 +8,6 @@ namespace Fetch.OrderLunch.WebApi.Application.Models
     public class DailyMenuViewModel
     {
         public string Name { get; set; }
-        public List<FoodViewModel> Foods { get; set; }
+     //   public List<FoodViewModel> Foods { get; set; }
     }
 }

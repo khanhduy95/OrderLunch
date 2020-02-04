@@ -33,7 +33,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("get/Category{id}")]
+        [Route("get/category/{id}")]
         public async Task<IActionResult> GetAll(int id, [FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 0)
         {
             if (ModelState.IsValid)

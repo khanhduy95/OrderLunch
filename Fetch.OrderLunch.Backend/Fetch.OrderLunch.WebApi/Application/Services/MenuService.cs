@@ -45,14 +45,14 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
 
         }
 
-        public async Task Update(MenuViewModel menuVm)
+        public async Task Update(ObjectID objectID)
         {
-            var menu = await _menuRepository.FindAsync(menuVm.Id);
+            var menu = await _menuRepository.FindAsync(objectID.Id);
             if (menu == null)
             {
                 throw new ArgumentNullException(nameof(menu));
             }
-            menu.CreationTime = DateTime.Now;
+            menu.ExprireTime = DateTime.Now;
 
             _menuRepository.UpdateMenu(menu);
            await _menuRepository.unitOfWork.SaveChangesAsync();

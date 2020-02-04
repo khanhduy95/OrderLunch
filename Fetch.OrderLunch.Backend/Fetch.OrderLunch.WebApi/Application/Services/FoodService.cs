@@ -13,16 +13,18 @@ using System.Threading.Tasks;
 namespace Fetch.OrderLunch.WebApi.Application.Services
 {
     public class FoodService : IFoodService
-    {       
-      
+    {
+        private readonly IRepository<Food> _repository;
         private readonly IAsyncRepository<Food> _asyncFoodRepository;
         private readonly IAsyncRepository<Menu> _asyncMenuRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public FoodService(IAsyncRepository<Food> asyncFoodRepository,
+        public FoodService(IRepository<Food> repository,
+                           IAsyncRepository<Food> asyncFoodRepository,
                            IAsyncRepository<Menu> asyncMenuRepository,
                            IHttpContextAccessor httpContextAccessor)
         {
+            _repository = repository;
             _asyncFoodRepository = asyncFoodRepository;
             _asyncMenuRepository = asyncMenuRepository;
             _httpContextAccessor = httpContextAccessor;
@@ -30,11 +32,11 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
 
         public async Task<FoodViewModel> Add(FoodViewModel foodVm)
         {
-            var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
-            if (userId == null)
-            {
-                throw new ArgumentNullException();
-            }
+            //var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
+            //if (userId == null)
+            //{
+            //    throw new ArgumentNullException();
+            //}
             var Food = new Food
             {
                 Name = foodVm.Name,
@@ -44,7 +46,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                 MenuId = foodVm.MenuId,
                 CategoryId = foodVm.CategoryId,
                 CreationTime = DateTime.Now,
-                CreatorUserId=userId
+            //    CreatorUserId=userId
             };
 
             await _asyncFoodRepository.AddAsync(Food);
@@ -67,7 +69,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             var roots = await _asyncFoodRepository.ListAllAsync();
             var root = roots.FirstOrDefault();
             var menu= await _asyncMenuRepository.GetByIdAsync(root.MenuId);
-            if (menu.ExprireTime > DateTime.Now)
+            if (menu.ExprireTime >= DateTime.Now)
             {
                 var totalItems = roots.Count();
                 var itemsOnPage = roots.OrderBy(x => x.Name)
@@ -99,7 +101,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             var roots = await _asyncFoodRepository.ListAsync(filterSpecification);
             var root = roots.FirstOrDefault();
             var menu = await _asyncMenuRepository.GetByIdAsync(root.MenuId);
-            if (menu.ExprireTime > DateTime.Now)
+            if (menu.ExprireTime >= DateTime.Now)
             {
                 var totalItems = roots.Count();
                 var itemsOnPage = roots.OrderBy(x => x.Name)

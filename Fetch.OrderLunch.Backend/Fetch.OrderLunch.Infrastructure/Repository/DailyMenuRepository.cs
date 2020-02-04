@@ -24,10 +24,20 @@ namespace Fetch.OrderLunch.Infrastructure.Repository
 
         public async Task<DailyMenu> GetAsync(string userId)
         {
-            var dailyMenu = await _dbContext.DailyMenu
-                .Include(x => x.Foods)
+            var dailyMenu = await _dbContext.DailyMenu                
                 .Where(x => x.CreatorUserId == userId)
-                .SingleOrDefaultAsync();
+                .FirstOrDefaultAsync();
+           
+            if (dailyMenu != null)
+            {
+                await _dbContext.Entry(dailyMenu)
+                    .Collection(i => i.Foods)
+                    .LoadAsync();
+
+                await _dbContext.Entry(dailyMenu)
+                    .Reference(i => i.Foods)
+                    .LoadAsync();
+            }
 
             return dailyMenu;
                 

@@ -27,10 +27,6 @@ namespace Fetch.OrderLunch.Infrastructure.Data.EntityConfigurations
                    .HasForeignKey(x=>x.FoodId)
                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne<DailyMenu>()
-                  .WithMany()
-                  .HasForeignKey(x => x.DailyMenuId)
-                  .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
