@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fetch.OrderLunch.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderLunchContext))]
-    [Migration("20200203090443_AddListFoodToMenu")]
-    partial class AddListFoodToMenu
+    [Migration("20200205082906_Initial6")]
+    partial class Initial6
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -177,7 +177,8 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreationTime");
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("date");
 
                     b.Property<string>("CreatorUserId");
 
@@ -230,6 +231,8 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                     b.Property<int>("FoodId");
 
                     b.Property<int>("DailyMenuId");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.HasKey("FoodId", "DailyMenuId");
 
@@ -376,8 +379,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
 
                     b.Property<string>("CreatorUserId");
 
-                    b.Property<int?>("DailyMenuId");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(200);
@@ -392,8 +393,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
 
                     b.Property<int>("MenuId");
 
-                    b.Property<int?>("MenuId1");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200);
@@ -405,11 +404,7 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("DailyMenuId");
-
                     b.HasIndex("MenuId");
-
-                    b.HasIndex("MenuId1");
 
                     b.ToTable("Foods");
                 });
@@ -515,13 +510,13 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
 
             modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.FoodDailyMenu", b =>
                 {
-                    b.HasOne("Fetch.OrderLunch.Core.Entities.CompanyAggregate.DailyMenu")
-                        .WithMany()
+                    b.HasOne("Fetch.OrderLunch.Core.Entities.CompanyAggregate.DailyMenu", "DailyMenu")
+                        .WithMany("FoodDailyMenus")
                         .HasForeignKey("DailyMenuId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Food")
-                        .WithMany()
+                    b.HasOne("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Food", "Food")
+                        .WithMany("FoodDailyMenus")
                         .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -570,18 +565,10 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Fetch.OrderLunch.Core.Entities.CompanyAggregate.DailyMenu")
-                        .WithMany("Foods")
-                        .HasForeignKey("DailyMenuId");
-
                     b.HasOne("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Menu")
-                        .WithMany()
+                        .WithMany("Foods")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Menu")
-                        .WithMany("Foods")
-                        .HasForeignKey("MenuId1");
                 });
 
             modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Menu", b =>

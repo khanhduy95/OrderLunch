@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fetch.OrderLunch.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderLunchContext))]
-    [Migration("20200131044650_Inital")]
-    partial class Inital
+    [Migration("20200205071046_Initial1")]
+    partial class Initial1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -230,6 +230,8 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                     b.Property<int>("FoodId");
 
                     b.Property<int>("DailyMenuId");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.HasKey("FoodId", "DailyMenuId");
 
@@ -507,13 +509,13 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
 
             modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.FoodDailyMenu", b =>
                 {
-                    b.HasOne("Fetch.OrderLunch.Core.Entities.CompanyAggregate.DailyMenu")
-                        .WithMany()
+                    b.HasOne("Fetch.OrderLunch.Core.Entities.CompanyAggregate.DailyMenu", "DailyMenu")
+                        .WithMany("FoodDailyMenus")
                         .HasForeignKey("DailyMenuId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Food")
-                        .WithMany()
+                    b.HasOne("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Food", "Food")
+                        .WithMany("FoodDailyMenus")
                         .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -563,7 +565,7 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Menu")
-                        .WithMany()
+                        .WithMany("Foods")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

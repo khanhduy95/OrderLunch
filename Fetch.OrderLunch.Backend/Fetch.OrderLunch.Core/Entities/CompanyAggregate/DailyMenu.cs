@@ -11,19 +11,26 @@ namespace Fetch.OrderLunch.Core.Entities.CompanyAggregate
     {
         public string Name { get; set; }
 
-        private List<FoodDailyMenu> _foods=new List<FoodDailyMenu>();
-        public IEnumerable<FoodDailyMenu> Foods => _foods;
-       
-        public void AddFoodToDailyMenu(int foodId,int dailyMenuId)
-        {
-            var exist = _foods.Where(x => x.FoodId == foodId).FirstOrDefault();
-            if (exist != null) { }
-            else
+        private List<FoodDailyMenu> _foodDailies=new List<FoodDailyMenu>();
+        public ICollection<FoodDailyMenu> FoodDailyMenus =>_foodDailies;
 
-                exist.FoodId = foodId;
-                exist.DailyMenuId = dailyMenuId;    
-                _foods.Add(exist);
-            }
+
+        public void AddFoodToDailyMenu(int foodId, int dailyMenuId)
+        {
+            var exist = _foodDailies.Where(x => x.FoodId == foodId).FirstOrDefault();
+            if (exist == null)
+            {
+                FoodDailyMenu foodDailyMenu = new FoodDailyMenu { FoodId = foodId, DailyMenuId = dailyMenuId };
+                _foodDailies.Add(foodDailyMenu);
+            }         
+        }
+
+        public IEnumerable<FoodDailyMenu> GetFood()
+        {
+            var Foods = _foodDailies.Where(x => x.DailyMenuId == Id).ToList();
+            return Foods;
+
         }
     }
+}
 

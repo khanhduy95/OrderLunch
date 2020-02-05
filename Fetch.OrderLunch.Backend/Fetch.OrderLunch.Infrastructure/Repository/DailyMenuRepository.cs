@@ -16,31 +16,40 @@ namespace Fetch.OrderLunch.Infrastructure.Repository
         public DailyMenuRepository(OrderLunchContext dbContext) : base(dbContext)
         {
         }
-
+       
         public DailyMenu AddDailyMenu(DailyMenu dailyMenu)
         {
-            throw new NotImplementedException();
+            return _dbContext.DailyMenu
+                .Add(dailyMenu)
+                .Entity;
         }
 
         public async Task<DailyMenu> GetAsync(string userId)
         {
-            var dailyMenu = await _dbContext.DailyMenu                
-                .Where(x => x.CreatorUserId == userId)
+            var dailyMenu = await _dbContext.DailyMenu
+                .Where(x => x.CreatorUserId == userId )
                 .FirstOrDefaultAsync();
-           
+
+            if (dailyMenu == null)
+            {
+                dailyMenu = _dbContext.DailyMenu
+                    .Local
+                    .FirstOrDefault(x => x.CreatorUserId == userId);
+            }
             if (dailyMenu != null)
             {
                 await _dbContext.Entry(dailyMenu)
-                    .Collection(i => i.Foods)
+                    .Collection(i => i.FoodDailyMenus)
                     .LoadAsync();
 
-                await _dbContext.Entry(dailyMenu)
-                    .Reference(i => i.Foods)
-                    .LoadAsync();
+                await _dbContext.DailyMenu
+               .Include(x => x.FoodDailyMenus)
+               .Where(x => x.Id==dailyMenu.Id)
+               .FirstOrDefaultAsync();
             }
 
             return dailyMenu;
-                
+
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpGet]
+        [Route("get/{id}")]
         public async Task<IActionResult> GetBySupplierId(int id)
         {
             if (ModelState.IsValid)

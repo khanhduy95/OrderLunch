@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fetch.OrderLunch.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderLunchContext))]
-    [Migration("20200203105832_repairFoodTable")]
-    partial class repairFoodTable
+    [Migration("20200205075904_Initial5")]
+    partial class Initial5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -231,6 +231,8 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
 
                     b.Property<int>("DailyMenuId");
 
+                    b.Property<bool>("IsDeleted");
+
                     b.HasKey("FoodId", "DailyMenuId");
 
                     b.HasIndex("DailyMenuId");
@@ -376,8 +378,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
 
                     b.Property<string>("CreatorUserId");
 
-                    b.Property<int?>("DailyMenuId");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(200);
@@ -402,8 +402,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("DailyMenuId");
 
                     b.HasIndex("MenuId");
 
@@ -511,13 +509,13 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
 
             modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.FoodDailyMenu", b =>
                 {
-                    b.HasOne("Fetch.OrderLunch.Core.Entities.CompanyAggregate.DailyMenu")
-                        .WithMany()
+                    b.HasOne("Fetch.OrderLunch.Core.Entities.CompanyAggregate.DailyMenu", "DailyMenu")
+                        .WithMany("FoodDailyMenus")
                         .HasForeignKey("DailyMenuId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Food")
-                        .WithMany()
+                    b.HasOne("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Food", "Food")
+                        .WithMany("FoodDailyMenus")
                         .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -565,10 +563,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Fetch.OrderLunch.Core.Entities.CompanyAggregate.DailyMenu")
-                        .WithMany("Foods")
-                        .HasForeignKey("DailyMenuId");
 
                     b.HasOne("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Menu")
                         .WithMany("Foods")

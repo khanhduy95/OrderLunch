@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fetch.OrderLunch.Infrastructure.Migrations
 {
-    public partial class Inital : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -386,12 +386,15 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                 name: "FoodDailyMenu",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     FoodId = table.Column<int>(nullable: false),
                     DailyMenuId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FoodDailyMenu", x => new { x.FoodId, x.DailyMenuId });
+                    table.PrimaryKey("PK_FoodDailyMenu", x => x.Id);
                     table.ForeignKey(
                         name: "FK_FoodDailyMenu_DailyMenu_DailyMenuId",
                         column: x => x.DailyMenuId,
@@ -421,6 +424,11 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                 name: "IX_FoodDailyMenu_DailyMenuId",
                 table: "FoodDailyMenu",
                 column: "DailyMenuId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FoodDailyMenu_FoodId",
+                table: "FoodDailyMenu",
+                column: "FoodId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Foods_CategoryId",

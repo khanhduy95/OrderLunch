@@ -13,19 +13,25 @@ namespace Fetch.OrderLunch.Infrastructure.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<FoodDailyMenu> builder)
         {
+           
             builder.Ignore(x => x.Id);
             builder.Ignore(x => x.CreationTime);
             builder.Ignore(x => x.IsActive);
-            builder.Ignore(x => x.IsDeleted);
+           // builder.Ignore(x => x.IsDeleted);
             builder.Ignore(x => x.CreatorUserId);
             builder.Ignore(x => x.DomainEvents);
 
             builder.HasKey(x => new { x.FoodId, x.DailyMenuId });
+           // builder.Property(x => new { x.FoodId, x.DailyMenuId }).UseSqlServerIdentityColumn().ValueGeneratedOnAddOrUpdate();
 
-            builder.HasOne<Food>()
-                   .WithMany()      
-                   .HasForeignKey(x=>x.FoodId)
-                   .OnDelete(DeleteBehavior.Cascade);
+            //////////
+            builder.HasOne(x => x.Food)
+                .WithMany(x => x.FoodDailyMenus)
+                .HasForeignKey(x => x.FoodId);
+
+            builder.HasOne(x => x.DailyMenu)
+                .WithMany(x => x.FoodDailyMenus)
+                .HasForeignKey(x => x.DailyMenuId);
 
         }
     }

@@ -82,7 +82,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
                         (MVSJwtTokens.Issuer,
                          MVSJwtTokens.Audience,
                          claims,
-                         expires: DateTime.UtcNow.AddMinutes(30),
+                         expires: DateTime.UtcNow.AddDays(1),
                          signingCredentials: creds);
 
                     var results = new

@@ -51,7 +51,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _dailyMenu.GetDailyMenuById());
+                return Ok(await _dailyMenu.GetDailyMenu());
             }
             return NotFound();
         }

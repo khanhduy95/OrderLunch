@@ -46,6 +46,7 @@ namespace Fetch.OrderLunch.Infrastructure.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+           
             modelBuilder.ApplyConfiguration(new CompanyEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OfficeEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new SupplierEntityTypeConfiguration());
@@ -85,6 +86,7 @@ namespace Fetch.OrderLunch.Infrastructure.Data
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
         {
+
             UpdateSoftDeleteStatuses();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }

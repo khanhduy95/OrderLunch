@@ -36,7 +36,7 @@ namespace Fetch.OrderLunch.Infrastructure.Repository
             }
             if (order != null)
             {
-                await _dbContext.Entry(order)
+                await _dbContext.Entry(order)                   
                     .Collection(i => i.OrderItems)
                     .LoadAsync();
 

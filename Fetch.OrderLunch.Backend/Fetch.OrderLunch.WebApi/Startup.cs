@@ -150,6 +150,10 @@ namespace Fetch.OrderLunch.WebApi
             }
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
 
+            app.UseCors(builder =>
+                   builder.WithOrigins("http://localhost:3000")
+                   .WithMethods("GET", "POST", "DELETE"));
+
             app.UseHttpsRedirection();
 
             app.UseMvc();

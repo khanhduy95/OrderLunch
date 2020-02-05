@@ -4,14 +4,16 @@ using Fetch.OrderLunch.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fetch.OrderLunch.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderLunchContext))]
-    partial class OrderLunchContextModelSnapshot : ModelSnapshot
+    [Migration("20200205071227_Initial2")]
+    partial class Initial2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,8 +177,7 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreationTime");
 
                     b.Property<string>("CreatorUserId");
 
@@ -229,8 +230,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                     b.Property<int>("FoodId");
 
                     b.Property<int>("DailyMenuId");
-
-                    b.Property<bool>("IsDeleted");
 
                     b.HasKey("FoodId", "DailyMenuId");
 

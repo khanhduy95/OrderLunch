@@ -1,5 +1,6 @@
 ﻿
 using Fetch.OrderLunch.Core.Entities.CompanyAggregate;
+using Fetch.OrderLunch.Core.Entities.SupplierAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -14,6 +15,9 @@ namespace Fetch.OrderLunch.Infrastructure.Data.EntityConfigurations
         {
             builder.HasKey(x=>x.Id);
 
+            builder.Property(x => x.CreationTime)
+                .HasColumnType("date");
+
             builder.Ignore(x => x.DomainEvents);
 
             builder.Property<int>(x => x.Id)
@@ -22,7 +26,7 @@ namespace Fetch.OrderLunch.Infrastructure.Data.EntityConfigurations
             builder.Property(x => x.Name)
                 .HasMaxLength(200)
                 .IsRequired();
-         
+
         }
     }
 }
