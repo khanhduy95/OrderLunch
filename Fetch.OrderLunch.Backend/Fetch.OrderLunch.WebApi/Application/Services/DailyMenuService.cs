@@ -44,7 +44,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             
         }
 
-        public async Task Create(DailyMenuViewModel dailyMenuVm)
+        public async Task Create(CreateDailyMenuViewModel dailyMenuVm)
         {
             var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
             if (userId == null)
@@ -60,6 +60,27 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             };
             await _dailyMenuRepository.AddAsync(dailyMenu);
             await _dailyMenuRepository.unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task Delete(ObjectID objectID)
+        {
+            var category = await _dailyMenuRepository.GetByIdAsync(objectID.Id);
+            if (category == null)
+            {
+                throw new ArgumentNullException("Category is null");
+            }
+            await _dailyMenuRepository.DeleteAsync(category);
+        }
+
+        public async Task<IEnumerable<CreateDailyMenuViewModel>> GetAll()
+        {
+            var results = await _dailyMenuRepository.ListAllAsync();
+            var model = results.Select(x => new CreateDailyMenuViewModel
+                                {   
+                                    Id=x.Id,        
+                                    Name=x.Name
+                                }).ToList();
+            return model;
         }
 
         public async Task<DailyMenuViewModel> GetDailyMenu()
@@ -87,7 +108,10 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                 Foods.Add(food);
                 
             };
-            return new DailyMenuViewModel { Name = dailyMenu.Name, Foods = Foods };
+            return new DailyMenuViewModel {
+                Name = dailyMenu.Name,
+                Foods = Foods
+            };
         }
      
     }

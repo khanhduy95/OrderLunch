@@ -22,9 +22,31 @@ namespace Fetch.OrderLunch.WebApi.Controllers
             _dailyMenu = dailyMenu;
         }
 
+        [HttpGet]
+        [Route("get/{id}")]
+        public async Task<IActionResult> GetDailyMenu()
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _dailyMenu.GetDailyMenu());
+            }
+            return NotFound();
+        }
+
+        [HttpGet]
+        [Route("get")]
+        public async Task<IActionResult> GetAll()
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _dailyMenu.GetAll());
+            }
+            return NotFound();
+        }
+
         [HttpPost]
         [Route("create")]
-        public async Task<IActionResult> AddFoodtoDailyMenu(DailyMenuViewModel model)
+        public async Task<IActionResult> Create(CreateDailyMenuViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -45,15 +67,17 @@ namespace Fetch.OrderLunch.WebApi.Controllers
             }
             return BadRequest();
         }
-        [HttpGet]
-        [Route("get")]
-        public async Task<IActionResult> GetDailyMenu()
+
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<IActionResult> Delete(ObjectID objectID)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _dailyMenu.GetDailyMenu());
+                await _dailyMenu.Delete(objectID);
+                return Ok();
             }
-            return NotFound();
+            return BadRequest();
         }
     }
 }

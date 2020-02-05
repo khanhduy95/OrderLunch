@@ -67,7 +67,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
             return BadRequest();
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("update")]
         [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fetch.OrderLunch.Infrastructure.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Initialize : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,16 +12,17 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                 name: "Baskets",
                 columns: table => new
                 {
-                    BuyerId = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
+                    BuyerId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Baskets", x => x.BuyerId);
+                    table.PrimaryKey("PK_Baskets", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -97,7 +98,7 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "date", nullable: false),
                     CreatorUserId = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
@@ -161,20 +162,23 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                     CreatorUserId = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
+                    FoodId = table.Column<int>(nullable: false),
+                    FoodName = table.Column<string>(nullable: true),
                     UnitPrice = table.Column<decimal>(nullable: false),
+                    OldUnitPrice = table.Column<decimal>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    CatalogItemId = table.Column<int>(nullable: false),
-                    BasketBuyerId = table.Column<string>(nullable: false)
+                    PictureUrl = table.Column<string>(nullable: true),
+                    BasketId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_basketItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_basketItems_Baskets_BasketBuyerId",
-                        column: x => x.BasketBuyerId,
+                        name: "FK_basketItems_Baskets_BasketId",
+                        column: x => x.BasketId,
                         principalTable: "Baskets",
-                        principalColumn: "BuyerId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -386,15 +390,13 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                 name: "FoodDailyMenu",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    IsDeleted = table.Column<bool>(nullable: false),
                     FoodId = table.Column<int>(nullable: false),
-                    DailyMenuId = table.Column<int>(nullable: false)
+                    DailyMenuId = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FoodDailyMenu", x => x.Id);
+                    table.PrimaryKey("PK_FoodDailyMenu", x => new { x.FoodId, x.DailyMenuId });
                     table.ForeignKey(
                         name: "FK_FoodDailyMenu_DailyMenu_DailyMenuId",
                         column: x => x.DailyMenuId,
@@ -410,9 +412,9 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_basketItems_BasketBuyerId",
+                name: "IX_basketItems_BasketId",
                 table: "basketItems",
-                column: "BasketBuyerId");
+                column: "BasketId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Buyers_IdentityGuid",
@@ -424,11 +426,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                 name: "IX_FoodDailyMenu_DailyMenuId",
                 table: "FoodDailyMenu",
                 column: "DailyMenuId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FoodDailyMenu_FoodId",
-                table: "FoodDailyMenu",
-                column: "FoodId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Foods_CategoryId",

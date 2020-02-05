@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fetch.OrderLunch.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderLunchContext))]
-    [Migration("20200205071046_Initial1")]
-    partial class Initial1
+    [Migration("20200205175220_Initialize")]
+    partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,20 +23,22 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
 
             modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.BasketAggregate.Basket", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<string>("BuyerId")
-                        .ValueGeneratedOnAdd();
+                        .IsRequired();
 
                     b.Property<DateTime>("CreationTime");
 
                     b.Property<string>("CreatorUserId");
 
-                    b.Property<int>("Id");
-
                     b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
 
-                    b.HasKey("BuyerId");
+                    b.HasKey("Id");
 
                     b.ToTable("Baskets");
                 });
@@ -47,18 +49,23 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BasketBuyerId")
-                        .IsRequired();
-
-                    b.Property<int>("CatalogItemId");
+                    b.Property<int?>("BasketId");
 
                     b.Property<DateTime>("CreationTime");
 
                     b.Property<string>("CreatorUserId");
 
+                    b.Property<int>("FoodId");
+
+                    b.Property<string>("FoodName");
+
                     b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<decimal>("OldUnitPrice");
+
+                    b.Property<string>("PictureUrl");
 
                     b.Property<int>("Quantity");
 
@@ -66,7 +73,7 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BasketBuyerId");
+                    b.HasIndex("BasketId");
 
                     b.ToTable("basketItems");
                 });
@@ -177,7 +184,8 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreationTime");
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("date");
 
                     b.Property<string>("CreatorUserId");
 
@@ -483,8 +491,7 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                 {
                     b.HasOne("Fetch.OrderLunch.Core.Entities.BasketAggregate.Basket")
                         .WithMany("Items")
-                        .HasForeignKey("BasketBuyerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("BasketId");
                 });
 
             modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.BuyerAggregate.PaymentMethod", b =>

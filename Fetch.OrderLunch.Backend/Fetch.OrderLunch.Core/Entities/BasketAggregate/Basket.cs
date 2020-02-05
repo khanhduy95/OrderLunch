@@ -1,4 +1,5 @@
-﻿using Fetch.OrderLunch.Core.Interfaces;
+﻿using Fetch.OrderLunch.Core.Exceptions;
+using Fetch.OrderLunch.Core.Interfaces;
 using Fetch.OrderLunch.Core.SeedWork;
 using System;
 using System.Collections.Generic;
@@ -13,20 +14,51 @@ namespace Fetch.OrderLunch.Core.Entities.BasketAggregate
         private readonly List<BasketItem> _items = new List<BasketItem>();
         public IReadOnlyCollection<BasketItem> Items => _items.AsReadOnly();
 
-        public void AddItem(int catalogItemId, decimal unitPrice, int quantity = 1)
+        public void AddItemToBasket(
+              int foodId, string foodName, decimal unitPrice, decimal oldUnitPrice,
+             string pictureUrl, int quantity = 1)
         {
-            if (!Items.Any(i => i.CatalogItemId == catalogItemId))
+            var itemExist = GetById(foodId);
+
+            if (itemExist != null)
             {
-                _items.Add(new BasketItem()
-                {
-                    CatalogItemId = catalogItemId,
-                    Quantity = quantity,
-                    UnitPrice = unitPrice
-                });
-                return;
+                itemExist.AddUnits(quantity);
+                itemExist.UnitPrice = unitPrice * itemExist.Quantity;
             }
-            var existingItem = Items.FirstOrDefault(i => i.CatalogItemId == catalogItemId);
-            existingItem.Quantity += quantity;
+            else
+            {
+                _items.Add(new BasketItem(foodId,
+                                          foodName,
+                                          unitPrice,
+                                          oldUnitPrice,
+                                          quantity,
+                                          pictureUrl));
+            }
+        }
+        public void DeleteItemToBasket(int id)
+        {
+            var itemExist = GetById(id);
+            if (itemExist == null)
+            {
+                throw new BasketDomainException("Product id not found");
+            }
+            _items.Remove(itemExist);
+        }
+        public void UpdateBasket(int productId, int quantity)
+        {
+            var itemExist = GetById(productId);
+            if (itemExist == null)
+            {
+                throw new BasketDomainException("Product id not found");
+            }
+
+            itemExist.UnitPrice = (itemExist.UnitPrice / itemExist.Quantity) * quantity;
+            itemExist.Quantity = quantity;
+        }
+        private BasketItem GetById(int id)
+        {
+            var basketItem = _items.Where(x => x.FoodId == id).FirstOrDefault();
+            return basketItem;
         }
     }
 }

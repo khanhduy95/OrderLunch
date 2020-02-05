@@ -2,10 +2,7 @@
 using Fetch.OrderLunch.WebApi.Application.Models;
 using Fetch.OrderLunch.Core.Entities.SupplierAggregate;
 using Fetch.OrderLunch.Core.Interfaces;
-using Fetch.OrderLunch.WebApi.Application.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +16,11 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
         private readonly IAsyncRepository<Category> _asyncRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CategoryService(IAsyncRepository<Category> asyncRepository, IHttpContextAccessor httpContextAccessor)
+        public CategoryService(IAsyncRepository<Category> asyncRepository,
+                               IHttpContextAccessor httpContextAccessor)
         {
-            _asyncRepository = asyncRepository;
-            _httpContextAccessor = httpContextAccessor;
+            _asyncRepository = asyncRepository ?? throw new ArgumentNullException(nameof(asyncRepository));
+            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
         public async Task Add(CategoryViewModel categoryVm)
@@ -41,7 +39,6 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
 
             };
             await _asyncRepository.AddAsync(category);
-         //   await _asyncRepository.unitOfWork.SaveChangesAsync();       
         }
 
         public async Task Delete(ObjectID objectID)

@@ -11,16 +11,14 @@ namespace Fetch.OrderLunch.Infrastructure.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Basket> builder)
         {
-            builder.HasKey(x=>x.BuyerId);
+            builder.HasKey(x=>x.Id);
 
             builder.Ignore(x => x.DomainEvents);
 
             builder.Property(x => x.BuyerId)
                 .IsRequired();
 
-            builder.HasMany(x => x.Items)
-               .WithOne()
-               .IsRequired();
+           ////
         }
     }
 }
