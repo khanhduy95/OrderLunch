@@ -12,7 +12,7 @@ namespace Fetch.OrderLunch.Core.Entities.BasketAggregate
     {
         public string BuyerId { get; set; }
         private readonly List<BasketItem> _items = new List<BasketItem>();
-        public IReadOnlyCollection<BasketItem> Items => _items.AsReadOnly();
+        public IReadOnlyCollection<BasketItem> Items => _items;
 
         public void AddItemToBasket(
               int foodId, string foodName, decimal unitPrice, decimal oldUnitPrice,
@@ -44,9 +44,9 @@ namespace Fetch.OrderLunch.Core.Entities.BasketAggregate
             }
             _items.Remove(itemExist);
         }
-        public void UpdateBasket(int productId, int quantity)
+        public void UpdateBasket(int foodId, int quantity)
         {
-            var itemExist = GetById(productId);
+            var itemExist = GetById(foodId);
             if (itemExist == null)
             {
                 throw new BasketDomainException("Product id not found");
@@ -57,7 +57,7 @@ namespace Fetch.OrderLunch.Core.Entities.BasketAggregate
         }
         private BasketItem GetById(int id)
         {
-            var basketItem = _items.Where(x => x.FoodId == id).FirstOrDefault();
+            var basketItem = _items.Where(x => x.Id == id).FirstOrDefault();
             return basketItem;
         }
     }

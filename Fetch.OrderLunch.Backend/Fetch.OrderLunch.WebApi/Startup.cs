@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using Fetch.OrderLunch.Core.Interfaces;
 using Fetch.OrderLunch.Infrastructure.Data;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,15 +43,20 @@ namespace Fetch.OrderLunch.WebApi
 
             services.AddTransient(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
             services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>) );
-           
+            services.AddTransient<IDailyMenuRepository, DailyMenuRepository>();
+            services.AddTransient<IMenuRepository, MenuRepository>();
+            services.AddTransient<IBasketRepository, BasketRepository>();
+
+
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IFoodService,FoodService>();
             services.AddTransient<ISupplierService, SupplierService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<IDailyMenuService, DailyMenuService>();
-            services.AddTransient<IMenuRepository, MenuRepository>();
-            services.AddTransient<IDailyMenuRepository, DailyMenuRepository>();
+            services.AddTransient<IBasketService, BasketService>();
+
+           
             //  services.AddTransient<IUserService, UserService>();
 
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -99,8 +106,19 @@ namespace Fetch.OrderLunch.WebApi
             //        ValidateAudience = false
             //    };
             //});
-
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("AllowMyOrigin",
+            //        builder =>
+            //        {
+            //            builder.WithOrigins("http://localhost:3000")
+            //            .AllowAnyMethod()
+            //            .AllowAnyHeader()
+            //            .AllowCredentials();
+            //        });
+            //});
             //Configure CORS for React UI
+          
             services.AddCors(
                 options => options.AddPolicy(
                     _defaultCorsPolicyName,
@@ -116,6 +134,11 @@ namespace Fetch.OrderLunch.WebApi
                         .AllowCredentials()
                 )
             );
+
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory(_defaultCorsPolicyName));
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -150,9 +173,10 @@ namespace Fetch.OrderLunch.WebApi
             }
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
 
-            app.UseCors(builder =>
-                   builder.WithOrigins("http://localhost:3000")
-                   .WithMethods("GET", "POST", "DELETE"));
+            //app.UseCors(builder =>
+            //       builder.WithOrigins("http://localhost:3000")
+            //       .WithMethods("GET","POST","DELETE"));
+
 
             app.UseHttpsRedirection();
 

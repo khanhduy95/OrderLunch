@@ -12,19 +12,33 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
 {
     public class BasketService : IBasketService
     {
-        private readonly IAsyncRepository<Basket> _asyncRepository;
+        private readonly IBasketRepository _basketRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BasketService(IAsyncRepository<Basket> asyncRepository,
+        public BasketService(IBasketRepository basketRepository,
                              IHttpContextAccessor httpContextAccessor)
         {
-            _asyncRepository = asyncRepository ?? throw new ArgumentNullException(nameof(asyncRepository));
+            _basketRepository = basketRepository ?? throw new ArgumentNullException(nameof(basketRepository));
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
-        public Task AddItemToBasket(int basketId, int catalogItemId, decimal price, int quantity)
+        public async Task AddItemToBasket(BasketItemViewModel basketItem)
         {
-            throw new NotImplementedException();
+            var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
+            if (userId == null)
+            {
+                throw new ArgumentNullException("userId invalied");
+            }
+            var basket = await _basketRepository.GetAsync(userId);
+            basket.AddItemToBasket(
+                basketItem.FoodId,
+                basketItem.FoodName,
+                basketItem.UnitPrice,
+                basketItem.OldUnitPrice,
+                basketItem.PictureUrl,
+                basketItem.Quantity);
+
+           await _basketRepository.unitOfWork.SaveChangesAsync();
         }
 
         public async Task CreateBasket()
@@ -34,28 +48,75 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             {
                 throw new ArgumentNullException("userId invalied");
             }
-            var basket = new Basket { CreatorUserId = userId };
-            await _asyncRepository.AddAsync(basket);
+            var result = await _basketRepository.GetAsync(userId);
+            if (result == null)
+            {
+                var basket = new Basket { CreatorUserId = userId, BuyerId = userId };
+                await _basketRepository.AddAsync(basket);
+            }
         }
 
         public async Task DeleteBasketAsync(int basketId)
         {
-            var basket = await _asyncRepository.GetByIdAsync(basketId);
+            var basket = await _basketRepository.GetByIdAsync(basketId);
             if (basket == null)
             {
                 throw new ArgumentNullException("Basket is null");
             }
-            await _asyncRepository.DeleteAsync(basket);
+            await _basketRepository.DeleteAsync(basket);
         }
 
-        public Task<IEnumerable<BasketViewModel>> Getbasket(string buyerId)
+        public async Task<bool> DeleteItemInBasket(int id)
         {
-            throw new NotImplementedException();
+            var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
+            if (userId == null)
+            {
+                throw new ArgumentNullException("userId invalied");
+            }
+            var basket = await _basketRepository.GetAsync(userId);
+            basket.DeleteItemToBasket(id);
+            await _basketRepository.unitOfWork.SaveChangesAsync();
+            
+            return true;
         }
 
-        public Task SetQuantities(int basketId, Dictionary<string, int> quantities)
+        public async Task<BasketViewModel> Getbasket()
         {
-            throw new NotImplementedException();
+            var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
+            if (userId == null)
+            {
+                throw new ArgumentNullException("userId invalied");
+            }
+            var basket = await _basketRepository.GetAsync(userId);
+            var basketModel = new BasketViewModel
+            {
+                buyerId = basket.BuyerId,
+                BasketItems = basket.Items
+                    .Select(x => new BasketItemViewModel
+                    {
+                        FoodId = x.FoodId,
+                        FoodName = x.FoodName,
+                        UnitPrice = x.UnitPrice,
+                        OldUnitPrice = x.OldUnitPrice,
+                        PictureUrl = x.PictureUrl,
+                        Quantity=x.Quantity
+                    })
+                    .ToList()
+            };
+            return basketModel;
+        }
+
+        public async Task UpdateBasket(BasketItemViewModel basketItem)
+        {
+            var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
+            if (userId == null)
+            {
+                throw new ArgumentNullException("userId invalied");
+            }
+            var basket = await _basketRepository.GetAsync(userId);
+
+            basket.UpdateBasket(basketItem.FoodId, basketItem.Quantity);
+            await _basketRepository.unitOfWork.SaveChangesAsync();
         }
     }
 }

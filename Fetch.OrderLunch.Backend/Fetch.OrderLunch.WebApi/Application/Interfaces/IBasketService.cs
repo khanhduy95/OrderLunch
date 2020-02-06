@@ -9,9 +9,10 @@ namespace Fetch.OrderLunch.WebApi.Application.Interfaces
     public interface IBasketService
     {
         Task CreateBasket();
-        Task AddItemToBasket(int basketId, int catalogItemId, decimal price, int quantity);
-        Task SetQuantities(int basketId, Dictionary<string, int> quantities);
+        Task AddItemToBasket(BasketItemViewModel basketItem);
+        Task UpdateBasket(BasketItemViewModel basketItem);
         Task DeleteBasketAsync(int basketId);
-        Task<IEnumerable<BasketViewModel>> Getbasket(string buyerId);
+        Task<BasketViewModel> Getbasket();
+        Task<bool> DeleteItemInBasket(int id);
     }
 }

@@ -5,12 +5,14 @@ using System.Net;
 using System.Threading.Tasks;
 using Fetch.OrderLunch.WebApi.Application.Interfaces;
 using Fetch.OrderLunch.WebApi.Application.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fetch.OrderLunch.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("localhost")]
     public class FoodController : ControllerBase
     {
         private readonly IFoodService _foodService;
@@ -60,11 +62,19 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Create([FromForm]FoodViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                return Ok(await _foodService.Add(model));
+                await _foodService.Add(model);
+                return Ok();
+                
+               
             }
-            return BadRequest();
+            catch (Exception e)
+            {
+
+                return BadRequest(e);
+            }
+           
         }
 
         [HttpPut]

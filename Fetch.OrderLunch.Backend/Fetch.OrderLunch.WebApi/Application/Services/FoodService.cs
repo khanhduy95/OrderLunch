@@ -69,8 +69,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             var roots = await _asyncFoodRepository.ListAllAsync();
             var root = roots.FirstOrDefault();
             var menu= await _asyncMenuRepository.GetByIdAsync(root.MenuId);
-            if (menu.ExprireTime >= DateTime.Now)
-            {
+            
                 var totalItems = roots.Count();
                 var itemsOnPage = roots.OrderBy(x => x.Name)
                                       .Select(x => new FoodViewModel
@@ -91,8 +90,8 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                     pageIndex, pageSize, totalItems, itemsOnPage);
 
                 return model;
-            }
-            return null;
+            
+            
         }
        
         public async Task<PaginatedItemsViewModel<FoodViewModel>> GetFoodByCategory(int id, int pageSize, int pageIndex)

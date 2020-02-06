@@ -1,25 +1,18 @@
-﻿
-using Fetch.OrderLunch.Core.Entities.OrderAggregate;
+﻿using Fetch.OrderLunch.Core.Entities.OrderAggregate;
 using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ordering.Domain.Events
+namespace Fetch.OrderLunch.Core.Events
 {
-    public class OrderStartedDomainEvent : INotification
+    public class OrderStartedDomainEvent
+       : INotification
     {
         public Order Order { get; private set; }
-        public string UserId { get; }
-        public string UserName { get; }
-        public int MethodId { get;  }
-
-        public OrderStartedDomainEvent(Order order, string userId, string userName,int methodId)
+        public OrderStartedDomainEvent(Order order)
         {
             Order = order;
-            UserId = userId;
-            UserName = userName;
-            MethodId = methodId;
         }
     }
 }

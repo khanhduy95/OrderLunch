@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fetch.OrderLunch.Core.Interfaces
 {
-    public  interface IBasketRepository : IRepository<Basket>
+    public  interface IBasketRepository : IAsyncRepository<Basket>
     {
         Task<Basket> GetAsync(string userId);
     }

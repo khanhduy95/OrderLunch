@@ -17,7 +17,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Models
     }
         public class BasketItemViewModel
     {
-        public int Id { get; set; }       
+        public int FoodId { get; set; }       
         public string FoodName { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal OldUnitPrice { get; set; }
