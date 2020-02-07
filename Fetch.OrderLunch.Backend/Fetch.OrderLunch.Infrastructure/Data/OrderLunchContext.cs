@@ -8,7 +8,10 @@ using Fetch.OrderLunch.Core.Entities.SupplierAggregate;
 using Fetch.OrderLunch.Core.Interfaces;
 using Fetch.OrderLunch.Core.SeedWork;
 using Fetch.OrderLunch.Infrastructure.Data.EntityConfigurations;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Ordering.Infrastructure;
 using Ordering.Infrastructure.Data.EntityConfigurations;
 using System;
 using System.Collections.Generic;
@@ -29,9 +32,7 @@ namespace Fetch.OrderLunch.Infrastructure.Data
         public DbSet<Food> Foods { get; set; }
         public DbSet<Menu> Menu { get; set; }
         public DbSet<DailyMenu> DailyMenu { get; set; }
-        public DbSet<Buyer> Buyers { get; set; }
-        public DbSet<Method> Methods { get; set; }
-        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<Buyer> Buyers { get; set; }       
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<BasketItem> basketItems { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -44,6 +45,12 @@ namespace Fetch.OrderLunch.Infrastructure.Data
         public OrderLunchContext(DbContextOptions<OrderLunchContext> options) : base(options)
         {
         }
+        private readonly IMediator _mediator;
+        private IDbContextTransaction _currentTransaction;
+
+        public IDbContextTransaction GetCurrentTransaction => _currentTransaction;
+
+        public bool HasActiveTransaction => _currentTransaction != null;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
            
@@ -56,12 +63,10 @@ namespace Fetch.OrderLunch.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new DailyMenuEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new BasketEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new BasketItemEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new PaymentMethodEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OrderEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OrderItemEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OrderStatusEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new BuyerEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new MethodEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ClientRequestEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new FoodDailyMenuEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OffcieSupplierEntityTypeConfiguration());
@@ -86,16 +91,59 @@ namespace Fetch.OrderLunch.Infrastructure.Data
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
         {
-
             UpdateSoftDeleteStatuses();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
-        public Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
+        public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            await _mediator.DispatchDomainEventsAsync(this);
+
+            var result = await base.SaveChangesAsync();
+
+            return true;
         }
 
+        public async Task CommitTransactionAsync(IDbContextTransaction transaction)
+        {
+            if (transaction == null) throw new ArgumentNullException(nameof(transaction));
+            if (transaction != _currentTransaction) throw new InvalidOperationException($"Transaction {transaction.TransactionId} is not current");
+
+            try
+            {
+                await SaveChangesAsync();
+                transaction.Commit();
+            }
+            catch
+            {
+                RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                if (_currentTransaction != null)
+                {
+                    _currentTransaction.Dispose();
+                    _currentTransaction = null;
+                }
+            }
+        }
+
+        public void RollbackTransaction()
+        {
+            try
+            {
+                _currentTransaction?.Rollback();
+            }
+            finally
+            {
+                if (_currentTransaction != null)
+                {
+                    _currentTransaction.Dispose();
+                    _currentTransaction = null;
+                }
+            }
+        }
         private void UpdateSoftDeleteStatuses()
         {
             foreach (var entry in ChangeTracker.Entries())

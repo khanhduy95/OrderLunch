@@ -31,25 +31,8 @@ namespace Fetch.OrderLunch.Infrastructure.Repository
             }
         }
 
-        public async Task<Buyer> FindAsync(string buyerIdentityGuid)
-        {
-            var buyer = await _dbContext.Buyers
-                .Include(x => x.PaymentMethods)
-                .Where(x => x.IdentityGuid == buyerIdentityGuid)
-                .SingleOrDefaultAsync();
-
-            return buyer;
-        }
-
-        public async Task<Buyer> FindByIdAsync(string id)
-        {
-            var buyer = await _dbContext.Buyers
-                .Include(x => x.PaymentMethods)
-                .Where(x => x.Id == int.Parse(id))
-                .SingleOrDefaultAsync();
-
-            return buyer;
-        }
+       
+       
 
         public Buyer UpdateBuyer(Buyer buyer)
         {

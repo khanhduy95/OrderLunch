@@ -26,10 +26,7 @@ namespace Ordering.Infrastructure.Data.EntityConfigurations
 
             builder.Property(x => x.Name);
 
-            builder.HasMany(x => x.PaymentMethods)
-                .WithOne()
-                .HasForeignKey("BuyerId")
-                .OnDelete(DeleteBehavior.Cascade);
+           
         }
 
        

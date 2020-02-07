@@ -31,11 +31,7 @@ namespace Ordering.Infrastructure.Data.EntityConfigurations
 
             builder.Property<string>("Description").IsRequired(false);
 
-            builder
-                .HasOne<PaymentMethod>()
-                .WithMany()
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+           
 
             builder.HasOne<Buyer>()
                .WithMany()

@@ -25,11 +25,13 @@ namespace Fetch.OrderLunch.WebApi.Application.Commands
         public async Task<bool> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
             var order = new Order(request.BuyerId);
+
             foreach(var item in request.OrderItems)
             {
                 order.AddOrderItem(item.ProductId, item.ProductName, item.UnitPrice, item.PictureUrl, item.Units);
             }
             _orderRepository.AddOrder(order);
+
             return await _orderRepository.unitOfWork.SaveEntitiesAsync();
         }
     }

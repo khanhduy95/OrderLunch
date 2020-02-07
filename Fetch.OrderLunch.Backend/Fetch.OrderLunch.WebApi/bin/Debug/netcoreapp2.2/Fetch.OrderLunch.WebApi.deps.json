@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v2.2": {
       "Fetch.OrderLunch.WebApi/1.0.0": {
         "dependencies": {
+          "Drapper": "1.2.0",
           "Fetch.OrderLunch.Core": "1.0.0",
           "Fetch.OrderLunch.Infrastructure": "1.0.0",
           "Microsoft.AspNetCore.App": "2.2.0",
@@ -38,6 +39,64 @@
         },
         "compile": {
           "Fetch.OrderLunch.WebApi.dll": {}
+        }
+      },
+      "Dapper/1.50.2": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Collections.Concurrent": "4.3.0",
+          "System.Collections.NonGeneric": "4.3.0",
+          "System.Data.SqlClient": "4.6.1",
+          "System.Dynamic.Runtime": "4.3.0",
+          "System.Linq": "4.3.0",
+          "System.Reflection": "4.3.0",
+          "System.Reflection.Emit": "4.3.0",
+          "System.Reflection.Emit.Lightweight": "4.3.0",
+          "System.Reflection.Extensions": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Runtime.InteropServices": "4.3.0",
+          "System.Text.RegularExpressions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Xml.XDocument": "4.3.0",
+          "System.Xml.XmlDocument": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Dapper.dll": {
+            "assemblyVersion": "1.50.2.0",
+            "fileVersion": "1.50.2.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/Dapper.dll": {}
+        }
+      },
+      "Drapper/1.2.0": {
+        "dependencies": {
+          "Dapper": "1.50.2",
+          "Drapper.Validation": "1.1.0",
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "lib/net461/Drapper.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        },
+        "compile": {
+          "lib/net461/Drapper.dll": {}
+        }
+      },
+      "Drapper.Validation/1.1.0": {
+        "runtime": {
+          "lib/net461/Drapper.Validation.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        },
+        "compile": {
+          "lib/net461/Drapper.Validation.dll": {}
         }
       },
       "MediatR/8.0.0": {
@@ -3723,6 +3782,27 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Dapper/1.50.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6VcCiiOxVhgMwgMCuQuaff8I5IyDamrzeOjuUH1iMExh8R5TJqwkVCpwdVJGQdwSCqWsQA/PerrrK7T6mONthQ==",
+      "path": "dapper/1.50.2",
+      "hashPath": "dapper.1.50.2.nupkg.sha512"
+    },
+    "Drapper/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CmOsjMjsq5s994Vo0dQp+BIqo4rvMKgXI1Dn/EusBRl+1dapvj00ZG1JQ5CvtFIHuJFrCMw4dxtyrg5WGeiK/w==",
+      "path": "drapper/1.2.0",
+      "hashPath": "drapper.1.2.0.nupkg.sha512"
+    },
+    "Drapper.Validation/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LfXBsNHBwnPwIjL/N9KdnyFEbn8x1mJ5zl6CBZ+3K5liPxd8R9EOhrQEh/To6nQDbEor3ybs9yb8WYGdQz0CAw==",
+      "path": "drapper.validation/1.1.0",
+      "hashPath": "drapper.validation.1.1.0.nupkg.sha512"
     },
     "MediatR/8.0.0": {
       "type": "package",

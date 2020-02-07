@@ -2,6 +2,58 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.2": {
+      "Dapper/1.50.2": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.11",
+          "System.Collections.Concurrent": "4.0.12",
+          "System.Collections.NonGeneric": "4.0.1",
+          "System.Data.SqlClient": "4.1.0",
+          "System.Dynamic.Runtime": "4.0.11",
+          "System.Linq": "4.1.0",
+          "System.Reflection": "4.1.0",
+          "System.Reflection.Emit": "4.0.1",
+          "System.Reflection.Emit.Lightweight": "4.0.1",
+          "System.Reflection.Extensions": "4.0.1",
+          "System.Reflection.TypeExtensions": "4.1.0",
+          "System.Runtime": "4.1.0",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Runtime.InteropServices": "4.1.0",
+          "System.Text.RegularExpressions": "4.1.0",
+          "System.Threading": "4.0.11",
+          "System.Xml.XDocument": "4.0.11",
+          "System.Xml.XmlDocument": "4.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Dapper.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Dapper.dll": {}
+        }
+      },
+      "Drapper/1.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Dapper": "1.50.2",
+          "Drapper.Validation": "1.1.0",
+          "Newtonsoft.Json": "10.0.1"
+        },
+        "compile": {
+          "lib/net461/Drapper.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Drapper.dll": {}
+        }
+      },
+      "Drapper.Validation/1.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/net461/Drapper.Validation.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Drapper.Validation.dll": {}
+        }
+      },
       "MediatR/8.0.0": {
         "type": "package",
         "compile": {
@@ -3260,7 +3312,7 @@
           "System.Threading": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.Collections.NonGeneric.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Collections.NonGeneric.dll": {}
@@ -3990,7 +4042,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.0/_._": {}
+          "ref/netstandard1.0/System.Reflection.Emit.Lightweight.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Reflection.Emit.Lightweight.dll": {}
@@ -4820,6 +4872,54 @@
     }
   },
   "libraries": {
+    "Dapper/1.50.2": {
+      "sha512": "6VcCiiOxVhgMwgMCuQuaff8I5IyDamrzeOjuUH1iMExh8R5TJqwkVCpwdVJGQdwSCqWsQA/PerrrK7T6mONthQ==",
+      "type": "package",
+      "path": "dapper/1.50.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "dapper.1.50.2.nupkg.sha512",
+        "dapper.nuspec",
+        "lib/net40/Dapper.dll",
+        "lib/net40/Dapper.xml",
+        "lib/net45/Dapper.dll",
+        "lib/net45/Dapper.xml",
+        "lib/net451/Dapper.dll",
+        "lib/net451/Dapper.xml",
+        "lib/netstandard1.3/Dapper.dll",
+        "lib/netstandard1.3/Dapper.xml"
+      ]
+    },
+    "Drapper/1.2.0": {
+      "sha512": "CmOsjMjsq5s994Vo0dQp+BIqo4rvMKgXI1Dn/EusBRl+1dapvj00ZG1JQ5CvtFIHuJFrCMw4dxtyrg5WGeiK/w==",
+      "type": "package",
+      "path": "drapper/1.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/Drapper.Settings.json",
+        "drapper.1.2.0.nupkg.sha512",
+        "drapper.nuspec",
+        "lib/net452/Drapper.dll",
+        "lib/net46/Drapper.dll",
+        "lib/net461/Drapper.dll"
+      ]
+    },
+    "Drapper.Validation/1.1.0": {
+      "sha512": "LfXBsNHBwnPwIjL/N9KdnyFEbn8x1mJ5zl6CBZ+3K5liPxd8R9EOhrQEh/To6nQDbEor3ybs9yb8WYGdQz0CAw==",
+      "type": "package",
+      "path": "drapper.validation/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "drapper.validation.1.1.0.nupkg.sha512",
+        "drapper.validation.nuspec",
+        "lib/net452/Drapper.Validation.dll",
+        "lib/net46/Drapper.Validation.dll",
+        "lib/net461/Drapper.Validation.dll"
+      ]
+    },
     "MediatR/8.0.0": {
       "sha512": "cYSDJ2b/dIiwTLW/ZW/SQcXq9I3WF6KR4D0KN4hxWR08tZqcvcVS1bQXZbsANdQdTQfxx+ZFp5WkHLMyeoR5Zw==",
       "type": "package",
@@ -13123,6 +13223,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
+      "Drapper >= 1.2.0",
       "Fetch.OrderLunch.Core >= 1.0.0",
       "Fetch.OrderLunch.Infrastructure >= 1.0.0",
       "Microsoft.AspNetCore.App >= 2.2.0",
@@ -13181,6 +13282,10 @@
     "frameworks": {
       "netcoreapp2.2": {
         "dependencies": {
+          "Drapper": {
+            "target": "Package",
+            "version": "[1.2.0, )"
+          },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
             "target": "Package",
@@ -13224,5 +13329,27 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Drapper 1.2.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v2.2'. This package may not be fully compatible with your project.",
+      "libraryId": "Drapper",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.2"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Drapper.Validation 1.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v2.2'. This package may not be fully compatible with your project.",
+      "libraryId": "Drapper.Validation",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.2"
+      ]
+    }
+  ]
 }

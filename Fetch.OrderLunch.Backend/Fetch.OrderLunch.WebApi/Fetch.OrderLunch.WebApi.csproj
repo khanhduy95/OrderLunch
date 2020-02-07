@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Drapper" Version="1.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
@@ -16,11 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Fetch.OrderLunch.Core\Fetch.OrderLunch.Core.csproj" />
     <ProjectReference Include="..\Fetch.OrderLunch.Infrastructure\Fetch.OrderLunch.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Application\DomainEventHandlers\" />
-    <Folder Include="Application\Queries\" />
   </ItemGroup>
 
 </Project>
