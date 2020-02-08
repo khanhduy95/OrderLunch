@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 
 namespace Fetch.OrderLunch.WebApi.Application.Commands
 {
-    public class IdentifierCommandHandler<T, R> : IRequestHandler<IdentifiedCommand<T, R>, R>
+    public class IdentifiedCommandHandler<T, R> : IRequestHandler<IdentifiedCommand<T, R>, R>
        where T : IRequest<R>
     {
         private readonly IMediator _mediator;
         private readonly IRequestManager _requestManager;
 
-        public IdentifierCommandHandler(IMediator mediator, IRequestManager requestManager)
+        public IdentifiedCommandHandler(IMediator mediator,
+                                        IRequestManager requestManager)
         {
             _mediator = mediator;
             _requestManager = requestManager;
@@ -36,6 +37,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Commands
             {
                 var result = await _mediator.Send(request.Command);
                 await _requestManager.CreateRequestForCommandAsync<T>(request.Id);
+
                 return result;
             }
         }

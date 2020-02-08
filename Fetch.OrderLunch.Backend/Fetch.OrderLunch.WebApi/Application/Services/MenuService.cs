@@ -37,7 +37,10 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                           Id = x.Id,
                           Name = x.Name,
                           Description = x.Description,
-                          Price = x.Price
+                          Price = x.Price,
+                          CategoryId=x.CategoryId,
+                          MenuId=x.MenuId,
+                          Image=x.Image
                       })
                   .ToList()
             };

@@ -15,13 +15,10 @@ namespace Ordering.Infrastructure.Data.EntityConfigurations
             
 
             builder.HasKey(x => x.Id);
-
             builder.Ignore(x => x.DomainEvents);
-
-            //builder.OwnsOne(x => x.Address, b =>
-            //{
-            //    b.WithOwner();
-            //});
+            builder.Ignore(x => x.CreationTime);
+            builder.Ignore(x => x.CreatorUserId);
+            builder.Ignore(x => x.IsActive);
 
             builder
                 .Property<DateTime>("_orderDate")
@@ -30,9 +27,7 @@ namespace Ordering.Infrastructure.Data.EntityConfigurations
                 .IsRequired();
 
             builder.Property<string>("Description").IsRequired(false);
-
            
-
             builder.HasOne<Buyer>()
                .WithMany()
                .IsRequired(false);

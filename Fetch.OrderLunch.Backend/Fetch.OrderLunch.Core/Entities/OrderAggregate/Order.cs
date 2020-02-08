@@ -28,16 +28,16 @@ namespace Fetch.OrderLunch.Core.Entities.OrderAggregate
         {
             
         }
-        public Order(int buyerId)
+        public Order(string userId,string userName, int? buyerId=null):this()
         {
             _orderItems = new List<OrderItem>();
             _buyerId = buyerId;
             _orderStatusId = OrderStatus.Submitted.Id;
             _orderDate = DateTime.Now;
 
-            AddOrderStartedDomainEvent();
+            AddOrderStartedDomainEvent(userId,userName);
         }
-
+        /////////
         public void AddOrderItem(int productId, string productName, decimal unitPrice, string pictureUrl, int units = 1)
         {
             var existingOrderForProduct = _orderItems.Where(o => o.ProductId == productId)
@@ -60,9 +60,11 @@ namespace Fetch.OrderLunch.Core.Entities.OrderAggregate
         {
             _buyerId = id;
         }
-        private void AddOrderStartedDomainEvent()
+        private void AddOrderStartedDomainEvent(string userId, string userName)
         {
-            AddDomainEvent(new OrderStartedDomainEvent(this));
+            var orderStartedDomainEvent = new OrderStartedDomainEvent( userId, userName,this);
+
+            AddDomainEvent(orderStartedDomainEvent);
         }
     }
 }

@@ -31,8 +31,23 @@ namespace Fetch.OrderLunch.Infrastructure.Repository
             }
         }
 
-       
-       
+        public async Task<Buyer> FindAsync(string BuyerIdentityGuid)
+        {
+            var buyer = await _dbContext.Buyers             
+              .Where(b => b.IdentityGuid == BuyerIdentityGuid)
+              .SingleOrDefaultAsync();
+
+            return buyer;
+        }
+
+        public async Task<Buyer> FindByIdAsync(string id)
+        {
+            var buyer = await _dbContext.Buyers               
+                .Where(b => b.Id == int.Parse(id))
+                .SingleOrDefaultAsync();
+
+            return buyer;
+        }
 
         public Buyer UpdateBuyer(Buyer buyer)
         {

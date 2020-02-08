@@ -38,7 +38,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                 basketItem.PictureUrl,
                 basketItem.Quantity);
 
-           await _basketRepository.unitOfWork.SaveChangesAsync();
+            await _basketRepository.UnitOfWork.SaveChangesAsync();
         }
 
         public async Task CreateBasket()
@@ -51,19 +51,21 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             var result = await _basketRepository.GetAsync(userId);
             if (result == null)
             {
-                var basket = new Basket { CreatorUserId = userId, BuyerId = userId };
-                await _basketRepository.AddAsync(basket);
+                var basket = new Basket { BuyerId = userId };
+                 _basketRepository.Add(basket);
+                await _basketRepository.UnitOfWork.SaveChangesAsync();
             }
         }
 
         public async Task DeleteBasketAsync(int basketId)
         {
-            var basket = await _basketRepository.GetByIdAsync(basketId);
+            var basket = await _basketRepository.FindIdAsync(basketId);
             if (basket == null)
             {
                 throw new ArgumentNullException("Basket is null");
             }
-            await _basketRepository.DeleteAsync(basket);
+            await _basketRepository.Delete(basket);
+
         }
 
         public async Task<bool> DeleteItemInBasket(int id)
@@ -75,7 +77,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             }
             var basket = await _basketRepository.GetAsync(userId);
             basket.DeleteItemToBasket(id);
-            await _basketRepository.unitOfWork.SaveChangesAsync();
+            await _basketRepository.UnitOfWork.SaveChangesAsync();
             
             return true;
         }
@@ -116,7 +118,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             var basket = await _basketRepository.GetAsync(userId);
 
             basket.UpdateBasket(basketItem.FoodId, basketItem.Quantity);
-            await _basketRepository.unitOfWork.SaveChangesAsync();
+            await _basketRepository.UnitOfWork.SaveChangesAsync();
         }
     }
 }

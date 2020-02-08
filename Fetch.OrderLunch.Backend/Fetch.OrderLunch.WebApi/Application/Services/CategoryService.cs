@@ -14,15 +14,13 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
     public class CategoryService : ICategoryService
     {        
         private readonly IAsyncRepository<Category> _asyncRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CategoryService(IAsyncRepository<Category> asyncRepository,
-                               IHttpContextAccessor httpContextAccessor)
+        public CategoryService(IAsyncRepository<Category> asyncRepository)
         {
-            _asyncRepository = asyncRepository ?? throw new ArgumentNullException(nameof(asyncRepository));
-            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+            _asyncRepository = asyncRepository;
         }
 
+        
         public async Task Add(CategoryViewModel categoryVm)
         {
             

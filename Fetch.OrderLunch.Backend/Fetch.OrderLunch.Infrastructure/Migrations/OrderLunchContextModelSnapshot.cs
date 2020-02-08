@@ -28,14 +28,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                     b.Property<string>("BuyerId")
                         .IsRequired();
 
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<string>("CreatorUserId");
-
-                    b.Property<bool>("IsActive");
-
-                    b.Property<bool>("IsDeleted");
-
                     b.HasKey("Id");
 
                     b.ToTable("Baskets");
@@ -49,17 +41,9 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
 
                     b.Property<int?>("BasketId");
 
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<string>("CreatorUserId");
-
                     b.Property<int>("FoodId");
 
                     b.Property<string>("FoodName");
-
-                    b.Property<bool>("IsActive");
-
-                    b.Property<bool>("IsDeleted");
 
                     b.Property<decimal>("OldUnitPrice");
 
@@ -82,15 +66,9 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<string>("CreatorUserId");
-
                     b.Property<string>("IdentityGuid")
                         .IsRequired()
                         .HasMaxLength(200);
-
-                    b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
 
@@ -102,47 +80,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Buyers");
-                });
-
-            modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.BuyerAggregate.Method", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasDefaultValue(1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Methods");
-                });
-
-            modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.BuyerAggregate.PaymentMethod", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BuyerId");
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<string>("CreatorUserId");
-
-                    b.Property<bool>("IsActive");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<int?>("methodId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BuyerId");
-
-                    b.HasIndex("methodId");
-
-                    b.ToTable("PaymentMethods");
                 });
 
             modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.CompanyAggregate.Company", b =>
@@ -265,23 +202,13 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address");
-
                     b.Property<int?>("BuyerId");
 
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<string>("CreatorUserId");
-
                     b.Property<string>("Description");
-
-                    b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
 
                     b.Property<int?>("OrderStatusId");
-
-                    b.Property<int?>("PaymentMethodId");
 
                     b.Property<DateTime>("_orderDate")
                         .HasColumnName("OrderDate");
@@ -292,8 +219,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
 
                     b.HasIndex("OrderStatusId");
 
-                    b.HasIndex("PaymentMethodId");
-
                     b.ToTable("Orders");
                 });
 
@@ -302,12 +227,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<string>("CreatorUserId");
-
-                    b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
 
@@ -492,18 +411,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                         .HasForeignKey("BasketId");
                 });
 
-            modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.BuyerAggregate.PaymentMethod", b =>
-                {
-                    b.HasOne("Fetch.OrderLunch.Core.Entities.BuyerAggregate.Buyer")
-                        .WithMany("PaymentMethods")
-                        .HasForeignKey("BuyerId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Fetch.OrderLunch.Core.Entities.BuyerAggregate.Method", "method")
-                        .WithMany()
-                        .HasForeignKey("methodId");
-                });
-
             modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.CompanyAggregate.Office", b =>
                 {
                     b.HasOne("Fetch.OrderLunch.Core.Entities.CompanyAggregate.Company")
@@ -547,11 +454,6 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                     b.HasOne("Fetch.OrderLunch.Core.Entities.OrderAggregate.OrderStatus", "OrderStatus")
                         .WithMany()
                         .HasForeignKey("OrderStatusId");
-
-                    b.HasOne("Fetch.OrderLunch.Core.Entities.BuyerAggregate.PaymentMethod")
-                        .WithMany()
-                        .HasForeignKey("PaymentMethodId")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.OrderAggregate.OrderItem", b =>

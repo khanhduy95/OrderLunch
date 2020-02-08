@@ -10,7 +10,8 @@ namespace Fetch.OrderLunch.Core.Interfaces
     {
         Buyer AddBuyer(Buyer buyer);
         Buyer UpdateBuyer(Buyer buyer);
-        
-       
+        Task<Buyer> FindAsync(string BuyerIdentityGuid);
+        Task<Buyer> FindByIdAsync(string id);
+
     }
 }

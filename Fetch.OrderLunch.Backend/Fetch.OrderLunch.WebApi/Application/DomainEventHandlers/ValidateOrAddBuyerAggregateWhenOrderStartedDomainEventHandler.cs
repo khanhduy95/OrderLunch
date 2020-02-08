@@ -1,4 +1,5 @@
-﻿using Fetch.OrderLunch.Core.Events;
+﻿using Fetch.OrderLunch.Core.Entities.BuyerAggregate;
+using Fetch.OrderLunch.Core.Events;
 using Fetch.OrderLunch.Core.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -24,7 +25,17 @@ namespace Fetch.OrderLunch.WebApi.Application.DomainEventHandlers
 
         public async Task Handle(OrderStartedDomainEvent notification, CancellationToken cancellationToken)
         {
-           // await _buyerRepository.FindAsync();
+           var  buyer = await _buyerRepository.FindAsync(notification.UserId);
+           bool buyerOriginallyExisted = (buyer == null) ? false : true;
+            if (!buyerOriginallyExisted)
+            {
+                buyer = new Buyer(notification.UserId, notification.UserName);
+            }
+            var buyerUpdated = buyerOriginallyExisted ?
+                _buyerRepository.UpdateBuyer(buyer) :
+                _buyerRepository.AddBuyer(buyer);
+
+            await _buyerRepository.unitOfWork.SaveEntitiesAsync();
             _logger.CreateLogger(nameof(ValidateOrAddBuyerAggregateWhenOrderStartedDomainEventHandler));
         }
     }

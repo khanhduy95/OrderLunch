@@ -9,15 +9,13 @@ namespace Fetch.OrderLunch.Core.Entities.BuyerAggregate
 {
     public class Buyer : BaseEntity, IAggregateRoot
     {
-        public string IdentityGuid { get; private set; }
-        public string Name { get; private set; }
-
-             
-        public Buyer(string identity, string name) 
+        public Buyer(string identityGuid, string name)
         {
-            IdentityGuid = !string.IsNullOrWhiteSpace(identity) ? identity : throw new ArgumentNullException(nameof(identity));
-            Name = !string.IsNullOrWhiteSpace(name) ? name : throw new ArgumentNullException(nameof(name));
+            IdentityGuid = identityGuid;
+            Name = name;
         }
 
+        public string IdentityGuid { get; private set; }
+        public string Name { get; private set; }
     }
 }

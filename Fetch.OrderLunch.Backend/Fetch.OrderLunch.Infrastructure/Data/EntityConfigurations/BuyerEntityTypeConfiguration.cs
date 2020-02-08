@@ -15,7 +15,11 @@ namespace Ordering.Infrastructure.Data.EntityConfigurations
 
             builder.HasKey(x => x.Id);
 
-            builder.Ignore(x => x.DomainEvents);
+            builder.Ignore(x => x.CreationTime);
+            builder.Ignore(x => x.CreatorUserId);
+            builder.Ignore(x => x.IsActive);
+            
+
 
             builder.Property(x => x.IdentityGuid)
                 .HasMaxLength(200)

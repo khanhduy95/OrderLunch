@@ -8,8 +8,9 @@ using System.Text;
 
 namespace Fetch.OrderLunch.Core.Entities.BasketAggregate
 {
-    public class Basket : BaseEntity, IAggregateRoot
+    public class Basket :  IAggregateRoot
     {
+        public int Id { get; set; }
         public string BuyerId { get; set; }
         private readonly List<BasketItem> _items = new List<BasketItem>();
         public IReadOnlyCollection<BasketItem> Items => _items;

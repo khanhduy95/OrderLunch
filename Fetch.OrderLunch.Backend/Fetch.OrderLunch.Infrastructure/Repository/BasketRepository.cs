@@ -10,10 +10,35 @@ using System.Threading.Tasks;
 
 namespace Fetch.OrderLunch.Infrastructure.Repository
 {
-    public class BasketRepository : BaseRepository<Basket>, IBasketRepository
+    public class BasketRepository :  IBasketRepository
     {
-        public BasketRepository(OrderLunchContext dbContext) : base(dbContext)
+        private OrderLunchContext _dbContext;
+
+        public IUnitOfWork UnitOfWork
         {
+            get
+            {
+                return _dbContext;
+            }
+        }
+
+        public BasketRepository(OrderLunchContext context)
+        {
+            _dbContext = context ?? throw new ArgumentNullException(nameof(context));
+        }
+
+       
+        public Basket Add(Basket basket)
+        {
+            return _dbContext.Baskets
+                .Add(basket)
+                .Entity;
+        }
+
+        public async Task Delete(Basket basket)
+        {
+            _dbContext.Baskets.Remove(basket);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<Basket> GetAsync(string userId)
@@ -27,6 +52,13 @@ namespace Fetch.OrderLunch.Infrastructure.Repository
                 return basket;
             }
             return basket;
+        }
+
+        public async Task<Basket> FindIdAsync(int id)
+        {
+            return await _dbContext.Baskets
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
         }
     }
 }

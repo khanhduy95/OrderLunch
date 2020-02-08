@@ -1,5 +1,6 @@
 ﻿using Fetch.OrderLunch.Core.Entities.OrderAggregate;
 using Fetch.OrderLunch.Core.Interfaces;
+using Fetch.OrderLunch.Infrastructure.Idempotency;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -24,7 +25,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Commands
 
         public async Task<bool> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            var order = new Order(request.BuyerId);
+            var order = new Order(request.UserId,request.UserName);
 
             foreach(var item in request.OrderItems)
             {
@@ -33,6 +34,21 @@ namespace Fetch.OrderLunch.WebApi.Application.Commands
             _orderRepository.AddOrder(order);
 
             return await _orderRepository.unitOfWork.SaveEntitiesAsync();
+        }
+    }
+    public class CreateOrderIdentifiedCommandHandler : IdentifiedCommandHandler<CreateOrderCommand, bool>
+    {
+        public CreateOrderIdentifiedCommandHandler(
+            IMediator mediator,
+            IRequestManager requestManager,
+            ILogger<IdentifiedCommandHandler<CreateOrderCommand, bool>> logger)
+            : base(mediator, requestManager)
+        {
+        }
+
+        protected override bool CreateResultForDuplicateRequest()
+        {
+            return true;                // Ignore duplicate requests for creating order.
         }
     }
 }

@@ -2,7 +2,6 @@
 using Fetch.OrderLunch.WebApi.Application.Models;
 using Fetch.OrderLunch.Core.Entities.SupplierAggregate;
 using Fetch.OrderLunch.Core.Interfaces;
-using Fetch.OrderLunch.WebApi.Application.Models;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;

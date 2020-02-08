@@ -13,7 +13,6 @@ namespace Fetch.OrderLunch.Infrastructure.Data.EntityConfigurations
         {
             builder.HasKey(x=>x.Id);
 
-            builder.Ignore(x => x.DomainEvents);
         }
     }       
     

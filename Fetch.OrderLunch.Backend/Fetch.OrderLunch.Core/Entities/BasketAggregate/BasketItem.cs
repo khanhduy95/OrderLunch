@@ -6,8 +6,9 @@ using System.Text;
 
 namespace Fetch.OrderLunch.Core.Entities.BasketAggregate
 {
-    public class BasketItem : BaseEntity
+    public class BasketItem 
     {
+        public int Id { get; set; }
         public int FoodId { get; set; }
         public string FoodName { get; set; }
         public decimal UnitPrice { get; set; }

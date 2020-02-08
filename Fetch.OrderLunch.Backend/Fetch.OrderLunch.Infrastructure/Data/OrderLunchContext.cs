@@ -50,10 +50,17 @@ namespace Fetch.OrderLunch.Infrastructure.Data
 
         public IDbContextTransaction GetCurrentTransaction => _currentTransaction;
 
+        public OrderLunchContext(DbContextOptions<OrderLunchContext> options,
+                               IMediator mediator)
+          : base(options)
+        {
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            System.Diagnostics.Debug.WriteLine("OrderingContext::ctor ->" + this.GetHashCode());
+        }
+
         public bool HasActiveTransaction => _currentTransaction != null;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
             modelBuilder.ApplyConfiguration(new CompanyEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OfficeEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new SupplierEntityTypeConfiguration());
@@ -97,11 +104,19 @@ namespace Fetch.OrderLunch.Infrastructure.Data
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
         {
-            await _mediator.DispatchDomainEventsAsync(this);
+            try
+            {
+                await _mediator.DispatchDomainEventsAsync(this);
 
-            var result = await base.SaveChangesAsync();
+                var result = await base.SaveChangesAsync();
 
-            return true;
+                return true;
+            }
+            catch(Exception e)
+            {
+                throw new Exception(nameof(e));
+            }
+
         }
 
         public async Task CommitTransactionAsync(IDbContextTransaction transaction)
@@ -148,15 +163,18 @@ namespace Fetch.OrderLunch.Infrastructure.Data
         {
             foreach (var entry in ChangeTracker.Entries())
             {
-                switch (entry.State)
+                if (entry.Entity.GetType() == typeof(BaseEntity))
                 {
-                    case EntityState.Added:
-                        entry.CurrentValues["IsDeleted"] = false;
-                        break;
-                    case EntityState.Deleted:
-                        entry.State = EntityState.Modified;
-                        entry.CurrentValues["IsDeleted"] = true;
-                        break;
+                    switch (entry.State)
+                    {
+                        case EntityState.Added:
+                            entry.CurrentValues["IsDeleted"] = false;
+                            break;
+                        case EntityState.Deleted:
+                            entry.State = EntityState.Modified;
+                            entry.CurrentValues["IsDeleted"] = true;
+                            break;
+                    }
                 }
             }
         }

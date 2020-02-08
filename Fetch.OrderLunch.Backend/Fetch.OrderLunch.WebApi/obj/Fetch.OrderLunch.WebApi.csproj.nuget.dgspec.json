@@ -188,9 +188,37 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
+            "Autofac.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
             "Drapper": {
               "target": "Package",
               "version": "[1.2.0, )"
+            },
+            "MediatR.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.ApplicationInsights.AspNetCore": {
+              "target": "Package",
+              "version": "[2.12.1, )"
+            },
+            "Microsoft.ApplicationInsights.DependencyCollector": {
+              "target": "Package",
+              "version": "[2.12.1, )"
+            },
+            "Microsoft.ApplicationInsights.Kubernetes": {
+              "target": "Package",
+              "version": "[1.1.1, )"
+            },
+            "Microsoft.ApplicationInsights.ServiceFabric": {
+              "target": "Package",
+              "version": "[2.3.1, )"
+            },
+            "Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel": {
+              "target": "Package",
+              "version": "[2.12.1, )"
             },
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
@@ -207,6 +235,10 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",
@@ -220,6 +252,14 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[4.0.1, )"
+            },
+            "System.Reflection": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.Reflection.Metadata": {
+              "target": "Package",
+              "version": "[1.8.0, )"
             }
           },
           "imports": [
