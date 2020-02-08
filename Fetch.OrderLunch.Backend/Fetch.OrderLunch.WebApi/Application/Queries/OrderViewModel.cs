@@ -9,8 +9,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Queries
     {
         public int OrderNumber { get; set; }
         public DateTime Date { get; set; }
-        public string Status { get; set; }
-        public string Description { get; set; }
+        public string Status { get; set; }        
         public List<OrderItem> OrderItems { get; set; }
         public decimal Total { get; set; }
     }
@@ -26,7 +25,6 @@ namespace Fetch.OrderLunch.WebApi.Application.Queries
         public int OrderNumber { get; set; }
         public DateTime Date { get; set; }
         public string Status { get; set; }
-        public string Description { get; set; }
-        public string Address { get; set; }
+       
     }
 }

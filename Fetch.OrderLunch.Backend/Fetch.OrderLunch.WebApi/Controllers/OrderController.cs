@@ -55,9 +55,9 @@ namespace Fetch.OrderLunch.WebApi.Controllers
 
                 return Ok(order);
             }
-            catch(Exception e)
+            catch
             {
-                throw new Exception(nameof(e));
+                return NotFound();
             }
         }
         [Route("")]

@@ -37,7 +37,7 @@ namespace Fetch.OrderLunch.Core.Entities.OrderAggregate
 
             AddOrderStartedDomainEvent(userId,userName);
         }
-        /////////
+        
         public void AddOrderItem(int productId, string productName, decimal unitPrice, string pictureUrl, int units = 1)
         {
             var existingOrderForProduct = _orderItems.Where(o => o.ProductId == productId)

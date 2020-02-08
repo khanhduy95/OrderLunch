@@ -23,8 +23,8 @@ namespace Fetch.OrderLunch.WebApi.Application.Queries
             {
                 connection.Open();
                 var result = await connection.QueryAsync<dynamic>(
-                    @"SELECT o.[Id] as OrderId, o.OrderDate as orderDate, s.Name as StatusName, 
-                    i.ProductName as ProName,i.PictureUrl as Picture,i.UnitPrice as unitPrice, i.Units as unit
+                    @"SELECT o.[Id] as OrderId, o.OrderDate as OrderDate, s.Name as StatusName, 
+                    i.ProductName as ProductName,i.PictureUrl as Picture,i.UnitPrice as UnitPrice, i.Units as Units
                     FROM Orders o
                     LEFT JOIN OrderItems i on o.Id=i.Id
                     LEFT JOIN OrderStatus s on o.OrderStatusId=s.Id
@@ -44,7 +44,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Queries
             {
                 connection.Open();
                 var result = await connection.QueryAsync<dynamic>(
-                    @"SELECT o.[Id] as OrderId, o.OrderDate as orderDate, s.Name as StatusName, 					
+                    @"SELECT o.[Id] as OrderId, o.OrderDate as OrderDate, s.Name as StatusName, 					
                     SUM(i.units*i.unitprice) as total
                     FROM Orders o
                     LEFT JOIN OrderItems i on o.Id=i.Id
@@ -65,11 +65,10 @@ namespace Fetch.OrderLunch.WebApi.Application.Queries
             {
                 var order = new OrderPaid
                 {
-                    OrderNumber = item.ordernumber,
-                    Date = item.date,
-                    Description = item.description,
-                    Address = item.address,
-                    Status = OrderStatus.Paid.Name
+                    OrderNumber = item.OrderId,
+                    Date = item.OrderDate,
+                    Status = item.StatusName,
+                    
                 };
 
                 orders.Add(order);
@@ -81,10 +80,9 @@ namespace Fetch.OrderLunch.WebApi.Application.Queries
         {
             var order = new Order
             {
-                OrderNumber = result[0].ordernumber,
-                Date = result[0].date,
-                Status = result[0].status,
-                Description = result[0].description,
+                OrderNumber = result[0].OrderId,
+                Date = result[0].OrderDate,
+                Status = result[0].StatusName,
                 OrderItems = new List<OrderItem>(),
                 Total = 0
             };
@@ -93,13 +91,13 @@ namespace Fetch.OrderLunch.WebApi.Application.Queries
             {
                 var orderitem = new OrderItem
                 {
-                    ProductName = item.productname,
-                    Units = item.units,
-                    UnitPrice = (double)item.unitprice,
-                    PictureUrl = item.pictureurl
+                    ProductName = item.ProductName,
+                    Units = item.Units,
+                    UnitPrice = (double)item.UnitPrice,
+                    PictureUrl = item.Picture
                 };
 
-                order.Total += item.units * item.unitprice;
+                order.Total += item.Units * item.UnitPrice;
                 order.OrderItems.Add(orderitem);
             }
 
