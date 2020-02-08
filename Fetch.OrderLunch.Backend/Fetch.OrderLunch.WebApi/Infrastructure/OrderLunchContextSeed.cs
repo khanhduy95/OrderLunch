@@ -29,7 +29,7 @@ namespace Fetch.OrderLunch.WebApi.Infrastructure
             return new List<OrderStatus>()
             {
                 OrderStatus.Submitted,
-                OrderStatus.Shipped,
+                OrderStatus.Paid,
                 OrderStatus.Cancelled
             };
         }

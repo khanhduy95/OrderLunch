@@ -10,7 +10,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Queries
     {
         Task<Order> GetOrder(int id);
 
-        Task<IEnumerable<Order>> GetOrders();
+        Task<IEnumerable<OrderPaid>> GetOrders();
 
     }
 }

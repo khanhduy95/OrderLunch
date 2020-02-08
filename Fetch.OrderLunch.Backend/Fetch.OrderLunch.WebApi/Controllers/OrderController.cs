@@ -50,12 +50,14 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         {
             try
             {
+                
                 var order = await _orderQueries.GetOrder(orderId);
+
                 return Ok(order);
             }
-            catch (KeyNotFoundException)
+            catch(Exception e)
             {
-                return NotFound();
+                throw new Exception(nameof(e));
             }
         }
         [Route("")]
