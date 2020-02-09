@@ -104,6 +104,7 @@ namespace Fetch.OrderLunch.WebApi
                 c.RoutePrefix = string.Empty;  // Set Swagger UI at apps root
             });
             app.UseAuthentication();
+           
         }
     }
     static class CustomExtensionsMethods
@@ -206,6 +207,18 @@ namespace Fetch.OrderLunch.WebApi
                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(MVSJwtTokens.Key))
                   };
               });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("DeleteRolePolicy",
+                    policy => policy.RequireClaim("Delete Role"));
+
+                options.AddPolicy("EditRolePolicy",
+                    policy => policy.RequireClaim("Edit Role","true"));
+
+                options.AddPolicy("AdminRolePolicy",
+                    policy => policy.RequireRole("Admin"));
+            });
 
             return services;
         }

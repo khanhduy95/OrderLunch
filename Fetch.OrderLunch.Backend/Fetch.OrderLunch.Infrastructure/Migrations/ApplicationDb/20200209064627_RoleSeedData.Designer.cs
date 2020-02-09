@@ -4,14 +4,16 @@ using Fetch.OrderLunch.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fetch.OrderLunch.Infrastructure.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200209064627_RoleSeedData")]
+    partial class RoleSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,6 +43,22 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations.ApplicationDb
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "f8678669-bb3a-40f3-80a0-46aecaf64106",
+                            ConcurrencyStamp = "92aefd66-cb05-4e7e-a39f-c763ca5ee0ee",
+                            Name = "Admin",
+                            NormalizedName = "admin"
+                        },
+                        new
+                        {
+                            Id = "e6d5f3c0-144d-4e4f-9ca0-3eb62435efde",
+                            ConcurrencyStamp = "c3f5044b-0850-44b1-b07b-c359da82e726",
+                            Name = "Member",
+                            NormalizedName = "member"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

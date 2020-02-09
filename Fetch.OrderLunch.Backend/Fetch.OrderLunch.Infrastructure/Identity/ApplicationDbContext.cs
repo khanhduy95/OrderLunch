@@ -18,10 +18,7 @@ namespace Fetch.OrderLunch.Infrastructure.Identity
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<IdentityRole>().HasData(
-                new IdentityRole { Name = "Admin", NormalizedName = "Admin".ToLower() },
-                new IdentityRole { Name = "Member", NormalizedName = "Member".ToLower() }
-               );
+           
         }
     }
 }

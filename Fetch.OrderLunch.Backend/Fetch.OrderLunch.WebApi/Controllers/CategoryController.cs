@@ -5,12 +5,14 @@ using System.Net;
 using System.Threading.Tasks;
 using Fetch.OrderLunch.WebApi.Application.Interfaces;
 using Fetch.OrderLunch.WebApi.Application.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fetch.OrderLunch.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(AuthenticationSchemes = MVSJwtTokens.AuthSchemes,Policy = "AdminRolePolicy")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;

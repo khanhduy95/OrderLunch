@@ -36,9 +36,9 @@ namespace Fetch.OrderLunch.WebApi.Application.Commands
             else
             {
                 var result = await _mediator.Send(request.Command);
-                await _requestManager.CreateRequestForCommandAsync<T>(request.Id);
-
-                return result;
+               
+                    await _requestManager.CreateRequestForCommandAsync<T>(request.Id);
+                    return result;
             }
         }
     }

@@ -35,10 +35,10 @@ namespace Fetch.OrderLunch.Infrastructure.Repository
                 .Entity;
         }
 
-        public async Task Delete(Basket basket)
+        public bool Delete(Basket basket)
         {
             _dbContext.Baskets.Remove(basket);
-            await _dbContext.SaveChangesAsync();
+            return true;
         }
 
         public async Task<Basket> GetAsync(string userId)

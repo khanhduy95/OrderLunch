@@ -64,8 +64,8 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             {
                 throw new ArgumentNullException("Basket is null");
             }
-            await _basketRepository.Delete(basket);
-
+             _basketRepository.Delete(basket);
+            await _basketRepository.UnitOfWork.SaveChangesAsync();
         }
 
         public async Task<bool> DeleteItemInBasket(int id)

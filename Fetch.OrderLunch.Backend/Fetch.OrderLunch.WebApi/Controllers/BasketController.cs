@@ -12,7 +12,6 @@ namespace Fetch.OrderLunch.WebApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = MVSJwtTokens.AuthSchemes)]
-
     public class BasketsController : Controller
     {
         private readonly IBasketService _basketService;

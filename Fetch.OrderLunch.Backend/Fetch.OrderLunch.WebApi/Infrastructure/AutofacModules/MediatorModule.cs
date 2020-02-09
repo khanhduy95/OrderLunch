@@ -5,6 +5,8 @@ using Fetch.OrderLunch.WebApi.Application.Commands;
 using Fetch.OrderLunch.WebApi.Application.DomainEventHandlers;
 using Fetch.OrderLunch.WebApi.Application.Interfaces;
 using Fetch.OrderLunch.WebApi.Application.Services;
+using Fetch.OrderLunch.WebApi.Application.Validations;
+using FluentValidation;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -29,8 +31,10 @@ namespace Fetch.OrderLunch.WebApi.Infrastructure.AutofacModules
             builder.RegisterAssemblyTypes(typeof(ValidateOrAddBuyerAggregateWhenOrderStartedDomainEventHandler).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(INotificationHandler<>));
 
-            builder.RegisterAssemblyTypes(typeof(ValidateOrAddBuyerAggregateWhenOrderStartedDomainEventHandler).GetTypeInfo().Assembly)
-                .AsClosedTypesOf(typeof(INotificationHandler<>));
+            builder
+                .RegisterAssemblyTypes(typeof(CreateOrderCommandValidator).GetTypeInfo().Assembly)
+                .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
+                .AsImplementedInterfaces();
 
             builder.Register<ServiceFactory>(context =>
             {

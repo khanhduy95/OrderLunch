@@ -80,6 +80,18 @@
           "lib/net461/Drapper.Validation.dll": {}
         }
       },
+      "FluentValidation/8.6.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "4.4.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
+        }
+      },
       "MediatR/8.0.0": {
         "type": "package",
         "compile": {
@@ -5303,6 +5315,25 @@
         "lib/net452/Drapper.Validation.dll",
         "lib/net46/Drapper.Validation.dll",
         "lib/net461/Drapper.Validation.dll"
+      ]
+    },
+    "FluentValidation/8.6.1": {
+      "sha512": "g0xw/YCVgJ1IYpBgKF9iuci/Arf6Dsq9H/WeeT9zaBpjrEA+Cr2GjWXHu1F0DKqVzp4J4hta4gGrRt6H4aESqQ==",
+      "type": "package",
+      "path": "fluentvalidation/8.6.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fluentvalidation.8.6.1.nupkg.sha512",
+        "fluentvalidation.nuspec",
+        "lib/net45/FluentValidation.dll",
+        "lib/net45/FluentValidation.xml",
+        "lib/netstandard1.1/FluentValidation.dll",
+        "lib/netstandard1.1/FluentValidation.xml",
+        "lib/netstandard1.6/FluentValidation.dll",
+        "lib/netstandard1.6/FluentValidation.xml",
+        "lib/netstandard2.0/FluentValidation.dll",
+        "lib/netstandard2.0/FluentValidation.xml"
       ]
     },
     "MediatR/8.0.0": {
@@ -14091,6 +14122,7 @@
       "Drapper >= 1.2.0",
       "Fetch.OrderLunch.Core >= 1.0.0",
       "Fetch.OrderLunch.Infrastructure >= 1.0.0",
+      "FluentValidation >= 8.6.1",
       "MediatR.Extensions.Microsoft.DependencyInjection >= 8.0.0",
       "Microsoft.ApplicationInsights.AspNetCore >= 2.12.1",
       "Microsoft.ApplicationInsights.DependencyCollector >= 2.12.1",
@@ -14163,6 +14195,10 @@
           "Drapper": {
             "target": "Package",
             "version": "[1.2.0, )"
+          },
+          "FluentValidation": {
+            "target": "Package",
+            "version": "[8.6.1, )"
           },
           "MediatR.Extensions.Microsoft.DependencyInjection": {
             "target": "Package",

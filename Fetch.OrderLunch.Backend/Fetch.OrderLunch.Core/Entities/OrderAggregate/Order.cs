@@ -26,7 +26,7 @@ namespace Fetch.OrderLunch.Core.Entities.OrderAggregate
 
         protected Order()
         {
-            
+            _orderItems = new List<OrderItem>();
         }
         public Order(string userId,string userName, int? buyerId=null):this()
         {
@@ -60,6 +60,24 @@ namespace Fetch.OrderLunch.Core.Entities.OrderAggregate
         {
             _buyerId = id;
         }
+
+        public void DeleteBasketWhenCreateCompleted(int basketId)
+        {
+            var DeleteBasketDomainEvent = new DeleteBasketDomainEvent(basketId);
+            AddDomainEvent(DeleteBasketDomainEvent);
+        }
+
+        public void SetPaidStatus()
+        {
+            if (_orderStatusId == OrderStatus.Submitted.Id)
+            {
+                AddDomainEvent(new OrderStatusChangedToPaidDomainEvent(Id));
+
+                _orderStatusId = OrderStatus.Paid.Id;
+               
+            }
+        }
+
         private void AddOrderStartedDomainEvent(string userId, string userName)
         {
             var orderStartedDomainEvent = new OrderStartedDomainEvent( userId, userName,this);

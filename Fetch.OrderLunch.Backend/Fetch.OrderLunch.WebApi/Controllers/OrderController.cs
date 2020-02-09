@@ -44,6 +44,29 @@ namespace Fetch.OrderLunch.WebApi.Controllers
             return BadRequest();
         }
 
+        [HttpPost]
+        [Route("SetPaidStatus")]
+        public async Task<IActionResult> SetPaidStatus([FromBody]SetPaidOrderStatusCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        {
+            bool result = false;
+            if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
+            {
+                var requestCreateOrder = new IdentifiedCommand<SetPaidOrderStatusCommand, bool>(command, guid);
+                result = await _mediator.Send(requestCreateOrder);
+            }
+            else
+            {
+                result = await _mediator.Send(command);
+            }
+
+            if (result)
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+
         [Route("{orderId:int}")]
         [HttpGet]
         public async Task<IActionResult> GetOrder(int orderId)

@@ -11,6 +11,8 @@ namespace Fetch.OrderLunch.WebApi.Application.Commands
     public class CreateOrderCommand : IRequest<bool>
     {
         [DataMember]
+        public int BasketId { get; set; }
+        [DataMember]
         public string UserId { get; private set; }
         [DataMember]
         public string UserName { get; private set; }

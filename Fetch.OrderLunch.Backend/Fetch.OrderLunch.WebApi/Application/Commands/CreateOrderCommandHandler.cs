@@ -33,6 +33,8 @@ namespace Fetch.OrderLunch.WebApi.Application.Commands
             }
             _orderRepository.AddOrder(order);
 
+            order.DeleteBasketWhenCreateCompleted(request.BasketId);
+            
             return await _orderRepository.unitOfWork.SaveEntitiesAsync();
         }
     }

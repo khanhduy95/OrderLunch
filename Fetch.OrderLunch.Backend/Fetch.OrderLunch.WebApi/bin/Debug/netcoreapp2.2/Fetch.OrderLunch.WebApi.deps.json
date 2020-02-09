@@ -28,6 +28,7 @@
           "Drapper": "1.2.0",
           "Fetch.OrderLunch.Core": "1.0.0",
           "Fetch.OrderLunch.Infrastructure": "1.0.0",
+          "FluentValidation": "8.6.1",
           "MediatR.Extensions.Microsoft.DependencyInjection": "8.0.0",
           "Microsoft.ApplicationInsights.AspNetCore": "2.12.1",
           "Microsoft.ApplicationInsights.DependencyCollector": "2.12.1",
@@ -137,6 +138,20 @@
         },
         "compile": {
           "lib/net461/Drapper.Validation.dll": {}
+        }
+      },
+      "FluentValidation/8.6.1": {
+        "dependencies": {
+          "System.ComponentModel.Annotations": "4.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentValidation.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.6.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
         }
       },
       "MediatR/8.0.0": {
@@ -4188,6 +4203,13 @@
       "sha512": "sha512-LfXBsNHBwnPwIjL/N9KdnyFEbn8x1mJ5zl6CBZ+3K5liPxd8R9EOhrQEh/To6nQDbEor3ybs9yb8WYGdQz0CAw==",
       "path": "drapper.validation/1.1.0",
       "hashPath": "drapper.validation.1.1.0.nupkg.sha512"
+    },
+    "FluentValidation/8.6.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-g0xw/YCVgJ1IYpBgKF9iuci/Arf6Dsq9H/WeeT9zaBpjrEA+Cr2GjWXHu1F0DKqVzp4J4hta4gGrRt6H4aESqQ==",
+      "path": "fluentvalidation/8.6.1",
+      "hashPath": "fluentvalidation.8.6.1.nupkg.sha512"
     },
     "MediatR/8.0.0": {
       "type": "package",

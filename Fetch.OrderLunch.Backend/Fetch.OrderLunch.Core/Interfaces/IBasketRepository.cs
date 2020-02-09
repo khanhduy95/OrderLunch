@@ -9,7 +9,7 @@ namespace Fetch.OrderLunch.Core.Interfaces
     public  interface IBasketRepository 
     {
         Basket Add(Basket basket);
-        Task Delete(Basket basket);
+        bool Delete(Basket basket);
         Task<Basket> GetAsync(string userId);
         Task<Basket> FindIdAsync(int id);
         IUnitOfWork UnitOfWork { get; }

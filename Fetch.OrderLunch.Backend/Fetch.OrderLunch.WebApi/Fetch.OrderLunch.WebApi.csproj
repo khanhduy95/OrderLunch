@@ -8,6 +8,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Drapper" Version="1.2.0" />
+    <PackageReference Include="FluentValidation" Version="8.6.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.12.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" Version="2.12.1" />
