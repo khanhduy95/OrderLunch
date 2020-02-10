@@ -24,7 +24,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
             var webRoot = _env.WebRootPath;
             var path = Path.Combine(webRoot+"\\images", pictureName);
             Byte[] b = System.IO.File.ReadAllBytes(path);
-            return File(b, "image/png");
+            return File(b, "file");
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(AuthenticationSchemes = MVSJwtTokens.AuthSchemes,Policy = "AdminRolePolicy")]
+  //[Authorize(AuthenticationSchemes = MVSJwtTokens.AuthSchemes,Policy = "AdminRolePolicy")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;

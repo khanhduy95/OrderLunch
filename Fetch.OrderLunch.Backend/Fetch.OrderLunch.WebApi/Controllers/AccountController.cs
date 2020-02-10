@@ -100,5 +100,9 @@ namespace Fetch.OrderLunch.WebApi.Controllers
             }
             return BadRequest();
         }
+        //public async Task<IActionResult> GetRole()
+        //{
+
+        //}
     }
 }

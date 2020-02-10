@@ -26,6 +26,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -77,8 +78,15 @@ namespace Fetch.OrderLunch.WebApi
 
         //}
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            var pathBase = Configuration["PATH_BASE"];
+            if (!string.IsNullOrEmpty(pathBase))
+            {
+                loggerFactory.CreateLogger<Startup>().LogDebug("Using PATH BASE '{pathBase}'", pathBase);
+                app.UsePathBase(pathBase);
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -144,7 +152,10 @@ namespace Fetch.OrderLunch.WebApi
             services.AddTransient<IBasketService, BasketService>();
 
             services.AddHttpContextAccessor();
-            services.AddMvc()
+            services.AddMvc(options =>
+                {
+                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+                })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddControllersAsServices();  
 
@@ -189,9 +200,10 @@ namespace Fetch.OrderLunch.WebApi
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
                     { "Bearer", Enumerable.Empty<string>() },
                 });
-                // c.OperationFilter<AuthorizeCheckOperationFilter>();
+                //c.OperationFilter<AuthorizeCheckOperationFilter>();
                 c.OperationFilter<FileUploadOperation>();
             });
+
             return services;
         }
         public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
