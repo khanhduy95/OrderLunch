@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAoOOJfuyASk2gxQuNyYMKVQAAAAACAAAAAAAQZgAAAAEAACAAAABT/GU740+KNGAOZD1Sk2yE4x69dPz3w4Xdp2yqzX66kAAAAAAOgAAAAAIAACAAAACnFUyczdjuj3+4yj/IVbWVxVrUrXRW+AVOjSkSKZzQ/IAAAABxb6GraiLXYUSEqUChuef4dgQc/dfbptnfhqZB8u6RuXmzWUgGbdEsU39HZss1sTxplFwZPYL/MyzUo3GpdYayBFV5AaRqKp3Mm/7/zb7gmAXBfK01ERNK9uNpv+wwuCrHlXAJOZI3vuWSWsxvkN3XVWX8p7WtPzsfurgn3oDwukAAAADCKmKIqW1Lpsu8Du3KRw92J89RdCco55rxpisuRTcmoTK2BBsXVXQanIK1eguMZuZGPtYSASkUgk2Ej4JmC2AY</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="Default">
+      <Value>workstation id=OrderLunchDB.mssql.somee.com%3bpacket size=4096%3buser id=khanhduy95_SQLLogin_1%3bpwd=ki9oadpzds%3bdata source=OrderLunchDB.mssql.somee.com%3bpersist security info=False%3binitial catalog=OrderLunchDB</Value>
+    </DestinationConnectionStrings>
+    <DestinationConnectionStrings Include="Identity">
+      <Value>workstation id=OrderLunchDB.mssql.somee.com%3bpacket size=4096%3buser id=khanhduy95_SQLLogin_1%3bpwd=ki9oadpzds%3bdata source=OrderLunchDB.mssql.somee.com%3bpersist security info=False%3binitial catalog=OrderLunchDB</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

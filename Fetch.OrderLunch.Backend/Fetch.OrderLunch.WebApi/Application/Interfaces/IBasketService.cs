@@ -8,7 +8,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Interfaces
 {
     public interface IBasketService
     {
-        Task CreateBasket();
+        Task CreateBasket(BasketInPut basketInPut);
         Task AddItemToBasket(BasketItemViewModel basketItem);
         Task UpdateBasket(BasketItemViewModel basketItem);
         Task DeleteBasketAsync(int basketId);

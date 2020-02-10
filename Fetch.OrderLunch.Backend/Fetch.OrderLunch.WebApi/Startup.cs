@@ -26,7 +26,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -34,7 +33,6 @@ namespace Fetch.OrderLunch.WebApi
 {
     public class Startup
     {
-        private const string _defaultCorsPolicyName = "localhost";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -45,12 +43,11 @@ namespace Fetch.OrderLunch.WebApi
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationInsights(Configuration)
-                .AddCustomMvc()
+                .AddCustomMvc(Configuration)
                 .AddCustomDbContext(Configuration)
                 .AddCustomSwagger(Configuration)
                 .AddCustomAuthentication(Configuration);
 
-           
             var container = new ContainerBuilder();
             container.Populate(services);
             container.RegisterModule(new ApplicationModule(Configuration.GetConnectionString("Default")));
@@ -59,34 +56,8 @@ namespace Fetch.OrderLunch.WebApi
             return new AutofacServiceProvider(container.Build());
         }
 
-        //    //Configure CORS for React UI
-        //    //services.AddCors(
-        //    //    options => options.AddPolicy(
-        //    //        _defaultCorsPolicyName,
-        //    //        builder => builder
-        //    //            .WithOrigins(
-        //    //                // App:CorsOrigins in appsettings.json can contain more than one address separated by comma.
-        //    //                Configuration.GetSection("App").GetSection("CorsOrigins").Value
-        //    //                    .Split(",", StringSplitOptions.RemoveEmptyEntries)
-        //    //                    .ToArray()
-        //    //            )
-        //    //            .AllowAnyHeader()
-        //    //            .AllowAnyMethod()
-        //    //            .AllowCredentials()
-        //    //    )
-        //    //);
-
-        //}
-
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            var pathBase = Configuration["PATH_BASE"];
-            if (!string.IsNullOrEmpty(pathBase))
-            {
-                loggerFactory.CreateLogger<Startup>().LogDebug("Using PATH BASE '{pathBase}'", pathBase);
-                app.UsePathBase(pathBase);
-            }
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -97,7 +68,7 @@ namespace Fetch.OrderLunch.WebApi
                 app.UseHsts();
             }
             //app.UseCors(_defaultCorsPolicyName); // Enable CORS!
-            app.UseCors("CorsPolicy");
+            app.UseCors("AllowCors");
             
             app.UseHttpsRedirection();
 
@@ -136,12 +107,12 @@ namespace Fetch.OrderLunch.WebApi
 
             return services;
         }
-        public static IServiceCollection AddCustomMvc(this IServiceCollection services)
+        public static IServiceCollection AddCustomMvc(this IServiceCollection services, IConfiguration configuration)
         {
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
-            services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>) );
+            services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
 
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IFoodService, FoodService>();
@@ -152,23 +123,28 @@ namespace Fetch.OrderLunch.WebApi
             services.AddTransient<IBasketService, BasketService>();
 
             services.AddHttpContextAccessor();
-            services.AddMvc(options =>
-                {
-                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
-                })
+            services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddControllersAsServices();  
+                .AddControllersAsServices();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
+            //Configure CORS for React UI
+            services.AddCors(
+                options => options.AddPolicy("AllowCors",
                     builder => builder
-                    .SetIsOriginAllowed((host) => true)
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
+                        .WithOrigins(
+                            // App:CorsOrigins in appsettings.json can contain more than one address separated by comma.
+                            configuration.GetSection("App").GetSection("CorsOrigins").Value
+                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                                .ToArray()
+                        )
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                )
+            );
+
             return services;
+
         }
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
@@ -200,10 +176,9 @@ namespace Fetch.OrderLunch.WebApi
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
                     { "Bearer", Enumerable.Empty<string>() },
                 });
-                //c.OperationFilter<AuthorizeCheckOperationFilter>();
+                // c.OperationFilter<AuthorizeCheckOperationFilter>();
                 c.OperationFilter<FileUploadOperation>();
             });
-
             return services;
         }
         public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)

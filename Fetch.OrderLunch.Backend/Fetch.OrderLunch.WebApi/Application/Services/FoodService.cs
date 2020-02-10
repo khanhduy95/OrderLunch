@@ -91,7 +91,6 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
 
                 return model;
             
-            
         }
        
         public async Task<PaginatedItemsViewModel<FoodViewModel>> GetFoodByCategory(int id, int pageSize, int pageIndex)

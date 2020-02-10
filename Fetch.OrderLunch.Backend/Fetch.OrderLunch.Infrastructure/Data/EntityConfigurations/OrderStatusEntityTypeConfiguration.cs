@@ -23,6 +23,12 @@ namespace Ordering.Infrastructure.Data.EntityConfigurations
             builder.Property(x => x.Name)
                 .HasMaxLength(200)
                 .IsRequired();
+
+            builder.HasData(
+                new OrderStatus(1, "submitted"),
+                new OrderStatus(2, "paid"),
+                new OrderStatus(3, "cancelled")
+                );
         }
     }
 }

@@ -266,6 +266,23 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OrderStatus");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "submitted"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "paid"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "cancelled"
+                        });
                 });
 
             modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.SupplierAggregate.Category", b =>

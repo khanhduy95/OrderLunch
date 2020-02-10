@@ -19,27 +19,21 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("get/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> GetBySupplierId(int id)
         {
-            if (ModelState.IsValid)
-            {
-                
-                return Ok(await _menuService.GetMenuById(id));
-            }
-            return BadRequest();
+            
+             return Ok(await _menuService.GetMenuById(id));
+           
         }
 
         [HttpPut]
-        [Route("update")]
         public async Task<IActionResult> Update(ObjectID objectID)
         {
-            if (ModelState.IsValid)
-            {
-                await _menuService.Update(objectID);
-                return Ok();
-            }
-            return BadRequest();
+            
+            await _menuService.Update(objectID);
+            return Ok();
+           
         }
     }
 }

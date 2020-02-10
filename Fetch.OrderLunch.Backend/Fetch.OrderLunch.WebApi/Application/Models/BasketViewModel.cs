@@ -11,12 +11,13 @@ namespace Fetch.OrderLunch.WebApi.Application.Models
         public string buyerId { get; set; }
         public List<BasketItemViewModel> BasketItems { get; set; }
     }
-    public class CreateBasketViewModel
-    { 
-        
-    }
-        public class BasketItemViewModel
+    public class BasketInPut
     {
+        public string UserId { get; set; }
+    }
+    public class BasketItemViewModel
+    {
+        public string UserId { get; set; }
         public int FoodId { get; set; }       
         public string FoodName { get; set; }
         public decimal UnitPrice { get; set; }

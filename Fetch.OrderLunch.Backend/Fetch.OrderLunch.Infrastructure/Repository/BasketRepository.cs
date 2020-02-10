@@ -60,5 +60,10 @@ namespace Fetch.OrderLunch.Infrastructure.Repository
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
         }
+
+        public Task<Basket> GetByIdAsync(int basketId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -22,74 +22,51 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("create")]
-        public async Task<IActionResult> Create()
+        [Route("")]
+        public async Task<IActionResult> Create(BasketInPut model)
         {
-            if (ModelState.IsValid)
-            {
-                await _basketService.CreateBasket();
-                return Ok();
-            }
-            return BadRequest();
+            
+            await _basketService.CreateBasket(model);
+            return Ok();
+           
         }
 
         [HttpGet]  
-        [Route("get")]
+        [Route("")]
         public async Task<ActionResult> GetBasket()
         {
-            if (ModelState.IsValid)
-            {
-                return Ok(await _basketService.Getbasket());
-            }
-            return NotFound();
+           
+            return Ok(await _basketService.Getbasket());
+          
         }
 
-        [HttpPost]
-        [Route("AddItem")]       
+        [HttpPost]   
+        [Route("Item")]
         public async Task<IActionResult> AddItemToBasket(BasketItemViewModel basketItem)
         {
-            if (ModelState.IsValid)
-            {
-                await _basketService.AddItemToBasket(basketItem);
-                return Ok();
-            }
-            return NotFound();
+          
+            await _basketService.AddItemToBasket(basketItem);
+            return Ok();
+            
         }
 
         [HttpPut]
-        [Route("update")]
         public async Task<IActionResult> UpdateBasket(BasketItemViewModel basketItem)
         {
-            if (ModelState.IsValid)
-            {
-                await _basketService.UpdateBasket(basketItem);
-                return Ok();
-            }
-            return NotFound();
+            
+            await _basketService.UpdateBasket(basketItem);
+            return Ok();
+            
         }
 
-        [HttpDelete]
-        [Route("deleteItem")]
+        [HttpDelete]        
         public async Task<IActionResult> DeleteItemInBasket(int id)
         {
-            if (ModelState.IsValid)
-            {
-                await _basketService.DeleteItemInBasket(id);
-                return Ok();
-            }
-            return NotFound();
+            
+            await _basketService.DeleteItemInBasket(id);
+            return Ok();
+            
         }
 
-        [HttpPost]
-        [Route("checkout")]
-        public async Task<IActionResult> Checkout(int id)
-        {
-            if (ModelState.IsValid)
-            {
-                await _basketService.DeleteItemInBasket(id);
-                return Ok();
-            }
-            return NotFound();
-        }
     }
 }

@@ -11,6 +11,7 @@ namespace Fetch.OrderLunch.Core.Interfaces
         Basket Add(Basket basket);
         bool Delete(Basket basket);
         Task<Basket> GetAsync(string userId);
+        Task<Basket> GetByIdAsync(int basketId);
         Task<Basket> FindIdAsync(int id);
         IUnitOfWork UnitOfWork { get; }
     }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Fetch.OrderLunch.WebApi.Application.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Fetch.OrderLunch.WebApi.Controllers
@@ -30,7 +31,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("register")]
+        [Route("Register")]
         [ProducesResponseType(typeof(RegisterViewModel), (int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Create(RegisterViewModel model)
@@ -55,7 +56,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
             }
         }
         [HttpPost]
-        [Route("login")]
+        [Route("Login")]
         [ProducesResponseType(typeof(UserLoginViewModel), (int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Login([FromBody]UserLoginViewModel model)
@@ -100,9 +101,29 @@ namespace Fetch.OrderLunch.WebApi.Controllers
             }
             return BadRequest();
         }
-        //public async Task<IActionResult> GetRole()
-        //{
 
-        //}
+        [HttpGet]
+        [Route("")]
+        public  async Task<IActionResult> GetUser()
+        {
+            try
+            {
+                var users=await _userManager.Users
+                    .Select(x => new DisplayUser
+                    {
+                        UserId=x.Id,
+                        UserName = x.UserName,
+                        Password = x.PasswordHash,
+                        PhoneNumber = x.PhoneNumber
+                    })
+                    .ToListAsync();
+                return Ok(users);
+            }
+            catch (Exception e)
+            {
+                return NotFound(nameof(e));
+            }
+            
+        }
     }
 }

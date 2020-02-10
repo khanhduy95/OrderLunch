@@ -24,12 +24,12 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
 
         public async Task AddItemToBasket(BasketItemViewModel basketItem)
         {
-            var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
-            if (userId == null)
+            var basket = await _basketRepository.GetAsync(basketItem.UserId);
+            if (basket == null)
             {
-                throw new ArgumentNullException("userId invalied");
+                throw new ArgumentNullException();
             }
-            var basket = await _basketRepository.GetAsync(userId);
+
             basket.AddItemToBasket(
                 basketItem.FoodId,
                 basketItem.FoodName,
@@ -41,17 +41,12 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             await _basketRepository.UnitOfWork.SaveChangesAsync();
         }
 
-        public async Task CreateBasket()
+        public async Task CreateBasket(BasketInPut basketInPut)
         {
-            var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
-            if (userId == null)
-            {
-                throw new ArgumentNullException("userId invalied");
-            }
-            var result = await _basketRepository.GetAsync(userId);
+            var result = await _basketRepository.GetAsync(basketInPut.UserId);
             if (result == null)
             {
-                var basket = new Basket { BuyerId = userId };
+                var basket = new Basket { BuyerId = basketInPut.UserId };
                  _basketRepository.Add(basket);
                 await _basketRepository.UnitOfWork.SaveChangesAsync();
             }
