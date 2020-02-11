@@ -44,6 +44,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpPut]
+        [Route("{id}")]
         public async Task<IActionResult> SetPaidStatus([FromBody]SetPaidOrderStatusCommand command, [FromHeader(Name = "x-requestid")] string requestId)
         {
             bool result = false;

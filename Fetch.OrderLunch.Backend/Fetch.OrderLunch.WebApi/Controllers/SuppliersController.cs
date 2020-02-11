@@ -49,6 +49,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpPut]
+        [Route("{id}")]
         public async Task<IActionResult> Update(SupplierViewModel model)
         {
            
@@ -58,7 +59,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpDelete]
-        [Route("")]
+        [Route("{id}")]
         public async Task<IActionResult> Delete(ObjectID objectID)
         {
            

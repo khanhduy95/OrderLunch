@@ -12,7 +12,6 @@ namespace Fetch.OrderLunch.WebApi.Application.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public IFormFile File { get; set; }
         public int MenuId { get; set; }
         public int CategoryId { get; set; }
         public string Image { get; set; }

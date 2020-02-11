@@ -33,7 +33,7 @@ namespace Fetch.OrderLunch.WebApi
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        //readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -50,22 +50,6 @@ namespace Fetch.OrderLunch.WebApi
                 .AddCustomAuthentication(Configuration);
 
             
-            //services.AddCors(
-            //    options => options.AddPolicy("AllowCors",
-            //        builder => builder
-            //            .WithOrigins(
-            //                // App:CorsOrigins in appsettings.json can contain more than one address separated by comma.
-            //                Configuration.GetSection("App").GetSection("CorsOrigins").Value
-            //                    .Split(",", StringSplitOptions.RemoveEmptyEntries)
-            //                    .ToArray()
-            //            )
-            //            .AllowAnyHeader()
-            //            .AllowAnyMethod()
-            //            .AllowCredentials()
-                        
-            //    )
-            //);
-
             var container = new ContainerBuilder();
             container.Populate(services);
             container.RegisterModule(new ApplicationModule(Configuration.GetConnectionString("Default")));
@@ -158,7 +142,7 @@ namespace Fetch.OrderLunch.WebApi
                 services.AddCors(options =>
                 {
                     options.AddPolicy("CorsPolicy",
-                        builder => builder.WithOrigins("http://localhost:3000/")
+                        builder => builder.AllowAnyOrigin()
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials());

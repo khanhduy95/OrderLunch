@@ -10,9 +10,20 @@ namespace Fetch.OrderLunch.WebApi.Application.Models
         public string Name { get; set; }
         public List<FoodViewModel> Foods { get; set; }
     }
-    public class CreateDailyMenuViewModel
+    public class CreateDailyMenu
+    {
+        public string Name { get; set; }
+    }
+
+    public class DisplayDailyMenu
     {
         public int Id { get; set; }
         public string Name { get; set; }
+    }
+
+    public class FoodDaily
+    {
+        public string UserId { get; set; }
+        public int FoodId { get; set; }
     }
 }

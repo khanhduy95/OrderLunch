@@ -8,10 +8,10 @@ namespace Fetch.OrderLunch.WebApi.Application.Interfaces
 {
     public interface IDailyMenuService
     {
-        Task AddFoodToDailyMenu(ObjectID objectID);
-        Task Create(CreateDailyMenuViewModel dailyMenuVm);
+        Task AddFoodToDailyMenu(FoodDaily food);
+        Task Create(CreateDailyMenu dailyMenuVm);
         Task<DailyMenuViewModel> GetDailyMenu();
-        Task<IEnumerable<CreateDailyMenuViewModel>> GetAll();
+        Task<IEnumerable<DisplayDailyMenu>> GetAll();
         Task Delete(ObjectID objectID);
     }
 }

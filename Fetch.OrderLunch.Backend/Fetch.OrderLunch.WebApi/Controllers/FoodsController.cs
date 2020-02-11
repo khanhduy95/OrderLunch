@@ -82,16 +82,17 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpPut]
+        [Route("{id}")]
         [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Update([FromForm]FoodViewModel model)
         {
-            
             await _foodService.Update(model);
             return Ok();
         }
 
         [HttpDelete]
+        [Route("{id}")]
         public async Task<IActionResult> Delete(ObjectID objectID)
         {
             await _foodService.Delete(objectID);

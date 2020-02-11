@@ -42,7 +42,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                 Name = foodVm.Name,
                 Description = foodVm.Description,
                 Price = foodVm.Price,
-                Image = await UploadFile(foodVm.File),
+                Image = foodVm.Image,
                 MenuId = foodVm.MenuId,
                 CategoryId = foodVm.CategoryId,
                 CreationTime = DateTime.Now,
@@ -182,7 +182,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             food.Price = foodVm.Price;
             food.MenuId = foodVm.MenuId;
             food.CategoryId = foodVm.CategoryId;
-            food.Image = await UploadFile(foodVm.File);
+            food.Image = foodVm.Image;
 
             await _asyncFoodRepository.UpdateAsync(food);
             await _asyncFoodRepository.unitOfWork.SaveChangesAsync();

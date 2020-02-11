@@ -1,7 +1,6 @@
 ﻿
 using Fetch.OrderLunch.WebApi.Application.Interfaces;
 using Fetch.OrderLunch.WebApi.Application.Models;
-using Fetch.OrderLunch.Core.Entities;
 using Fetch.OrderLunch.Core.Entities.CompanyAggregate;
 using Fetch.OrderLunch.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -25,23 +24,21 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
-        public async Task AddFoodToDailyMenu(ObjectID objectID)
+        public async Task AddFoodToDailyMenu(FoodDaily food)
         {
-            var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
-            if (userId == null)
-            {
-                throw new ArgumentNullException();
-            }
-         //   var result = await _dailyMenuRepository.ListAllAsync();
-          //  var daily = result.Where(x => x.CreatorUserId == userId).FirstOrDefault();
-            var dailyMenu =await _dailyMenuRepository.GetAsync(userId);
+            //var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
+            //if (userId == null)
+            //{
+            //    throw new ArgumentNullException();
+            //}
+            var dailyMenu =await _dailyMenuRepository.GetAsync(food.UserId);
            
-            dailyMenu.AddFoodToDailyMenu(objectID.Id, dailyMenu.Id);                     
+            dailyMenu.AddFoodToDailyMenu(food.FoodId, dailyMenu.Id);                     
             await _dailyMenuRepository.unitOfWork.SaveChangesAsync();
             
         }
 
-        public async Task Create(CreateDailyMenuViewModel dailyMenuVm)
+        public async Task Create(CreateDailyMenu dailyMenuVm)
         {
             var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
             if (userId == null)
@@ -69,12 +66,12 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             await _dailyMenuRepository.DeleteAsync(category);
         }
 
-        public async Task<IEnumerable<CreateDailyMenuViewModel>> GetAll()
+        public async Task<IEnumerable<DisplayDailyMenu>> GetAll()
         {
             var results = await _dailyMenuRepository.ListAllAsync();
-            var model = results.Select(x => new CreateDailyMenuViewModel
+            var model = results.Select(x => new DisplayDailyMenu
                                 {   
-                                    Id=x.Id,        
+                                    Id=x.Id,
                                     Name=x.Name
                                 }).ToList();
             return model;

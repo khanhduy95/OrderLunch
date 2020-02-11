@@ -70,7 +70,8 @@ namespace Fetch.OrderLunch.WebApi.Controllers
             
         }
 
-        [HttpDelete]       
+        [HttpDelete]
+        [Route("{id}")]
         public async Task<IActionResult> Delete(ObjectID objectID)
         {
             

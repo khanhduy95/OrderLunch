@@ -28,6 +28,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpPut]
+        [Route("{id}")]
         public async Task<IActionResult> Update(ObjectID objectID)
         {
             
