@@ -11,7 +11,6 @@ namespace Fetch.OrderLunch.WebApi.Application.Interfaces
         Task CreateBasket(BasketInPut basketInPut);
         Task AddItemToBasket(BasketItemViewModel basketItem);
         Task UpdateBasket(BasketItemViewModel basketItem);
-        Task DeleteBasketAsync(int basketId);
         Task<BasketViewModel> Getbasket();
         Task<bool> DeleteItemInBasket(int id);
     }

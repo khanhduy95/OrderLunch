@@ -45,10 +45,17 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations.ApplicationDb
                     b.HasData(
                         new
                         {
-                            Id = "017b520c-4bf2-11ea-b77f-2e728ce88125",
-                            ConcurrencyStamp = "7043f7ee-c9a9-4271-81d3-6b415bc069d2",
-                            Name = "Admin Role",
-                            NormalizedName = "Admin Role"
+                            Id = "17eb914a-4c20-11ea-b77f-2e728ce88125",
+                            ConcurrencyStamp = "ccd39228-d13a-44a2-86a6-bb011fc3cd56",
+                            Name = "Admin",
+                            NormalizedName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "0a89e59c-4c20-11ea-b77f-2e728ce88125",
+                            ConcurrencyStamp = "0d3b65ae-b62a-4a59-b15b-bb8abe1b8ead",
+                            Name = "Member",
+                            NormalizedName = "Member"
                         });
                 });
 
@@ -127,10 +134,11 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations.ApplicationDb
                         {
                             Id = "017b2cdc-4bf2-11ea-b77f-2e728ce88125",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2fd52367-d5f7-4b27-ba07-b2d80b8b0a35",
+                            ConcurrencyStamp = "a4bc7410-e92f-4954-ac4c-554424831d76",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "Admin ",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP2qLeW3IubmFOKGhwvw2wDQpLMdtHkQn9Swyg0m0YXxPEPsw1fTBUEZHrLXevil7w==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "Admin"
@@ -193,7 +201,7 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations.ApplicationDb
                         new
                         {
                             UserId = "017b2cdc-4bf2-11ea-b77f-2e728ce88125",
-                            RoleId = "017b520c-4bf2-11ea-b77f-2e728ce88125"
+                            RoleId = "17eb914a-4c20-11ea-b77f-2e728ce88125"
                         });
                 });
 

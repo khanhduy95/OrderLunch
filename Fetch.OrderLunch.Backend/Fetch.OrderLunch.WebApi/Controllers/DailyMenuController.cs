@@ -13,11 +13,11 @@ namespace Fetch.OrderLunch.WebApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = MVSJwtTokens.AuthSchemes)]
-    public class DailyMenusController : Controller
+    public class DailyMenuController : Controller
     {
         private readonly IDailyMenuService _dailyMenu;
 
-        public DailyMenusController(IDailyMenuService dailyMenu)
+        public DailyMenuController(IDailyMenuService dailyMenu)
         {
             _dailyMenu = dailyMenu;
         }

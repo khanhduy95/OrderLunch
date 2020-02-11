@@ -59,6 +59,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpPut]
+        [Route("{id}")]
         [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Update(CategoryViewModel model)

@@ -15,8 +15,10 @@ namespace Fetch.OrderLunch.Infrastructure.Data.EntityConfigurations
 
             builder.Property(x => x.BuyerId)
                 .IsRequired();
-
-           
+            builder.HasMany(x => x.Items)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+           ///////////////////////
         }
     }
 }

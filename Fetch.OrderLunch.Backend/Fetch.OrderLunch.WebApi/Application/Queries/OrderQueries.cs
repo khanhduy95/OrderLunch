@@ -48,7 +48,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Queries
                     SUM(i.units*i.unitprice) as total
                     FROM Orders o
                     LEFT JOIN OrderItems i on o.Id=i.Id
-                    LEFT JOIN OrderStatus s on o.OrderStatusId=s.Id
+                    LEFT JOIN OrderStatus s on o.OrderStatusId=s.Id                
 					GROUP BY o.Id, o.OrderDate, s.Name"
                     );
                 if (result.AsList().Count == 0)

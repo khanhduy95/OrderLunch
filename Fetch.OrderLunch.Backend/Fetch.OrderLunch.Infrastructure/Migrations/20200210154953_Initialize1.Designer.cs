@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fetch.OrderLunch.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderLunchContext))]
-    [Migration("20200210104942_Initialize")]
-    partial class Initialize
+    [Migration("20200210154953_Initialize1")]
+    partial class Initialize1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -427,7 +427,8 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                 {
                     b.HasOne("Fetch.OrderLunch.Core.Entities.BasketAggregate.Basket")
                         .WithMany("Items")
-                        .HasForeignKey("BasketId");
+                        .HasForeignKey("BasketId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.CompanyAggregate.Office", b =>

@@ -11,6 +11,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class SuppliersController : ControllerBase
     {
         private readonly ISupplierService _supplierService;
@@ -26,7 +27,6 @@ namespace Fetch.OrderLunch.WebApi.Controllers
             return Ok(await _supplierService.GetAll());
 
         }
-
 
         [HttpGet]
         [Route("{id}")]
@@ -58,6 +58,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpDelete]
+        [Route("")]
         public async Task<IActionResult> Delete(ObjectID objectID)
         {
            

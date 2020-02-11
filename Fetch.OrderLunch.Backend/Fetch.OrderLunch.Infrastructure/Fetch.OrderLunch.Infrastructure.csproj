@@ -15,8 +15,4 @@
     <ProjectReference Include="..\Fetch.OrderLunch.Core\Fetch.OrderLunch.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\ApplicationDb\" />
-  </ItemGroup>
-
 </Project>

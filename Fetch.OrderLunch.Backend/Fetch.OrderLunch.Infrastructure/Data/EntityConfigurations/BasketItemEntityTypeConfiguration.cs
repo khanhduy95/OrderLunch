@@ -12,7 +12,7 @@ namespace Fetch.OrderLunch.Infrastructure.Data.EntityConfigurations
         public void Configure(EntityTypeBuilder<BasketItem> builder)
         {
             builder.HasKey(x=>x.Id);
-
+            
         }
     }       
     

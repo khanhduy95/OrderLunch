@@ -46,21 +46,10 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             var result = await _basketRepository.GetAsync(basketInPut.UserId);
             if (result == null)
             {
-                var basket = new Basket { BuyerId = basketInPut.UserId };
+                var basket = new Basket(basketInPut.UserId);
                  _basketRepository.Add(basket);
                 await _basketRepository.UnitOfWork.SaveChangesAsync();
             }
-        }
-
-        public async Task DeleteBasketAsync(int basketId)
-        {
-            var basket = await _basketRepository.FindIdAsync(basketId);
-            if (basket == null)
-            {
-                throw new ArgumentNullException("Basket is null");
-            }
-             _basketRepository.Delete(basket);
-            await _basketRepository.UnitOfWork.SaveChangesAsync();
         }
 
         public async Task<bool> DeleteItemInBasket(int id)
@@ -91,12 +80,14 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                 BasketItems = basket.Items
                     .Select(x => new BasketItemViewModel
                     {
+                        BasketId=basket.Id,
                         FoodId = x.FoodId,
                         FoodName = x.FoodName,
                         UnitPrice = x.UnitPrice,
                         OldUnitPrice = x.OldUnitPrice,
                         PictureUrl = x.PictureUrl,
-                        Quantity=x.Quantity
+                        Quantity=x.Quantity,
+                        
                     })
                     .ToList()
             };

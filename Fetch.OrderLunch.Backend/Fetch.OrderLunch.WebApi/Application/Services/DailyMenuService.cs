@@ -16,15 +16,12 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
     public class DailyMenuService : IDailyMenuService
     {
         private readonly IDailyMenuRepository _dailyMenuRepository;
-        private readonly IAsyncRepository<Food> _foodRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public DailyMenuService(IDailyMenuRepository dailyMenuRepository,
-                                IAsyncRepository<Food> foodRepository,
                                 IHttpContextAccessor httpContextAccessor)
         {
             _dailyMenuRepository = dailyMenuRepository ?? throw new ArgumentNullException(nameof(dailyMenuRepository));
-            _foodRepository = foodRepository ?? throw new ArgumentNullException(nameof(foodRepository));
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
@@ -96,7 +93,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
 
             foreach(var item in dailyMenu.GetFood())
             {
-                var results = await _foodRepository.ListAllAsync();
+                var results = await _dailyMenuRepository.ListAllAsync();
 
                 var food = results.Where(i=>i.Id==item.FoodId)
                     .Select(x => new FoodViewModel

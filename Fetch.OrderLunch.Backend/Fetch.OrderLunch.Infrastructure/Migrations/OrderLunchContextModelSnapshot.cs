@@ -425,7 +425,8 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations
                 {
                     b.HasOne("Fetch.OrderLunch.Core.Entities.BasketAggregate.Basket")
                         .WithMany("Items")
-                        .HasForeignKey("BasketId");
+                        .HasForeignKey("BasketId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Fetch.OrderLunch.Core.Entities.CompanyAggregate.Office", b =>

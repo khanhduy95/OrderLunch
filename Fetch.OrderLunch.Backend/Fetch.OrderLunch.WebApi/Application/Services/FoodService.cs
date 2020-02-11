@@ -141,6 +141,35 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             };
         }
 
+        public async Task<PaginatedItemsViewModel<FoodViewModel>> SearchFoodByFoodName(string foodName, int pageIndex, int pageSize)
+        {
+            var filterSpecification = new FoodFilterSpecification(foodName);
+            var roots = await _asyncFoodRepository.ListAsync(filterSpecification);
+            var root = roots.FirstOrDefault();
+            var menu = await _asyncMenuRepository.GetByIdAsync(root.MenuId);
+          
+                var totalItems = roots.Count();
+                var itemsOnPage = roots.OrderBy(x => x.Name)
+                                      .Select(x => new FoodViewModel
+                                      {
+                                          Id = x.Id,
+                                          Description = x.Description,
+                                          Name = x.Name,
+                                          Price = x.Price,
+                                          MenuId = x.MenuId,
+                                          CategoryId = x.CategoryId,
+                                          Image = x.Image
+                                      })
+                                      .Skip(pageSize * pageIndex)
+                                      .Take(pageSize)
+                                      .ToList();
+
+                var model = new PaginatedItemsViewModel<FoodViewModel>(
+                    pageIndex, pageSize, totalItems, itemsOnPage);
+
+                return model;
+        }
+
         public async Task<FoodViewModel> Update(FoodViewModel foodVm)
         {
             var food = await _asyncFoodRepository.GetByIdAsync(foodVm.Id);

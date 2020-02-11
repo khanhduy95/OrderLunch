@@ -18,7 +18,6 @@ namespace Fetch.OrderLunch.Core.Entities.BasketAggregate
         public BasketItem(int foodId, string foodName, decimal unitPrice, decimal oldUnitPrice,
                         int quantity, string pictureUrl)
         {
-
             FoodId = foodId;
             FoodName = foodName;
             UnitPrice = unitPrice;

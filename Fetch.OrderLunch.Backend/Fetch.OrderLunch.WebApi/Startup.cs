@@ -9,7 +9,6 @@ using Autofac.Extensions.DependencyInjection;
 using Fetch.OrderLunch.Core.Interfaces;
 using Fetch.OrderLunch.Infrastructure.Data;
 using Fetch.OrderLunch.Infrastructure.Identity;
-using Fetch.OrderLunch.Infrastructure.Repository;
 using Fetch.OrderLunch.WebApi.Application.Interfaces;
 using Fetch.OrderLunch.WebApi.Application.Models;
 using Fetch.OrderLunch.WebApi.Application.Services;
@@ -26,6 +25,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -33,6 +33,7 @@ namespace Fetch.OrderLunch.WebApi
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -43,10 +44,27 @@ namespace Fetch.OrderLunch.WebApi
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationInsights(Configuration)
-                .AddCustomMvc(Configuration)
+                .AddCustomMvc()
                 .AddCustomDbContext(Configuration)
                 .AddCustomSwagger(Configuration)
                 .AddCustomAuthentication(Configuration);
+
+            
+            //services.AddCors(
+            //    options => options.AddPolicy("AllowCors",
+            //        builder => builder
+            //            .WithOrigins(
+            //                // App:CorsOrigins in appsettings.json can contain more than one address separated by comma.
+            //                Configuration.GetSection("App").GetSection("CorsOrigins").Value
+            //                    .Split(",", StringSplitOptions.RemoveEmptyEntries)
+            //                    .ToArray()
+            //            )
+            //            .AllowAnyHeader()
+            //            .AllowAnyMethod()
+            //            .AllowCredentials()
+                        
+            //    )
+            //);
 
             var container = new ContainerBuilder();
             container.Populate(services);
@@ -56,8 +74,12 @@ namespace Fetch.OrderLunch.WebApi
             return new AutofacServiceProvider(container.Build());
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        [Obsolete]
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -66,10 +88,9 @@ namespace Fetch.OrderLunch.WebApi
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
-            //app.UseCors(_defaultCorsPolicyName); // Enable CORS!
-            app.UseCors("AllowCors");
-            
+            };
+            app.UseCors("CorsPolicy");
+
             app.UseHttpsRedirection();
 
             app.UseMvc();
@@ -107,7 +128,7 @@ namespace Fetch.OrderLunch.WebApi
 
             return services;
         }
-        public static IServiceCollection AddCustomMvc(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddCustomMvc(this IServiceCollection services)
         {
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -123,26 +144,44 @@ namespace Fetch.OrderLunch.WebApi
             services.AddTransient<IBasketService, BasketService>();
 
             services.AddHttpContextAccessor();
-            services.AddMvc()
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+            })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddControllersAsServices();
+                .AddControllersAsServices();  //Injecting Controllers themselves thru DI
+                                              //For further info see: http://docs.autofac.org/en/latest/integration/aspnetcore.html#controllers-as-services
+
+            try
+            {
+                services.AddCors(options =>
+                {
+                    options.AddPolicy("CorsPolicy",
+                        builder => builder.WithOrigins("http://localhost:3000/")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+                });
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(nameof(e));
+            }
+            
+
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("CorsPolicy",
+            //        builder => builder
+            //        .SetIsOriginAllowed((host) => true)
+            //        .AllowAnyMethod()
+            //        .AllowAnyHeader()
+            //        .AllowCredentials());
+            //});
 
             //Configure CORS for React UI
-            services.AddCors(
-                options => options.AddPolicy("AllowCors",
-                    builder => builder
-                        .WithOrigins(
-                            // App:CorsOrigins in appsettings.json can contain more than one address separated by comma.
-                            configuration.GetSection("App").GetSection("CorsOrigins").Value
-                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                                .ToArray()
-                        )
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials()
-                )
-            );
-
             return services;
 
         }

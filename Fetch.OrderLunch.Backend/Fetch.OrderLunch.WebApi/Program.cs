@@ -22,9 +22,7 @@ namespace Fetch.OrderLunch.WebApi
         {
             var host = CreateWebHostBuilder(args)
                     .Build();
-
                 host.Run();
-            
         }
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)

@@ -12,11 +12,9 @@ namespace Fetch.OrderLunch.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   
     public class FoodsController : ControllerBase
     {
         private readonly IFoodService _foodService;
-
 
         public FoodsController(IFoodService foodService)
         {
@@ -46,6 +44,15 @@ namespace Fetch.OrderLunch.WebApi.Controllers
             
             return Ok(await _foodService.GetFoodByCategory(id, pageIndex, pageSize));
            
+        }
+
+        [HttpGet]
+        [Route("Name")]
+        public async Task<IActionResult> GetFoodByFoodName(string foodName, [FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 0)
+        {
+
+            return Ok(await _foodService.SearchFoodByFoodName(foodName, pageIndex, pageSize));
+
         }
 
         [HttpGet]
