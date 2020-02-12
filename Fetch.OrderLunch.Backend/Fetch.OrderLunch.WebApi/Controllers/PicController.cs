@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Fetch.OrderLunch.WebApi.Application.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,22 +30,23 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadFile(IFormFile file)
+        public async Task<IActionResult> UploadFile([FromForm]FileInputModel file)
         {
             try
             {
-                if (file == null || file.Length == 0)
-                    return Content("file not selected");
+                if (file.FileToUpload == null || file.FileToUpload.Length == 0)
+                {
+                    throw new ArgumentNullException("file null");
+                }
 
                 var path = Path.Combine(
                             Directory.GetCurrentDirectory(), "wwwroot\\images",
-                            file.FileName);
+                            file.FileToUpload.FileName);
 
                 using (var stream = new FileStream(path, FileMode.Create))
                 {
-                    await file.CopyToAsync(stream);
+                    await file.FileToUpload.CopyToAsync(stream);
                 }
-
                 return Ok(file);
             }
             catch 

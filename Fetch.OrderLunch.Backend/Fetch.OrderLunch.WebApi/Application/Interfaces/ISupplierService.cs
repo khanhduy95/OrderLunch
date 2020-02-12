@@ -9,6 +9,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Interfaces
     public interface ISupplierService
     {
         Task<IEnumerable<SupplierViewModel>> GetAll();
+        Task<MenuViewModel> GetMenu(int supplierId);
         Task<SupplierViewModel> GetById(int id);
         Task Add(SupplierInput supplierVm);
         Task Update(SupplierViewModel supplierVm);       

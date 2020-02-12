@@ -14,14 +14,17 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
     {
         private readonly IAsyncRepository<Supplier> _asyncSupplierRepository;
         private readonly IAsyncRepository<Menu> _asyncMenuRepository;
+        private readonly ISupplierRepository _supplierRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public SupplierService(IAsyncRepository<Supplier> asyncSupplierRepository,
                                IAsyncRepository<Menu> asyncMenuRepository,
+                               ISupplierRepository supplierRepository,
                                IHttpContextAccessor httpContextAccessor)
         {
             _asyncSupplierRepository = asyncSupplierRepository;
             _asyncMenuRepository = asyncMenuRepository;
+            _supplierRepository = supplierRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -91,6 +94,20 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                 return supplier;
             }
             throw new ArgumentNullException("SupplierId is null"); 
+        }
+
+        public async Task<MenuViewModel> GetMenu(int supplierId)
+        {
+            var supplier = await _supplierRepository.GetAsync(supplierId);
+            if (supplier != null)
+            {
+                var menu = supplier.Menu.Foods
+                                .Select(x => new MenuViewModel
+                                {
+
+                                }).ToList();
+            }
+            return null;
         }
 
         public async Task Update(SupplierViewModel supplierVm)

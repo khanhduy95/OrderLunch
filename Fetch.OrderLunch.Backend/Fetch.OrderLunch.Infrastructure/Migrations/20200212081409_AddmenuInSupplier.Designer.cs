@@ -4,14 +4,16 @@ using Fetch.OrderLunch.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fetch.OrderLunch.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderLunchContext))]
-    partial class OrderLunchContextModelSnapshot : ModelSnapshot
+    [Migration("20200212081409_AddmenuInSupplier")]
+    partial class AddmenuInSupplier
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

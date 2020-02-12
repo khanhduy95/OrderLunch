@@ -27,7 +27,7 @@ namespace Fetch.OrderLunch.Infrastructure.Repository
         public async Task<DailyMenu> GetAsync(string userId)
         {
             var dailyMenu = await _dbContext.DailyMenu
-                .Where(x => x.CreatorUserId == userId )
+                .Where(x => x.CreatorUserId == userId && x.CreationTime==DateTime.Today)
                 .FirstOrDefaultAsync();
 
             if (dailyMenu == null)

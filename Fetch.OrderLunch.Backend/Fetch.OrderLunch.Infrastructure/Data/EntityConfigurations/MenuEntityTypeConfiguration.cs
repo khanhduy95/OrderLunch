@@ -16,9 +16,7 @@ namespace Fetch.OrderLunch.Infrastructure.Data.EntityConfigurations
 
             builder.Ignore(x => x.DomainEvents);
             
-            builder.HasOne<Supplier>()
-                   .WithOne()
-                   .IsRequired();
+          
         
         }
     }

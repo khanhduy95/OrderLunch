@@ -137,35 +137,18 @@ namespace Fetch.OrderLunch.WebApi
                 .AddControllersAsServices();  //Injecting Controllers themselves thru DI
                                               //For further info see: http://docs.autofac.org/en/latest/integration/aspnetcore.html#controllers-as-services
 
-            try
+            services.AddCors(options =>
             {
-                services.AddCors(options =>
-                {
-                    options.AddPolicy("CorsPolicy",
-                        builder => builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials());
-                });
-            }
-            catch (Exception e)
-            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
 
-                throw new Exception(nameof(e));
-            }
             
 
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("CorsPolicy",
-            //        builder => builder
-            //        .SetIsOriginAllowed((host) => true)
-            //        .AllowAnyMethod()
-            //        .AllowAnyHeader()
-            //        .AllowCredentials());
-            //});
-
-            //Configure CORS for React UI
+            // Configure CORS for React UI
             return services;
 
         }

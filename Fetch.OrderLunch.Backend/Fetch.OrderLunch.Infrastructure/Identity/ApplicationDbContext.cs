@@ -46,18 +46,42 @@ namespace Fetch.OrderLunch.Infrastructure.Identity
                 NormalizedUserName="ADMIN"
             };
 
+            var claims = new List<IdentityUserClaim<string>>()
+            {
+                new IdentityUserClaim<string>()
+                {
+                    Id=1,
+                    UserId="017b2cdc-4bf2-11ea-b77f-2e728ce88125",
+                    ClaimType="Role Edit",
+                    ClaimValue="true"
+                },
+
+                 new IdentityUserClaim<string>()
+                {
+                    Id=2,
+                    UserId="017b2cdc-4bf2-11ea-b77f-2e728ce88125",
+                    ClaimType="Delete Edit",
+                    ClaimValue="true"
+                },
+
+                  new IdentityUserClaim<string>()
+                {
+                    Id=3,
+                    UserId="017b2cdc-4bf2-11ea-b77f-2e728ce88125",
+                    ClaimType="Create Edit",
+                    ClaimValue="true"
+                },
+
+            };
+
             PasswordHasher<IdentityUser> ph = new PasswordHasher<IdentityUser>();
             user.PasswordHash = ph.HashPassword(user, "Admin");
 
             builder.Entity<IdentityUser>().HasData(user);
 
-            builder.Entity<IdentityUserRole<string>>()
-                   .HasData(
-                            new IdentityUserRole<string>
-                            {
-                                UserId = userId,
-                                RoleId = AdminRoleId
-                            });
+            builder.Entity<IdentityUserClaim<string>>()
+                   .HasData(claims);
+                           
         }
     }
 }

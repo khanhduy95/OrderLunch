@@ -10,7 +10,8 @@ namespace Fetch.OrderLunch.Core.Entities.SupplierAggregate
         public string Name { get; set; }
         public string Address { get; set; }
         public string HotLine { get; set; }
-       
+        public Menu Menu { get; set; }
+
         public Menu CreateMenu(int supplierId)
         {
            

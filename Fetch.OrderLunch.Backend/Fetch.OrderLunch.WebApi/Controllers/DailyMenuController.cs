@@ -23,61 +23,51 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public async Task<IActionResult> GetDailyMenu()
+        [Route("id")]
+        public async Task<IActionResult> GetDailyMenu(string userId)
         {
-            if (ModelState.IsValid)
-            {
-                return Ok(await _dailyMenu.GetDailyMenu());
-            }
-            return NotFound();
+            
+            return Ok(await _dailyMenu.GetDailyMenu(userId));
+           
         }
 
         [HttpGet]
         [Route("")]
         public async Task<IActionResult> GetAll()
         {
-            if (ModelState.IsValid)
-            {
-                return Ok(await _dailyMenu.GetAll());
-            }
-            return NotFound();
+           
+             return Ok(await _dailyMenu.GetAll());
+           
         }
 
         [HttpPost]    
         [Route("")]
         public async Task<IActionResult> Create(CreateDailyMenu model)
         {
-            if (ModelState.IsValid)
-            {
-                await _dailyMenu.Create(model);
-                return Ok();
-            }
-            return BadRequest();
+            
+            await _dailyMenu.Create(model);
+            return Ok();
+            
         }
 
         [HttpPost]
-        [Route("{id}/Food")]
+        [Route("id/Food")]
         public async Task<IActionResult> AddFoodtoDailyMenu(FoodDaily model)
         {
-            if (ModelState.IsValid)
-            {
-                await _dailyMenu.AddFoodToDailyMenu(model);
-                return Ok();
-            }
-            return BadRequest();
+            
+            await _dailyMenu.AddFoodToDailyMenu(model);
+            return Ok();
+           
         }
 
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete(ObjectID objectID)
         {
-            if (ModelState.IsValid)
-            {
-                await _dailyMenu.Delete(objectID);
-                return Ok();
-            }
-            return BadRequest();
+            
+            await _dailyMenu.Delete(objectID);
+            return Ok();
+           
         }
     }
 }

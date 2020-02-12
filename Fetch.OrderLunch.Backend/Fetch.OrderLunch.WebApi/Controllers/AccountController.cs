@@ -48,13 +48,14 @@ namespace Fetch.OrderLunch.WebApi.Controllers
                 await _userManager.CreateAsync(user);
 
                 ViewBag.Message = "User was created";
-                return Created("", user);
+                return Created("","");
             }
             else
             {
                 return BadRequest();
             }
         }
+
         [HttpPost]
         [Route("Login")]
         [ProducesResponseType(typeof(UserLoginViewModel), (int)HttpStatusCode.Created)]
@@ -77,7 +78,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
                     };
 
                     var roles = await _userManager.GetRolesAsync(user);
-                    claims.Add(roles.Select(Role => new Claim(ClaimTypes.Role, Role)).FirstOrDefault());
+                    claims.Add(roles.Select(Role => new Claim("Role", Role)).FirstOrDefault());
 
                     var token = new JwtSecurityToken
                         (MVSJwtTokens.Issuer,
@@ -92,7 +93,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
                         expiration = token.ValidTo
                     };
 
-                    return Created("", results);
+                    return Created("",results);
                 }
                 else
                 {
@@ -113,7 +114,6 @@ namespace Fetch.OrderLunch.WebApi.Controllers
                     {
                         UserId=x.Id,
                         UserName = x.UserName,
-                        Password = x.PasswordHash,
                         PhoneNumber = x.PhoneNumber
                     })
                     .ToListAsync();
@@ -125,5 +125,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
             }
             
         }
+
+      
     }
 }
