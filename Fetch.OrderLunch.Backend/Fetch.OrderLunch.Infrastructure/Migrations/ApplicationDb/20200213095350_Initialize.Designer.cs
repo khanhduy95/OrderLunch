@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fetch.OrderLunch.Infrastructure.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200210161456_Initialize2")]
-    partial class Initialize2
+    [Migration("20200213095350_Initialize")]
+    partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,14 +48,14 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations.ApplicationDb
                         new
                         {
                             Id = "17eb914a-4c20-11ea-b77f-2e728ce88125",
-                            ConcurrencyStamp = "ccd39228-d13a-44a2-86a6-bb011fc3cd56",
+                            ConcurrencyStamp = "3ecd0a5f-70d0-4b6d-a359-1366d00b0903",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
                             Id = "0a89e59c-4c20-11ea-b77f-2e728ce88125",
-                            ConcurrencyStamp = "0d3b65ae-b62a-4a59-b15b-bb8abe1b8ead",
+                            ConcurrencyStamp = "87ec47cf-dca4-4ed9-9872-f808029d0a49",
                             Name = "Member",
                             NormalizedName = "Member"
                         });
@@ -136,11 +136,11 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations.ApplicationDb
                         {
                             Id = "017b2cdc-4bf2-11ea-b77f-2e728ce88125",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a4bc7410-e92f-4954-ac4c-554424831d76",
+                            ConcurrencyStamp = "13393c8d-1b67-4c94-8ea1-f42d97321504",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP2qLeW3IubmFOKGhwvw2wDQpLMdtHkQn9Swyg0m0YXxPEPsw1fTBUEZHrLXevil7w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPBrDve8o7ZzVtZDiv+MQz4lQHTPiXXgR6txNEM2yTKtShZOMy0gw4hL/3sHB78u5Q==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "Admin"
@@ -165,6 +165,29 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations.ApplicationDb
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "Role Edit",
+                            ClaimValue = "true",
+                            UserId = "017b2cdc-4bf2-11ea-b77f-2e728ce88125"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "Delete Edit",
+                            ClaimValue = "true",
+                            UserId = "017b2cdc-4bf2-11ea-b77f-2e728ce88125"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClaimType = "Create Edit",
+                            ClaimValue = "true",
+                            UserId = "017b2cdc-4bf2-11ea-b77f-2e728ce88125"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>

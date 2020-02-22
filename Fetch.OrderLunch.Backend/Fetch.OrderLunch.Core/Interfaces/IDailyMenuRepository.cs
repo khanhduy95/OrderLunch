@@ -11,5 +11,8 @@ namespace Fetch.OrderLunch.Core.Interfaces
         DailyMenu AddDailyMenu(DailyMenu dailyMenu);
 
         Task<DailyMenu> GetAsync(string userId);
+
+        Task<DailyMenu> FindByIdAsync(int id);
+
     }
 }

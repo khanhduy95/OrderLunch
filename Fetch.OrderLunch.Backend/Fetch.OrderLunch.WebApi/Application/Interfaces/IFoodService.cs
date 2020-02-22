@@ -13,8 +13,8 @@ namespace Fetch.OrderLunch.WebApi.Application.Interfaces
         Task<PaginatedItemsViewModel<FoodViewModel>> GetAll(int pageIndex, int pageSize);
         Task<FoodViewModel> GetFoodById(int id);
         Task<PaginatedItemsViewModel<FoodViewModel>> SearchFoodByFoodName(string foodName, int pageIndex, int pageSize);
-        Task<FoodViewModel> Add(FoodViewModel foodVm);
-        Task<FoodViewModel> Update(FoodViewModel foodVm);      
-        Task Delete(ObjectID objectID);
+        Task Add(FoodInput foodVm);
+        Task Update(FoodViewModel foodVm,int id);      
+        Task Delete(int foodId);
     }
 }

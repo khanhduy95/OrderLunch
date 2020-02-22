@@ -30,7 +30,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<FoodViewModel> Add(FoodViewModel foodVm)
+        public async Task Add(FoodInput foodVm)
         {
             //var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
             //if (userId == null)
@@ -51,12 +51,11 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
 
             await _asyncFoodRepository.AddAsync(Food);
             await _asyncFoodRepository.unitOfWork.SaveChangesAsync();
-            return foodVm;
         }
 
-        public async  Task Delete(ObjectID objectID)
+        public async  Task Delete(int foodId)
         {
-            var food =await _asyncFoodRepository.GetByIdAsync(objectID.Id);
+            var food =await _asyncFoodRepository.GetByIdAsync(foodId);
             if (food == null)
             {
                 throw new ArgumentNullException(nameof(food));
@@ -143,11 +142,13 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
 
         public async Task<PaginatedItemsViewModel<FoodViewModel>> SearchFoodByFoodName(string foodName, int pageIndex, int pageSize)
         {
-            var filterSpecification = new FoodFilterSpecification(foodName);
-            var roots = await _asyncFoodRepository.ListAsync(filterSpecification);
-            var root = roots.FirstOrDefault();
-            var menu = await _asyncMenuRepository.GetByIdAsync(root.MenuId);
-          
+            if (!String.IsNullOrEmpty(foodName))
+            {
+                var filterSpecification = new FoodFilterSpecification(foodName);
+                var roots = await _asyncFoodRepository.ListAsync(filterSpecification);
+                var root = roots.FirstOrDefault();
+                var menu = await _asyncMenuRepository.GetByIdAsync(root.MenuId);
+
                 var totalItems = roots.Count();
                 var itemsOnPage = roots.OrderBy(x => x.Name)
                                       .Select(x => new FoodViewModel
@@ -168,43 +169,28 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                     pageIndex, pageSize, totalItems, itemsOnPage);
 
                 return model;
+            }
+            return await GetAll(pageIndex,pageSize);
         }
 
-        public async Task<FoodViewModel> Update(FoodViewModel foodVm)
+        public async Task Update(FoodViewModel foodVm,int id)
         {
-            var food = await _asyncFoodRepository.GetByIdAsync(foodVm.Id);
-            if (food == null)
+            var food = await _asyncFoodRepository.GetByIdAsync(id);
+            if (food == null || food.Id!=foodVm.Id)
             {
-                throw new ArgumentNullException(nameof(food));
+                throw new ArgumentNullException("parameter 'Id' Incorrect");
             }
+
             food.Name = foodVm.Name;
             food.Description = foodVm.Description;
             food.Price = foodVm.Price;
             food.MenuId = foodVm.MenuId;
             food.CategoryId = foodVm.CategoryId;
             food.Image = foodVm.Image;
-
             await _asyncFoodRepository.UpdateAsync(food);
             await _asyncFoodRepository.unitOfWork.SaveChangesAsync();
-            return foodVm;
+
         }
            
-        private async Task<string> UploadFile(IFormFile file)
-        {
-            if (file == null || file.Length == 0)
-            {
-                throw new ArgumentNullException("file null");
-            }
-
-            var path = Path.Combine(
-                        Directory.GetCurrentDirectory(), "wwwroot\\images",
-                        file.FileName);
-
-            using (var stream = new FileStream(path, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-            return file.FileName;
-        }       
     }
 }

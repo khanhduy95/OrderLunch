@@ -48,26 +48,34 @@ namespace Fetch.OrderLunch.WebApi.Controllers
 
         [HttpGet]
         [Route("Name")]
-        public async Task<IActionResult> GetFoodByFoodName(string foodName, [FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 0)
+        public async Task<IActionResult> GetFoodByFoodName(string name, [FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 0)
         {
 
-            return Ok(await _foodService.SearchFoodByFoodName(foodName, pageIndex, pageSize));
+            return Ok(await _foodService.SearchFoodByFoodName(name, pageIndex, pageSize));
 
         }
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetFoodById(int id)
         {
+            try
+            {
+                return Ok(await _foodService.GetFoodById(id));
+
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
+            }
             
-            return Ok(await _foodService.GetFoodById(id));
-           
         }
 
         [HttpPost]
         [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Create([FromForm]FoodViewModel model)
+        public async Task<IActionResult> Create(FoodInput model)
         {
             try
             {
@@ -82,20 +90,28 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Update([FromForm]FoodViewModel model)
+        public async Task<IActionResult> Update(FoodViewModel model,int id)
         {
-            await _foodService.Update(model);
-            return Ok();
+            try
+            {
+                await _foodService.Update(model, id);
+                return Ok();
+            }
+            catch (Exception )
+            {
+                return BadRequest($"parameter 'id' Incorrect or Object is null");
+            }
+
         }
 
         [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> Delete(ObjectID objectID)
+        [Route("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            await _foodService.Delete(objectID);
+            await _foodService.Delete(id);
             return Ok();
         }
 

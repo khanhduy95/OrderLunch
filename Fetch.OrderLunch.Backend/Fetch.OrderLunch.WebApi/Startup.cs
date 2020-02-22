@@ -190,6 +190,12 @@ namespace Fetch.OrderLunch.WebApi
         public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication()
+              .AddFacebook(facebookOptions =>
+              {
+                  facebookOptions.AppId = "208182446945226";
+
+                  facebookOptions.AppSecret = "2a2e9d0bada558a2ccb4b4078dad4b7b";
+              })
               .AddCookie(x => x.SlidingExpiration = true)
               .AddJwtBearer(x =>
               {
@@ -203,12 +209,6 @@ namespace Fetch.OrderLunch.WebApi
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("DeleteRolePolicy",
-                    policy => policy.RequireClaim("Delete Role"));
-
-                options.AddPolicy("EditRolePolicy",
-                    policy => policy.RequireClaim("Edit Role","true"));
-
                 options.AddPolicy("AdminRolePolicy",
                     policy => policy.RequireRole("Admin"));
             });

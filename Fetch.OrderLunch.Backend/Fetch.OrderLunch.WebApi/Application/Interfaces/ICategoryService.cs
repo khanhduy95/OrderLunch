@@ -10,8 +10,8 @@ namespace Fetch.OrderLunch.WebApi.Application.Interfaces
     {
         Task<IEnumerable<CategoryViewModel>> GetAll();
         Task<CategoryViewModel> GetById(int id);
-        Task Add(CategoryViewModel categoryVm);
-        Task Update(CategoryViewModel categoryVm);
-        Task Delete(ObjectID objectID);
+        Task Add(CategoryInput categoryInput);
+        Task Update(CategoryViewModel category,int id);
+        Task Delete(int categoryId);
     }
 }

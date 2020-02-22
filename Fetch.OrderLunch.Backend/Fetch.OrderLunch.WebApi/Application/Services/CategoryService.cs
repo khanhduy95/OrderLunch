@@ -21,7 +21,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
         }
 
         
-        public async Task Add(CategoryViewModel categoryVm)
+        public async Task Add(CategoryInput categoryInput)
         {
             
             //var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);          
@@ -31,7 +31,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             //}
             var category = new Category
             {
-                Name = categoryVm.Name,
+                Name = categoryInput.Name,
                 CreationTime = DateTime.Now,             
              //   CreatorUserId = userId
 
@@ -39,9 +39,9 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             await _asyncRepository.AddAsync(category);
         }
 
-        public async Task Delete(ObjectID objectID)
+        public async Task Delete(int categoryId)
         {
-            var category = await _asyncRepository.GetByIdAsync(objectID.Id);
+            var category = await _asyncRepository.GetByIdAsync(categoryId);
             if (category == null)
             {
                 throw new ArgumentNullException("Category is null");
@@ -76,16 +76,16 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
         }
 
        
-        public async Task Update(CategoryViewModel categoryVm)
+        public async Task Update(CategoryViewModel category,int id)
         {
-            var category = await _asyncRepository.GetByIdAsync(categoryVm.Id);
-            if (category == null)
+            var result = await _asyncRepository.GetByIdAsync(id);
+            if (result == null || result.Id!=category.Id)
             {
                 throw new ArgumentNullException("Category is null");
             }
-            category.Name = categoryVm.Name;
+            result.Name = category.Name;
 
-            await _asyncRepository.UpdateAsync(category);
+            await _asyncRepository.UpdateAsync(result);
           
         }
     }

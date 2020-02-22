@@ -46,14 +46,14 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations.ApplicationDb
                         new
                         {
                             Id = "17eb914a-4c20-11ea-b77f-2e728ce88125",
-                            ConcurrencyStamp = "877131a5-09d8-40c4-b7b5-4e1a71d3f428",
+                            ConcurrencyStamp = "3ecd0a5f-70d0-4b6d-a359-1366d00b0903",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
                             Id = "0a89e59c-4c20-11ea-b77f-2e728ce88125",
-                            ConcurrencyStamp = "b9606f05-ecb1-4fee-90e6-2c862465a16b",
+                            ConcurrencyStamp = "87ec47cf-dca4-4ed9-9872-f808029d0a49",
                             Name = "Member",
                             NormalizedName = "Member"
                         });
@@ -134,11 +134,11 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations.ApplicationDb
                         {
                             Id = "017b2cdc-4bf2-11ea-b77f-2e728ce88125",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "50ae289f-a3c9-4f1d-951f-1eb06532bd0c",
+                            ConcurrencyStamp = "13393c8d-1b67-4c94-8ea1-f42d97321504",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHYQLhUgSzyE0LdqYSTQPmGtsNk0PiA7fb49i2YeNVf+XFs3ChDJrn/OOR2aeDsflw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPBrDve8o7ZzVtZDiv+MQz4lQHTPiXXgR6txNEM2yTKtShZOMy0gw4hL/3sHB78u5Q==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "Admin"
@@ -219,6 +219,13 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations.ApplicationDb
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "017b2cdc-4bf2-11ea-b77f-2e728ce88125",
+                            RoleId = "17eb914a-4c20-11ea-b77f-2e728ce88125"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

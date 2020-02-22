@@ -11,7 +11,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Models
         public string Email { get; set; }
         public string Password { get; set; }
     }
-    public class DisplayUser
+    public class UserInfor
     {
         public string UserId { get; set; }
         public string UserName { get; set; }

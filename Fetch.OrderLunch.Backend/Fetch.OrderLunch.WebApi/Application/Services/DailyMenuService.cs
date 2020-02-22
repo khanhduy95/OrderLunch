@@ -27,18 +27,19 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
-        public async Task AddFoodToDailyMenu(FoodDaily food)
+        public async Task AddFoodToDailyMenu(FoodDaily food, string userId)
         {
             //var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
             //if (userId == null)
             //{
             //    throw new ArgumentNullException();
             //}
-            var dailyMenu =await _dailyMenuRepository.GetAsync(food.UserId);
+            var dailyMenu =await _dailyMenuRepository.GetAsync(userId);
             if (dailyMenu==null)
             {
                 throw new ArgumentException("DailyMenu is not exist!");
-            }
+            };
+
             dailyMenu.AddFoodToDailyMenu(food.FoodId, dailyMenu.Id);
             await _dailyMenuRepository.unitOfWork.SaveChangesAsync();
         }
@@ -49,7 +50,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             if (userId == null)
             {
                 throw new ArgumentNullException();
-            }
+            };
 
             var dailyMenu = new DailyMenu
             {
@@ -61,13 +62,14 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             await _dailyMenuRepository.unitOfWork.SaveChangesAsync();
         }
 
-        public async Task Delete(ObjectID objectID)
+        public async Task Delete(int dailyMenuId)
         {
-            var dailyMenu = await _dailyMenuRepository.GetByIdAsync(objectID.Id);
+            var dailyMenu = await _dailyMenuRepository.GetByIdAsync(dailyMenuId);
             if (dailyMenu == null)
             {
                 throw new ArgumentNullException("Category is null");
-            }
+            };
+
             await _dailyMenuRepository.DeleteAsync(dailyMenu);
         }
 
@@ -88,7 +90,7 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
         {
             var dailyMenu = await _dailyMenuRepository.GetAsync(userId);
             var Foods = new List<FoodViewModel>();
-
+                           
             foreach(var item in dailyMenu.GetFood())
             {
                 var results = await _foodRepository.ListAllAsync();
@@ -111,10 +113,30 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
 
         public async Task<DailyMenuViewModel> GetDailyMenuToDay()
         {
-            var results = await _dailyMenuRepository.ListAllAsync();
-
-            return null;
+            var result =await _dailyMenuRepository.ListAllAsync();
+            var dailyMenu = result.Where(x => x.CreationTime == DateTime.Today).FirstOrDefault();
             
+            var Foods = new List<FoodViewModel>();
+            foreach (var item in dailyMenu.GetFood())
+            {
+                var results = await _foodRepository.ListAllAsync();
+
+                var food = results.Where(i => i.Id == item.FoodId)
+                    .Select(x => new FoodViewModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name
+                    }).FirstOrDefault();
+
+                Foods.Add(food);
+
+            };
+
+            return new DailyMenuViewModel
+            {
+                Name = dailyMenu.Name,
+                Foods = Foods
+            };
         }
     }
 }

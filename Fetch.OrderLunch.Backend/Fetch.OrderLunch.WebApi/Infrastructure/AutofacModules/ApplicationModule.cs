@@ -49,6 +49,10 @@ namespace Fetch.OrderLunch.WebApi.Infrastructure.AutofacModules
                .As<IBasketRepository>()
                .InstancePerLifetimeScope();
 
+            builder.RegisterType<SupplierRepository>()
+               .As<ISupplierRepository>()
+               .InstancePerLifetimeScope();
+
             builder.RegisterType<OrderRepository>()
                 .As<IOrderRepository>()
                 .InstancePerLifetimeScope();

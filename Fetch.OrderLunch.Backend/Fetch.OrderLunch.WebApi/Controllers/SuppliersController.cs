@@ -49,23 +49,28 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
-        public async Task<IActionResult> Update(SupplierViewModel model)
+        [Route("{id:int}")]
+        public async Task<IActionResult> Update(int id,SupplierViewModel supplier)
         {
-           
-            await _supplierService.Update(model);
-            return Ok();
-           
+            try
+            {
+                await _supplierService.Update(supplier, id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest($"parameter 'id' Incorrect or Object is null");
+            }
+
+
         }
 
         [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> Delete(ObjectID objectID)
+        [Route("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
         {
-           
-            await _supplierService.Delete(objectID);
+            await _supplierService.Delete(id);
             return Ok();
-          
         }
 
     }

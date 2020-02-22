@@ -67,12 +67,12 @@ namespace Fetch.OrderLunch.WebApi.Controllers
 
         [Route("{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetOrder(int orderId)
+        public async Task<IActionResult> GetOrder(int id)
         {
             try
             {
                 
-                var order = await _orderQueries.GetOrder(orderId);
+                var order = await _orderQueries.GetOrder(id);
 
                 return Ok(order);
             }
@@ -85,9 +85,18 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetOrders()
         {
-            var orders = await _orderQueries.GetOrders();
+            try
+            {
+                var orders = await _orderQueries.GetOrders();
 
-            return Ok(orders);
+                return Ok(orders);
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
+            }
+           
         }
     }
 }

@@ -94,15 +94,19 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             return basketModel;
         }
 
-        public async Task UpdateBasket(BasketItemViewModel basketItem)
+        public async Task UpdateBasket(BasketItemViewModel basketItem,int id)
         {
             var userId = ExtensionMethod.GetUserId(_httpContextAccessor.HttpContext);
             if (userId == null)
             {
                 throw new ArgumentNullException("userId invalied");
-            }
-            var basket = await _basketRepository.GetAsync(userId);
+            };
 
+            var basket = await _basketRepository.GetAsync(userId);
+            if (basket.Id != id)
+            {
+                throw new ArgumentNullException();
+            }
             basket.UpdateBasket(basketItem.FoodId, basketItem.Quantity);
             await _basketRepository.UnitOfWork.SaveChangesAsync();
         }

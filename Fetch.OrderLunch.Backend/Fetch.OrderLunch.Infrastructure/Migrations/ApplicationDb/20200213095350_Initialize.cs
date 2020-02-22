@@ -156,17 +156,32 @@ namespace Fetch.OrderLunch.Infrastructure.Migrations.ApplicationDb
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "017b520c-4bf2-11ea-b77f-2e728ce88125", "7043f7ee-c9a9-4271-81d3-6b415bc069d2", "Admin Role", "Admin Role" });
+                values: new object[] { "17eb914a-4c20-11ea-b77f-2e728ce88125", "3ecd0a5f-70d0-4b6d-a359-1366d00b0903", "Admin", "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "0a89e59c-4c20-11ea-b77f-2e728ce88125", "87ec47cf-dca4-4ed9-9872-f808029d0a49", "Member", "Member" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "017b2cdc-4bf2-11ea-b77f-2e728ce88125", 0, "2fd52367-d5f7-4b27-ba07-b2d80b8b0a35", null, false, false, null, null, null, "Admin ", null, false, null, false, "Admin" });
+                values: new object[] { "017b2cdc-4bf2-11ea-b77f-2e728ce88125", 0, "13393c8d-1b67-4c94-8ea1-f42d97321504", null, false, false, null, null, "ADMIN", "AQAAAAEAACcQAAAAEPBrDve8o7ZzVtZDiv+MQz4lQHTPiXXgR6txNEM2yTKtShZOMy0gw4hL/3sHB78u5Q==", null, false, null, false, "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserClaims",
+                columns: new[] { "Id", "ClaimType", "ClaimValue", "UserId" },
+                values: new object[,]
+                {
+                    { 1, "Role Edit", "true", "017b2cdc-4bf2-11ea-b77f-2e728ce88125" },
+                    { 2, "Delete Edit", "true", "017b2cdc-4bf2-11ea-b77f-2e728ce88125" },
+                    { 3, "Create Edit", "true", "017b2cdc-4bf2-11ea-b77f-2e728ce88125" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "017b2cdc-4bf2-11ea-b77f-2e728ce88125", "017b520c-4bf2-11ea-b77f-2e728ce88125" });
+                values: new object[] { "017b2cdc-4bf2-11ea-b77f-2e728ce88125", "17eb914a-4c20-11ea-b77f-2e728ce88125" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

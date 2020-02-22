@@ -11,7 +11,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = MVSJwtTokens.AuthSchemes)]
+    //[Authorize(AuthenticationSchemes = MVSJwtTokens.AuthSchemes)]
     public class BasketsController : Controller
     {
         private readonly IBasketService _basketService;
@@ -41,7 +41,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         }
 
         [HttpPost]   
-        [Route("Item")]
+        [Route("{id}/Item")]
         public async Task<IActionResult> AddItemToBasket(BasketItemViewModel basketItem)
         {
           
@@ -52,12 +52,18 @@ namespace Fetch.OrderLunch.WebApi.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> UpdateBasket(BasketItemViewModel basketItem)
+        public async Task<IActionResult> UpdateBasket(int id,BasketItemViewModel basketItem)
         {
-            
-            await _basketService.UpdateBasket(basketItem);
-            return Ok();
-            
+            try
+            {
+                await _basketService.UpdateBasket(basketItem, id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest($"parameter 'id' Incorrect or Object is null");
+
+            }
         }
 
         [HttpDelete] 

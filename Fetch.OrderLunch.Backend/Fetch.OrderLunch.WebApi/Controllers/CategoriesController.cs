@@ -49,10 +49,10 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         [HttpPost]       
         [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Create(CategoryViewModel model)
+        public async Task<IActionResult> Create(CategoryInput category)
         {
            
-                await _categoryService.Add(model);
+                await _categoryService.Add(category);
                 return Ok();
            
 
@@ -62,20 +62,27 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         [Route("{id}")]
         [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Update(CategoryViewModel model)
+        public async Task<IActionResult> Update(int id,CategoryViewModel category)
         {
-            
-                await _categoryService.Update(model);
+            try
+            {
+                await _categoryService.Update(category, id);
                 return Ok();
-            
+            }
+            catch (Exception)
+            {
+                return BadRequest($"parameter 'id' Incorrect or Object is null");
+            }
+
+
         }
 
         [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> Delete(ObjectID objectID)
+        [Route("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
         {
             
-                await _categoryService.Delete(objectID);
+                await _categoryService.Delete(id);
                 return Ok();
             
         }

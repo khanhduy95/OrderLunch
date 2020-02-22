@@ -24,7 +24,6 @@ namespace Fetch.OrderLunch.WebApi.Application.Models
 
     public class FoodDaily
     {
-        public string UserId { get; set; }
         public int FoodId { get; set; }
     }
 }

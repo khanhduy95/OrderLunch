@@ -41,15 +41,24 @@ namespace Fetch.OrderLunch.Infrastructure.Repository
                 await _dbContext.Entry(dailyMenu)
                     .Collection(i => i.FoodDailyMenus)
                     .LoadAsync();
-
-                await _dbContext.DailyMenu
-               .Include(x => x.FoodDailyMenus)
-               .Where(x => x.Id==dailyMenu.Id)
-               .FirstOrDefaultAsync();
             }
 
             return dailyMenu;
+        }
 
+        public async Task<DailyMenu> FindByIdAsync(int id)
+        {
+            var dailyMenu = await _dbContext.DailyMenu
+               .Where(x => x.Id == id && x.CreationTime == DateTime.Today)
+               .FirstOrDefaultAsync();
+
+            if (dailyMenu != null)
+            {
+                await _dbContext.Entry(dailyMenu)
+                    .Collection(i => i.FoodDailyMenus)
+                    .LoadAsync();
+            }
+            return dailyMenu;
         }
     }
 }

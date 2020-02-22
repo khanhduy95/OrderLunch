@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Fetch.OrderLunch.WebApi.Application.Models;
+using Fetch.OrderLunch.WebApi.Application.Models.UserViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,9 +23,8 @@ namespace Fetch.OrderLunch.WebApi.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AccountController(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<IdentityUser> userManager,
+                                 SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -32,8 +32,6 @@ namespace Fetch.OrderLunch.WebApi.Controllers
 
         [HttpPost]
         [Route("Register")]
-        [ProducesResponseType(typeof(RegisterViewModel), (int)HttpStatusCode.Created)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Create(RegisterViewModel model)
         {
             var result = await _userManager.FindByNameAsync(model.UserName);
@@ -58,8 +56,6 @@ namespace Fetch.OrderLunch.WebApi.Controllers
 
         [HttpPost]
         [Route("Login")]
-        [ProducesResponseType(typeof(UserLoginViewModel), (int)HttpStatusCode.Created)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Login([FromBody]UserLoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -110,7 +106,7 @@ namespace Fetch.OrderLunch.WebApi.Controllers
             try
             {
                 var users=await _userManager.Users
-                    .Select(x => new DisplayUser
+                    .Select(x => new UserInfor
                     {
                         UserId=x.Id,
                         UserName = x.UserName,
@@ -123,9 +119,56 @@ namespace Fetch.OrderLunch.WebApi.Controllers
             {
                 return NotFound(nameof(e));
             }
-            
         }
 
-      
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetUserById(string id)
+        {
+            var result = await _userManager.FindByIdAsync(id);
+            try
+            {
+                var user = new UserInfor
+                {
+                    UserId = result.Id,
+                    UserName = result.UserName,
+                    PhoneNumber = result.PhoneNumber,
+                    Email = result.Email
+                };
+
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return NotFound(nameof(e));
+            }
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> DeleteAccount(string id)
+        {
+           var user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                await _userManager.DeleteAsync(user);
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        [HttpPut]
+        [Route("{id}/Role")]
+        public async Task<IActionResult> SetRole(string id, Role role)
+        {
+            var user =await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                await _userManager.AddToRoleAsync(user, role.Name);
+                return Ok();
+            }
+            return BadRequest();
+        }
+
     }
 }

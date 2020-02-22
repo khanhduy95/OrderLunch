@@ -25,9 +25,10 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
             if (menu == null)
             {
                 throw new ArgumentNullException("menu is null");
-            }
+            };
             var menuVm = new MenuViewModel
             {
+                Id=menu.Id,
                 ExprireTime = menu.ExprireTime,
                 Foods = menu.Foods
                   .Where(x => x.MenuId == menu.Id)

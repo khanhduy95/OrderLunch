@@ -18,7 +18,6 @@ namespace Fetch.OrderLunch.WebApi.Application.Models
         public string Name { get; set; }
         public string Address { get; set; }
         public string HotLine { get; set; }       
-     
     }
     public class MenuViewModel
     {

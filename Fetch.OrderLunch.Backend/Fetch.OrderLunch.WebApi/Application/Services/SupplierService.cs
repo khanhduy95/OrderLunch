@@ -14,17 +14,15 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
     {
         private readonly IAsyncRepository<Supplier> _asyncSupplierRepository;
         private readonly IAsyncRepository<Menu> _asyncMenuRepository;
-        private readonly ISupplierRepository _supplierRepository;
+       
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public SupplierService(IAsyncRepository<Supplier> asyncSupplierRepository,
                                IAsyncRepository<Menu> asyncMenuRepository,
-                               ISupplierRepository supplierRepository,
                                IHttpContextAccessor httpContextAccessor)
         {
             _asyncSupplierRepository = asyncSupplierRepository;
             _asyncMenuRepository = asyncMenuRepository;
-            _supplierRepository = supplierRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -53,13 +51,14 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                 await _asyncSupplierRepository.unitOfWork.SaveChangesAsync();
         }
        
-        public async Task Delete(ObjectID objectID)
+        public async Task Delete(int id)
         {
-           var supplier=await _asyncSupplierRepository.GetByIdAsync(objectID.Id);
+           var supplier=await _asyncSupplierRepository.GetByIdAsync(id);
             if (supplier == null)
             {
                 throw new ArgumentNullException("supplier is null");
-            }
+            };
+
             await _asyncSupplierRepository.DeleteAsync(supplier);
             await _asyncSupplierRepository.unitOfWork.SaveChangesAsync();
         }
@@ -92,38 +91,24 @@ namespace Fetch.OrderLunch.WebApi.Application.Services
                     HotLine = query.HotLine
                 };
                 return supplier;
-            }
+            };
+
             throw new ArgumentNullException("SupplierId is null"); 
         }
 
-        public async Task<MenuViewModel> GetMenu(int supplierId)
+        public async Task Update(SupplierViewModel supplier,int id)
         {
-            var supplier = await _supplierRepository.GetAsync(supplierId);
-            if (supplier != null)
-            {
-                var menu = supplier.Menu.Foods
-                                .Select(x => new MenuViewModel
-                                {
+            var result = await _asyncSupplierRepository.GetByIdAsync(id);
 
-                                }).ToList();
-            }
-            return null;
-        }
-
-        public async Task Update(SupplierViewModel supplierVm)
-        {
-            var supplier = await _asyncSupplierRepository.GetByIdAsync(supplierVm.Id);
-
-            if (supplier == null)
+            if (supplier == null || result.Id!=supplier.Id)
             {
                 throw new ArgumentNullException(nameof(supplier));
-            }
-            
-            supplier.Name = supplierVm.Name;
-            supplier.Address = supplierVm.Address;
-            supplier.HotLine = supplierVm.HotLine;
+            };
+            result.Name = supplier.Name;
+            result.Address = supplier.Address;
+            result.HotLine = supplier.HotLine;
 
-            await _asyncSupplierRepository.UpdateAsync(supplier);
+            await _asyncSupplierRepository.UpdateAsync(result);
            
         }
        
