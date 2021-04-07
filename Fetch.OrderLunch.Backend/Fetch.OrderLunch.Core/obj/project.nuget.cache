@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "CuZa2WuSDUm8nibU0JOumtSAtrma+8iVSW5yTWMrv6pk6Ac9b2glBEeCA3xhN8E9z3TDnA7Y/ue0v5ypxm9c7g==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\nguye\\source\\repos\\orderlunch\\Fetch.OrderLunch.Backend\\Fetch.OrderLunch.Core\\Fetch.OrderLunch.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\nguye\\.nuget\\packages\\mediatr\\8.0.0\\mediatr.8.0.0.nupkg.sha512",
+    "C:\\Users\\nguye\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\nguye\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

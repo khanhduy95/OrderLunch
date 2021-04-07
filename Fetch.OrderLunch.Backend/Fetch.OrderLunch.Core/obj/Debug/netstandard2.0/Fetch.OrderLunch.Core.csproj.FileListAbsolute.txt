@@ -6,3 +6,12 @@ D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\bin\Debug\ne
 D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\bin\Debug\netstandard2.0\Fetch.OrderLunch.Core.pdb
 D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\obj\Debug\netstandard2.0\Fetch.OrderLunch.Core.dll
 D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\obj\Debug\netstandard2.0\Fetch.OrderLunch.Core.pdb
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\bin\Debug\netstandard2.0\Fetch.OrderLunch.Core.deps.json
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\bin\Debug\netstandard2.0\Fetch.OrderLunch.Core.dll
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\bin\Debug\netstandard2.0\Fetch.OrderLunch.Core.pdb
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\obj\Debug\netstandard2.0\Fetch.OrderLunch.Core.csprojAssemblyReference.cache
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\obj\Debug\netstandard2.0\Fetch.OrderLunch.Core.AssemblyInfoInputs.cache
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\obj\Debug\netstandard2.0\Fetch.OrderLunch.Core.AssemblyInfo.cs
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\obj\Debug\netstandard2.0\Fetch.OrderLunch.Core.csproj.CoreCompileInputs.cache
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\obj\Debug\netstandard2.0\Fetch.OrderLunch.Core.dll
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Core\obj\Debug\netstandard2.0\Fetch.OrderLunch.Core.pdb
