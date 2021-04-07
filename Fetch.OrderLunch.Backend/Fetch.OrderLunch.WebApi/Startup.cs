@@ -52,7 +52,7 @@ namespace Fetch.OrderLunch.WebApi
             
             var container = new ContainerBuilder();
             container.Populate(services);
-            container.RegisterModule(new ApplicationModule(Configuration.GetConnectionString("Default")));
+           // container.RegisterModule(new ApplicationModule(Configuration.GetConnectionString("Default")));
             container.RegisterModule(new MediatorModule());
 
             return new AutofacServiceProvider(container.Build());
