@@ -9,3 +9,15 @@ D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\ob
 D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\bin\Debug\netstandard2.0\Fetch.OrderLunch.Infrastructure.pdb
 D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Debug\netstandard2.0\Fetch.OrderLunch.Infrastructure.dll
 D:\Github\OrderLunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Debug\netstandard2.0\Fetch.OrderLunch.Infrastructure.pdb
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\bin\Debug\netstandard2.0\Fetch.OrderLunch.Infrastructure.deps.json
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\bin\Debug\netstandard2.0\Fetch.OrderLunch.Infrastructure.dll
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\bin\Debug\netstandard2.0\Fetch.OrderLunch.Infrastructure.pdb
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\bin\Debug\netstandard2.0\Fetch.OrderLunch.Core.dll
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\bin\Debug\netstandard2.0\Fetch.OrderLunch.Core.pdb
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Debug\netstandard2.0\Fetch.OrderLunch.Infrastructure.csprojAssemblyReference.cache
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Debug\netstandard2.0\Fetch.OrderLunch.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Debug\netstandard2.0\Fetch.OrderLunch.Infrastructure.AssemblyInfo.cs
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Debug\netstandard2.0\Fetch.OrderLunch.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Debug\netstandard2.0\Fetch.OrderLunch.Infrastructure.csproj.CopyComplete
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Debug\netstandard2.0\Fetch.OrderLunch.Infrastructure.dll
+C:\Users\nguye\source\repos\orderlunch\Fetch.OrderLunch.Backend\Fetch.OrderLunch.Infrastructure\obj\Debug\netstandard2.0\Fetch.OrderLunch.Infrastructure.pdb
